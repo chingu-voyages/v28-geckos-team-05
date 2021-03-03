@@ -2,7 +2,7 @@
 name: User Story template
 about: Describe this issue template's purpose here.
 title: ''
-labels: ''
+labels: user_story
 assignees: ''
 
 ---
