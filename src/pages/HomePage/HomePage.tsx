@@ -1,5 +1,6 @@
 import React from 'react';
+import './HomePage.scss';
 
 export default function HomePage() {
-  return <div>[Home page]</div>;
+  return <div className="page">[Home page]</div>;
 }

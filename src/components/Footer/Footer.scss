@@ -1,0 +1,9 @@
+@import '../../styles/constants';
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: $footer-height;
+  background-color: $color-app-bg;
+}
