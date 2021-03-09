@@ -4,17 +4,17 @@ import HomePage from './pages/HomePage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
-import './App.css';
+import './App.scss';
 
 const App = () => (
-  <>
-    <Header />
+  <div className="app">
     <Router>
+      <Header />
       <Route path="/" exact component={HomePage} />
       <Route path="/about" exact component={AboutPage} />
+      <Footer />
     </Router>
-    <Footer />
-  </>
+  </div>
 );
 
 export default App;
