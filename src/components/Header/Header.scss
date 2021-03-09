@@ -1,0 +1,13 @@
+@import '../../styles/variables';
+
+.header {
+  width: 100%;
+  height: $header-height;
+  background-color: $color-primary;
+  color: $color-page-bg;
+
+  a {
+    text-decoration: none;
+    color: $color-page-bg;
+  }
+}
