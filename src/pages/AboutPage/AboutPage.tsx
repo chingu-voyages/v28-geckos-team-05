@@ -12,8 +12,8 @@ export default function AboutPage() {
       <h2>Disclaimer</h2>
       <p>
         Ingredient prices are estimates. All recipe information including
-        nutrient,ingredient, and calorie breakdowns are provided "as is" and are
-        not guaranteed to be accurate. If you suffer from food allergies or
+        nutrient, ingredient, and calorie breakdowns are provided "as is" and
+        are not guaranteed to be accurate. If you suffer from food allergies or
         intolerances, please make sure to double-check the ingredients list on
         the package you purchased and do not rely solely on our data.
       </p>
