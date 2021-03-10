@@ -8,14 +8,12 @@ import './Header.scss';
 function Header() {
   const toggleMobileMenu = () => {};
 
-  const resizeNavbarOnScroll = (evt) => {
+  const resizeNavbarOnScroll = () => {
     const navbar = document.querySelector('.navbar');
 
-    if (document.documentElement.scrollTop > 0) {
-      navbar.classList.add('navbar--small');
-    } else {
-      navbar.classList.remove('navbar--small');
-    }
+    document.documentElement.scrollTop > 0
+      ? navbar && navbar.classList.add('navbar--small')
+      : navbar && navbar.classList.remove('navbar--small');
   };
 
   useEffect(() => {
