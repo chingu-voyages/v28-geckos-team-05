@@ -1,9 +1,10 @@
 // Colors
 $color-primary: #223843;
-$color-secondary: #286D6A;
-$color-app-bg: #DBD3D8;
-$color-page-bg: #EFF1F3;
-$color-card-bg: #DCC1AB;
+$color-secondary: #286d6a;
+$color-app-bg: #dbd3d8;
+$color-page-bg: #eff1f3;
+$color-card-bg: #dcc1ab;
+$color-input-border: #bbc7d3;
 
 // Breakpoints for media queries
 $bp-min-desktop: 769px;
@@ -14,3 +15,10 @@ $page-inner-padding: 1rem;
 $header-height: 5vh;
 $header-height-small: 3.5vh;
 $footer-height: 5vh;
+
+// borders
+$input-border: 1px solid $color-input-border;
+
+// Border Radius
+$standard-border-radius: 5px;
+$round-input-radius: 20px;
