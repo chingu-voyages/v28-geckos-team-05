@@ -1,9 +1,24 @@
 @import '../../styles/variables';
 
 .footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: $footer-height;
-  background-color: $color-primary;
+    display: flex;
+    justify-content:center;
+    align-items: center;
+    position: fixed;
+    bottom:0;
+    width: 100%;
+    height: $footer-height;
+    background-color: $color-primary;
+    color: $color-app-bg;
+}
+
+.footer__link-container {
+
+    & a:nth-of-type(2) {
+        margin: 0 1rem;
+        padding: 0 1rem;
+        border-left: 1px solid $color-app-bg;
+        border-right: 1px solid $color-app-bg;
+    }
+
 }
