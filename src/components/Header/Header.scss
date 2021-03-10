@@ -9,11 +9,17 @@
   background-color: $color-primary;
   color: $color-page-bg;
   padding: 0.6rem;
+  position: sticky;
+  top: 0;
 
   a {
     text-decoration: none;
     color: $color-page-bg;
     font-weight: 500;
+
+    &:current {
+      font-weight: 600;
+    }
   }
 
   &-content {

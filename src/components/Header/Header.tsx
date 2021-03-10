@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome } from '@fortawesome/free-solid-svg-icons';
+
 import './Header.scss';
 
 function Header() {
@@ -18,12 +19,8 @@ function Header() {
       />
       <div className="navbar-links">
         <div className="navbar-content--left">
-          <Link to="/">
-            <FontAwesomeIcon
-              icon={faHome}
-              size="2x"
-              className="navbar-menuItem"
-            />
+          <Link to="/" className="navbar-menuItem">
+            <FontAwesomeIcon icon={faHome} size="2x" />
           </Link>
           <Link to="/about" className="navbar-menuItem">
             ABOUT
