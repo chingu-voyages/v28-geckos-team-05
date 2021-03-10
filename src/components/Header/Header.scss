@@ -22,7 +22,16 @@
     }
   }
 
-  &-content {
+  &--small {
+    height: $header-height-small;
+
+    .navbar__menuItem {
+      font-size: small;
+      padding: 0 0.7rem;
+    }
+  }
+
+  &-container {
     &--left {
       display: flex;
       align-items: center;
@@ -34,15 +43,15 @@
     }
   }
 
-  &-menuIcon {
+  &__menuIcon {
     display: flex;
   }
 
-  &-links {
+  &__links {
     display: none;
   }
   
-  &-menuItem {
+  &__menuItem {
     box-sizing: initial;
     padding: 0 1.5rem;
   }
@@ -52,11 +61,11 @@
   .navbar {
     justify-content: center;
 
-    &-menuIcon {
+    &__menuIcon {
       display: none;
     }
 
-    &-links {
+    &__links {
       display: flex;
       justify-content: space-between;
       width: $max-page-width;
