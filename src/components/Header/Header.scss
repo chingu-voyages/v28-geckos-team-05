@@ -11,7 +11,7 @@
   padding: 0.6rem;
   position: sticky;
   top: 0;
-  transition: 0.3s all;
+  transition: 0.3s all ease-in-out;
 
   a {
     text-decoration: none;
@@ -31,7 +31,7 @@
       padding: 0 0.7rem;
     }
 
-    transition: 0.3s all;
+    transition: 0.3s all ease-in-out;
   }
 
   &-container {
