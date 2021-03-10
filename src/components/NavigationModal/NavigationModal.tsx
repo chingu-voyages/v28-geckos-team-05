@@ -17,7 +17,7 @@ export default function NavigationModal({ onClose }: Props) {
           role="tab"
           tabIndex={-1}
         >
-          X
+          &#10005;
         </div>
       </div>
       <div className="modal-content">
