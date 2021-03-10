@@ -13,11 +13,23 @@
   a {
     text-decoration: none;
     color: $color-page-bg;
+    font-weight: 500;
+  }
+
+  &-content {
+    &--left {
+      display: flex;
+      align-items: center;
+    }
+
+    &--right {
+      display: flex;
+      align-items: center;
+    }
   }
 
   &-menuIcon {
     display: flex;
-    justify-content: flex-start;
   }
 
   &-links {
@@ -26,8 +38,7 @@
   
   &-menuItem {
     box-sizing: initial;
-    text-transform: uppercase;
-    padding: 0 2rem;
+    padding: 0 1.5rem;
   }
 }
 
@@ -41,8 +52,7 @@
 
     &-links {
       display: flex;
-      align-items: center;
-      justify-content: space-around;
+      justify-content: space-between;
       width: $max-page-width;
     }
   }
