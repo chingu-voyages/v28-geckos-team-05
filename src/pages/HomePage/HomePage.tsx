@@ -45,22 +45,21 @@ export default function HomePage() {
         searchTerm,
         getSearchData,
         getRandomData,
-        handleChange
+        handleChange,
       }}
     >
       <div className="page">
         <SearchBar />
 
         {/* this code is for tests only --- to remove */}
-        { 
-          recipesList.length          
+        {recipesList.length
           ? recipesList.map((el: { title: string }) => (
               <div key={el.title}>{el.title}</div>
             ))
-          : 'Empty array :( '
-        }
-        {/* end test only code */}  
+          : 'Empty array :( '}
+        {searchError && 'There was an error with the network request'}
+        {/* end test only code */}
       </div>
-    </ HomepageContext.Provider>
+    </HomepageContext.Provider>
   );
 }
