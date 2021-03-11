@@ -1,13 +1,77 @@
 @import '../../styles/variables';
 
-.header {
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
   width: 100%;
   height: $header-height;
   background-color: $color-primary;
   color: $color-page-bg;
+  padding: 0.6rem;
+  position: sticky;
+  top: 0;
+  transition: 0.3s all ease-in-out;
 
   a {
     text-decoration: none;
     color: $color-page-bg;
+    font-weight: 500;
+
+    &:current {
+      font-weight: 600;
+    }
+  }
+
+  &--small {
+    height: $header-height-small;
+
+    .navbar__menuItem {
+      font-size: small;
+      padding: 0 0.7rem;
+    }
+
+    transition: 0.3s all ease-in-out;
+  }
+
+  &-container {
+    &--left {
+      display: flex;
+      align-items: center;
+    }
+
+    &--right {
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &__menuIcon {
+    display: flex;
+  }
+
+  &__links {
+    display: none;
+  }
+  
+  &__menuItem {
+    box-sizing: initial;
+    padding: 0 1.5rem;
+  }
+}
+
+@media screen and (min-width: $bp-min-desktop) {
+  .navbar {
+    justify-content: center;
+
+    &__menuIcon {
+      display: none;
+    }
+
+    &__links {
+      display: flex;
+      justify-content: space-between;
+      width: $max-page-width;
+    }
   }
 }

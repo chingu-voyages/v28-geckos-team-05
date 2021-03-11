@@ -1,0 +1,40 @@
+.modal {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($color: white, $alpha: 0.9);
+  height: 100vh;
+  width: 100vw;
+  z-index: 10;
+  
+  &__button {
+    font-size: 3em;
+    border: 0;
+    padding: 0.5em;
+    cursor: pointer;
+  }
+  
+  &-content {
+    color: black;
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 70%;
+
+    &-links {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      justify-content: space-around;
+
+      &__link {
+        font-size: 3em;
+        font-weight: 500;
+      }
+    }
+  }
+}
