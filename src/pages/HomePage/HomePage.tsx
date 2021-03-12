@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
+import { URL } from '../../typescript/types';
+import { getURL } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 
 export default function HomePage() {
@@ -10,13 +12,19 @@ export default function HomePage() {
   const limit = 1;
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
   const apiKey = process.env.REACT_APP_API_KEY;
-  const searchUrl = `${baseUrl}/search?apiKey=${apiKey}&number=${limit}&query=${searchTerm}`;
-  const randomUrl = `${baseUrl}/random?apiKey=${apiKey}&number=${limit}`;
+  const searchUrl: URL = {
+    apiURL: `${baseUrl}/search?apiKey=${apiKey}&number=${limit}&query=${searchTerm}`,
+    mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
+  };
+  const randomUrl: URL = {
+    apiURL: `${baseUrl}/random?apiKey=${apiKey}&number=${limit}`,
+    mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
+  };
 
   const getSearchData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch(searchUrl);
+      const response = await fetch(getURL(searchUrl));
       const jsonData = await response.json();
       setRecipesList(jsonData.results);
       setSearchTerm('');
@@ -27,7 +35,7 @@ export default function HomePage() {
 
   const getRandomData = async () => {
     try {
-      const response = await fetch(randomUrl);
+      const response = await fetch(getURL(randomUrl));
       const jsonData = await response.json();
       setRecipesList(jsonData.recipes);
     } catch (error) {
