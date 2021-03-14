@@ -24,12 +24,12 @@ export default function SearchBar() {
             <FontAwesomeIcon icon={faSearch} className="search__icon" />
             <input
               type="text"
+              placeholder="Insert your search term..."
               value={searchTerm}
-              placeholder=""
               onChange={handleChange}
               required
             />
-            <button type="submit" className="search__submit">
+            <button type="submit" className="search__submit" title={`start your research ${searchTerm && `for: ${searchTerm}`}`}>
               search
             </button>
           </div>
@@ -37,6 +37,7 @@ export default function SearchBar() {
             type="button"
             onClick={getRandomData}
             className="search__random"
+            title="start your random research"
           >
             I'm feeling lucky
           </button>

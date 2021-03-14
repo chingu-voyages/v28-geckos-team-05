@@ -1,11 +1,5 @@
 import React, { createContext } from 'react';
-
-interface HomepageContent {
-  searchTerm: string;
-  getSearchData: (e: React.FormEvent<HTMLFormElement>) => void;
-  getRandomData: () => void;
-  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
+import { HomepageContent } from '../typescript/types';
 
 export const HomepageContext = createContext<HomepageContent>({
   searchTerm: '',

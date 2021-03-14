@@ -3,4 +3,11 @@ type URL = {
   mockURL: string;
 };
 
-export type { URL };
+type HomepageContent = {
+  searchTerm: string;
+  getSearchData: (e: React.FormEvent<HTMLFormElement>) => void;
+  getRandomData: () => void;
+  handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+export type { URL, HomepageContent };

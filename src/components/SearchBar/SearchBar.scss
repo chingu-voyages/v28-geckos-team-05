@@ -4,45 +4,52 @@
   background-size: cover;
   text-align: center;
   padding: 2rem 0;
-}
-.search__container {
-  position: relative;
-  width: 85%;
-  min-width: 280px;
-  margin: 1rem auto;
-  padding: 1rem;
 
-  &:after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    border-radius: $standard-border-radius;
-    background-color: #fff;
-    opacity: 0.8;
-    z-index: 0;
-  }
-  h1,
-  h2,
-  form {
+  &__container {
     position: relative;
-    z-index: 1;
+    width: 85%;
+    min-width: 280px;
+    margin: 1rem auto;
+    padding: 1rem;
+
+    @media (min-width: $bp-min-desktop) {
+      width: 60%;
+    }
+  
+    &:after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: $standard-border-radius;
+      background-color: #fff;
+      opacity: 0.8;
+      z-index: 0;
+    }
+
+    h1,
+    h2,
+    form {
+      position: relative;
+      z-index: 1;
+    }
+    h1 {
+      font-family: 'Knewave', cursive;
+      letter-spacing: 0.1rem;
+      font-size: 34px;
+      font-weight: 300;
+      color: $color-primary;
+    }
+    h2 {
+      font-weight: 300;
+      color: $color-secondary;
+      font-size: 18px;
+    }
   }
-  h1 {
-    font-family: 'Knewave', cursive;
-    letter-spacing: 0.1rem;
-    font-size: 34px;
-    font-weight: 300;
-    color: $color-primary;
-  }
-  h2 {
-    font-weight: 300;
-    color: $color-secondary;
-    font-size: 18px;
-  }
-  .search__wrapper {
+
+  &__wrapper {
     margin: 25px auto 0;
     display: flex;
     align-items: center;
@@ -50,49 +57,50 @@
     border-radius: $round-input-radius;
     background-color: #fff;
 
-    .search__icon {
-      position: relative;
-      margin-left: 6px;
-      z-index: 1;
-      font-size: 28px;
-      color: $color-primary;
+    @media (min-width: $bp-min-desktop) {
+      width: 60%;
     }
+
     input {
       width: 96%;
       border: 0;
       margin: 0 auto;
       padding: 10px 6px;
       font-size: 16px;
+      
+      &::placeholder {
+        font-style: italic;
+      }
     }
   }
-  .search__submit,
-  .search__random {
+  &__icon {
+    position: relative;
+    margin-left: 6px;
+    z-index: 1;
+    font-size: 28px;
+    color: $color-primary;
+  }
+  &__submit,
+  &__random {
     cursor: pointer;
     background-color: $color-primary;
     color: #fff;
     padding: 12px;
     border: $input-border;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+      background-color: lighten($color-primary, 7%);
+    }
   }
-  .search__submit {
+  &__submit {
     border-radius: $round-input-radius;
   }
-  .search__random {
+  &__random {
     display: block;
     margin: 10px auto;
     border-radius: $standard-border-radius;
     font-weight: 700;
     font-size: 16px;
-  }
-}
-
-@media (min-width: $bp-min-desktop) {
-  .search__container {
-    width: 60%;
-    .search__wrapper {
-      width: 60%;
-    }
-    input {
-      width: 50%;
-    }
   }
 }
