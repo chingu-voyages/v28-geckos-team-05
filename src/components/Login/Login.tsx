@@ -13,12 +13,8 @@ export default function Login() {
     try {
       await auth.signInWithEmailAndPassword(email, password);
     } catch (err) {
-      console.log(err);
+      console.error(err);
     }
-  };
-
-  const logOutHandler = () => {
-    auth.signOut();
   };
 
   return (
