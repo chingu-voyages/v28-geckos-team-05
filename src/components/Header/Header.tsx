@@ -52,12 +52,21 @@ function Header({ userLoggedIn }: any) {
             </Link>
           </div>
           <div className="navbar-container--right">
-            {!userLoggedIn ?
-            <Link to="/login" className="navbar__menuItem">
-              Login
-            </Link>
-            : <button type='button' onClick={() => {auth.signOut()}} className="navbar__menuItem">Log Out</button>
-}
+            {!userLoggedIn ? (
+              <Link to="/login" className="navbar__menuItem">
+                Login
+              </Link>
+            ) : (
+              <button
+                className="navbar__menuItem--logOutButton"
+                type="button"
+                onClick={() => {
+                  auth.signOut();
+                }}
+              >
+                Log Out
+              </button>
+            )}
           </div>
         </div>
       </nav>
