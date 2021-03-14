@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
 import { auth } from '../../firebase';
 import './Login.scss';
@@ -11,7 +12,6 @@ export default function Login() {
     e.preventDefault();
     try {
       await auth.signInWithEmailAndPassword(email, password);
-      //   const { user } = userCredential;
     } catch (err) {
       console.log(err);
     }
@@ -22,32 +22,33 @@ export default function Login() {
   };
 
   return (
-    <div>
-      <form>
-        <span>email</span>
+    <form className="login__form-container">
+      <div className="login__input-container">
+        <label htmlFor="username">email: </label>
         <input
+          className="login__input"
           type="email"
           id="username"
-          name="name"
+          name="username"
           required
           onChange={(e) => setEmail(e.target.value)}
         />
-        <span>password</span>
+      </div>
+      <div>
+        <label htmlFor="password">password: </label>
         <input
+          className="login__input"
           type="password"
           id="password"
-          name="name"
+          name="password"
           required
           onChange={(e) => setPassword(e.target.value)}
         />
+      </div>
 
-        <button type="submit" onClick={loginHandler}>
-          Log in
-        </button>
-      </form>
-      <button type="button" onClick={logOutHandler}>
-        LogOut
+      <button className="login__button" type="submit" onClick={loginHandler}>
+        Log in
       </button>
-    </div>
+    </form>
   );
 }
