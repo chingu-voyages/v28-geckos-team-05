@@ -13,15 +13,13 @@ const App = () => {
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
 
   auth.onAuthStateChanged((user) => {
-    console.log(user);
     user ? setUserLoggedIn(true) : setUserLoggedIn(false);
-    console.log(userLoggedIn);
   });
 
   return (
     <div className="app">
       <Router>
-        <Header userLoggedIn={userLoggedIn}/>
+        <Header userLoggedIn={userLoggedIn} />
         <Route path="/" exact component={HomePage} />
         <Route path="/about" exact component={AboutPage} />
         <Route path="/calendar" exact component={CalendarPage} />
