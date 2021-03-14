@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { auth } from './firebase';
 import HomePage from './pages/HomePage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
@@ -18,15 +18,18 @@ const App = () => {
 
   return (
     <div className="app">
-      <Router>
-        <Header userLoggedIn={userLoggedIn} />
-        <Route path="/" exact component={HomePage} />
-        <Route path="/about" exact component={AboutPage} />
-        <Route path="/calendar" exact component={CalendarPage} />
-        <Route path="/login" exact component={Login} />
-        <Footer />
-      </Router>
-    </div>
+        <Router>
+          <Header />
+          <Switch>
+            <Route path="/" exact component={HomePage} />
+            <Route path="/about" exact component={AboutPage} />
+            <Route path="/calendar" exact component={CalendarPage} />
+            <Route path="/login" exact component={Login} />
+            <Route component={NotFound} />
+          </Switch>
+          <Footer />
+        </Router>
+      </div>
   );
 };
 
