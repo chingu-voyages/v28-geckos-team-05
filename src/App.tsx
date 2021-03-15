@@ -12,6 +12,7 @@ import './App.scss';
 
 const App = () => {
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
+  console.log(userLoggedIn);
 
   auth.onAuthStateChanged((user) => {
     user ? setUserLoggedIn(true) : setUserLoggedIn(false);
