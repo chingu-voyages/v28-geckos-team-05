@@ -3,10 +3,12 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 import NavigationModal from '../NavigationModal/NavigationModal';
+import { auth } from '../../firebase';
 
 import './Header.scss';
 
-function Header() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function Header({ userLoggedIn }: any) {
   const [showModal, setShowModal] = useState(false);
 
   const resizeNavbarOnScroll = () => {
@@ -50,10 +52,21 @@ function Header() {
             </Link>
           </div>
           <div className="navbar-container--right">
-            <div className="navbar__menuItem">Hi, User123</div>
-            <Link to="#" className="navbar__menuItem">
-              Login
-            </Link>
+            {!userLoggedIn ? (
+              <Link to="/login" className="navbar__menuItem">
+                Login
+              </Link>
+            ) : (
+              <button
+                className="navbar__menuItem--logOutButton"
+                type="button"
+                onClick={() => {
+                  auth.signOut();
+                }}
+              >
+                Log Out
+              </button>
+            )}
           </div>
         </div>
       </nav>
