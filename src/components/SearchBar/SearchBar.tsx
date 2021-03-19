@@ -5,7 +5,12 @@ import { HomepageContext } from '../../context/GlobalContext';
 
 import './SearchBar.scss';
 
-export default function SearchBar() {
+type SearchProps = {
+  textInput: string;
+};
+
+export default function SearchBar(props: SearchProps) {
+  const { textInput } = props;
   const { searchTerm, getSearchData, getRandomData, handleChange } = useContext(
     HomepageContext
   );
@@ -25,7 +30,7 @@ export default function SearchBar() {
             <input
               type="text"
               placeholder="Insert your search term..."
-              value={searchTerm}
+              value={textInput}
               onChange={handleChange}
               required
             />

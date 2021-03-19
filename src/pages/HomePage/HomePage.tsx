@@ -8,6 +8,7 @@ import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HomePage({ userLoggedIn }: any) {
+  const [textInput, setTextInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [recipesList, setRecipesList] = useState([]);
   const [searchError, setSearchError] = useState('');
@@ -33,6 +34,7 @@ export default function HomePage({ userLoggedIn }: any) {
     e.preventDefault();
     setSearchEntered(true);
     try {
+      setSearchTerm(textInput);
       const response = await fetch(getURL(searchUrl));
       const jsonData = await response.json();
       const idsBulk = getIdsBulk(jsonData.results);
@@ -55,7 +57,7 @@ export default function HomePage({ userLoggedIn }: any) {
   };
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchTerm(e.target.value);
+    setTextInput(e.target.value);
   }
 
   return (
@@ -70,7 +72,7 @@ export default function HomePage({ userLoggedIn }: any) {
       }}
     >
       <div className="page">
-        <SearchBar />
+        <SearchBar textInput={textInput} />
 
         {!userLoggedIn && !searchEntered ? (
           <>
