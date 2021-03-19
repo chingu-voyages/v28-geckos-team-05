@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { URL } from '../../typescript/types';
-import { getURL } from '../../utils';
+import { getURL, getIdsBulk } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import './HomePage.scss';
+import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HomePage({ userLoggedIn }: any) {
@@ -19,6 +20,10 @@ export default function HomePage({ userLoggedIn }: any) {
     apiURL: `${baseUrl}/search?apiKey=${apiKey}&number=${limit}&query=${searchTerm}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
   };
+  const bulkUrl: URL = {
+    apiURL: `${baseUrl}/informationBulk?apiKey=${apiKey}`,
+    mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
+  };
   const randomUrl: URL = {
     apiURL: `${baseUrl}/random?apiKey=${apiKey}&number=${limit}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
@@ -30,8 +35,10 @@ export default function HomePage({ userLoggedIn }: any) {
     try {
       const response = await fetch(getURL(searchUrl));
       const jsonData = await response.json();
-      setRecipesList(jsonData.results);
-      setSearchTerm('');
+      const idsBulk = getIdsBulk(jsonData.results);
+      const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
+      const jsonDataBulk = await responseBulk.json();
+      setRecipesList(jsonDataBulk);
     } catch (error) {
       setSearchError(error);
     }
@@ -56,6 +63,7 @@ export default function HomePage({ userLoggedIn }: any) {
       value={{
         searchTerm,
         searchEntered,
+        recipesList,
         getSearchData,
         getRandomData,
         handleChange,
@@ -138,6 +146,11 @@ export default function HomePage({ userLoggedIn }: any) {
             {/* end test only code */}
           </>
         )}
+        {recipesList.length ? <RecipeCardList /> : 'Empty array :( '}
+
+        {/* this code is for tests only --- to remove */}
+        {searchError && 'There was an error with the network request'}
+        {/* end test only code */}
       </div>
     </HomepageContext.Provider>
   );

@@ -12,6 +12,7 @@
   position: sticky;
   top: 0;
   transition: 0.3s all ease-in-out;
+  z-index: 3;
 
   a {
     text-decoration: none;
@@ -53,25 +54,24 @@
   &__links {
     display: none;
   }
-  
+
   &__menuItem {
     box-sizing: initial;
     padding: 0 1.5rem;
 
     &--logOutButton {
-        color: $color-page-bg;
-        background: none;
-        font-family: inherit;
-        border: none;
-        font-size: inherit;
-        font-weight: inherit;
-    
-        &:hover {
+      color: $color-page-bg;
+      background: none;
+      font-family: inherit;
+      border: none;
+      font-size: inherit;
+      font-weight: inherit;
+
+      &:hover {
         cursor: pointer;
-        }
+      }
     }
   }
-
 }
 
 @media screen and (min-width: $bp-min-desktop) {
