@@ -5,6 +5,7 @@ import { getURL, getIdsBulk } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import './HomePage.scss';
 import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
+import Loader from '../../components/Loader/Loader';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HomePage({ userLoggedIn }: any) {
@@ -18,7 +19,7 @@ export default function HomePage({ userLoggedIn }: any) {
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
   const apiKey = process.env.REACT_APP_API_KEY;
   const searchUrl: URL = {
-    apiURL: `${baseUrl}/search?apiKey=${apiKey}&number=${limit}&query=${searchTerm}`,
+    apiURL: `${baseUrl}/search?apiKey=${apiKey}&number=${limit}&query=${textInput}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
   };
   const bulkUrl: URL = {
@@ -35,12 +36,14 @@ export default function HomePage({ userLoggedIn }: any) {
     setSearchEntered(true);
     try {
       setSearchTerm(textInput);
+      setRecipesList([]);
       const response = await fetch(getURL(searchUrl));
       const jsonData = await response.json();
       const idsBulk = getIdsBulk(jsonData.results);
       const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
       const jsonDataBulk = await responseBulk.json();
       setRecipesList(jsonDataBulk);
+      setTextInput('');
     } catch (error) {
       setSearchError(error);
     }
@@ -48,6 +51,8 @@ export default function HomePage({ userLoggedIn }: any) {
 
   const getRandomData = async () => {
     try {
+      setSearchTerm('random recipes');
+      setRecipesList([]);
       const response = await fetch(getURL(randomUrl));
       const jsonData = await response.json();
       setRecipesList(jsonData.recipes);
@@ -138,21 +143,12 @@ export default function HomePage({ userLoggedIn }: any) {
           </>
         ) : (
           <>
-            {/* this code is for tests only --- to remove */}
-            {recipesList.length
-              ? recipesList.map((el: { title: string }) => (
-                  <div key={el.title}>{el.title}</div>
-                ))
-              : 'Empty array :( '}
+            {searchTerm && !recipesList.length && <Loader />}
+            {searchTerm && !!recipesList.length && <RecipeCardList />}
             {searchError && 'There was an error with the network request'}
             {/* end test only code */}
           </>
         )}
-        {recipesList.length ? <RecipeCardList /> : 'Empty array :( '}
-
-        {/* this code is for tests only --- to remove */}
-        {searchError && 'There was an error with the network request'}
-        {/* end test only code */}
       </div>
     </HomepageContext.Provider>
   );

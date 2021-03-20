@@ -1,15 +1,21 @@
 @import '../../styles/variables';
 
-$page-inner-padding: 1.5rem;
-
 @mixin element-width($el-width, $el-gap) {
   flex: 1 0 calc(#{$el-width} - #{$el-gap});
   max-width: calc(#{$el-width} - #{$el-gap});
 }
 
+@mixin basic-btn-props() {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
 .recipe {
   @include element-width(50%, 0.8rem);
-  margin-bottom: $page-inner-padding;
+  margin-bottom: $card-outer-padding;
   box-sizing: border-box;
   position: relative;
   border-radius: $round-input-radius;
@@ -19,15 +25,11 @@ $page-inner-padding: 1.5rem;
     0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
 
   @media (min-width: $bp-min-desktop) {
-    @include element-width(25%, $page-inner-padding);
+    @include element-width(25%, $card-outer-padding);
   }
 
   &__button-wishlist {
-    cursor: pointer;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include basic-btn-props;
     top: 10px;
     right: 10px;
     width: 30px;
@@ -54,11 +56,7 @@ $page-inner-padding: 1.5rem;
   }
 
   &__button-details {
-    cursor: pointer;
-    position: absolute;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    @include basic-btn-props;
     top: -18px;
     right: 10px;
     width: 30px;
@@ -84,9 +82,7 @@ $page-inner-padding: 1.5rem;
       }
     }
   }
-  // &__image-wrapper {
-  //   min-height: 153px;
-  // }
+  
   &__image {
     width: 100%;
   }
