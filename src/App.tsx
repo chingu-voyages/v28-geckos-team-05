@@ -7,6 +7,7 @@ import CalendarPage from './pages/CalendarPage/CalendarPage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
 import NotFound from './components/NotFound/NotFound';
 import './App.scss';
 
@@ -26,6 +27,7 @@ const App = () => {
           <Route path="/about" exact component={AboutPage} />
           <Route path="/calendar" exact component={CalendarPage} />
           <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
           <Route component={NotFound} />
         </Switch>
         <Footer />

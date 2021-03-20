@@ -34,4 +34,18 @@
     &__button:hover {
         cursor: pointer;
     }
+
+    &__singup-text {
+        display: flex;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        margin-top: .5rem;
+        font-size: $font-size-small;
+
+        &__link {
+            margin-left: .3rem;
+            font-weight: 700;
+        }
+    }
 }
