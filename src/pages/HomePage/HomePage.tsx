@@ -31,25 +31,40 @@ export default function HomePage({ userLoggedIn }: any) {
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
   };
 
+  let idsBulk = '';
+
   const getSearchData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchEntered(true);
+    setSearchError('');
     try {
       setSearchTerm(textInput);
       setRecipesList([]);
       const response = await fetch(getURL(searchUrl));
       const jsonData = await response.json();
-      const idsBulk = getIdsBulk(jsonData.results);
-      const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
-      const jsonDataBulk = await responseBulk.json();
-      setRecipesList(jsonDataBulk);
-      setTextInput('');
+      idsBulk = getIdsBulk(jsonData.results);
     } catch (error) {
       setSearchError(error);
+    }
+    if (idsBulk.length) {
+      try {
+        const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
+        const jsonDataBulk = await responseBulk.json();
+        setRecipesList(jsonDataBulk);
+        setTextInput('');
+      } catch (error) {
+        setSearchError(error);
+      }
+    } else {
+      setTextInput('');
+      setSearchTerm('');
+      setSearchError(`no results for the search term : ${textInput}`);
     }
   };
 
   const getRandomData = async () => {
+    setSearchError('');
+
     try {
       setSearchTerm('random recipes');
       setRecipesList([]);
@@ -145,7 +160,7 @@ export default function HomePage({ userLoggedIn }: any) {
           <>
             {searchTerm && !recipesList.length && <Loader />}
             {searchTerm && !!recipesList.length && <RecipeCardList />}
-            {searchError && 'There was an error with the network request'}
+            {searchError}
             {/* end test only code */}
           </>
         )}
