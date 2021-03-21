@@ -22,6 +22,10 @@
     border: 1px solid $color-primary;
     margin: 1rem 0;
   }
+
+  &__paragraph {
+    padding: 0.5rem;
+  }
 }
 
 @media screen and (min-width: $bp-min-desktop) {

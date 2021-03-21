@@ -69,14 +69,15 @@ export default function HomePage({ userLoggedIn }: any) {
             {/* Splash page displayed when user is not logged in and no search has been entered yet */}
             <div className="splash">
               <p className="splash__paragraph">
-                Meal planner helps you create a healthy eating habit no matter
-                your constraints - be it your budget, food allergies, or
-                monotony.
+                <strong>Meal planner</strong> helps you create a healthy eating
+                habit no matter your constraints - be it your budget, food
+                allergies, or monotony.
               </p>
               <div className="splash__maincontent">
                 <div className="splash__item">
                   <div className="splash__paragraph">
-                    Find healthy recipes that fit your budget and dietary needs
+                    <strong>Find</strong> healthy recipes that fit your budget
+                    and dietary needs
                   </div>
                   <img
                     className="splash__image"
@@ -91,13 +92,14 @@ export default function HomePage({ userLoggedIn }: any) {
                     alt="Track your daily calorie and macronutrient intake"
                   />
                   <div className="splash__paragraph">
-                    Track your daily calorie and macronutrient intake
+                    <strong>Track</strong> your daily calorie and macronutrient
+                    intake
                   </div>
                 </div>
                 <div className="splash__item">
                   {' '}
                   <div className="splash__paragraph">
-                    Automatically generate your shopping list
+                    <strong>Generate</strong> your shopping list automatically
                   </div>
                   <img
                     className="splash__image"
@@ -113,7 +115,7 @@ export default function HomePage({ userLoggedIn }: any) {
                     alt="Learn new recipes step by step"
                   />
                   <div className="splash__paragraph">
-                    Learn new recipes step by step
+                    <strong>Learn</strong> new recipes step by step
                   </div>
                 </div>
               </div>
