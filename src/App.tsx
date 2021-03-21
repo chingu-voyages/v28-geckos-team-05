@@ -22,7 +22,11 @@ const App = () => {
       <Router>
         <Header userLoggedIn={userLoggedIn} />
         <Switch>
-          <Route path="/" exact component={HomePage} />
+          <Route
+            path="/"
+            exact
+            render={() => <HomePage userLoggedIn={userLoggedIn} />}
+          />
           <Route path="/about" exact component={AboutPage} />
           <Route path="/calendar" exact component={CalendarPage} />
           <Route path="/login" exact component={Login} />
