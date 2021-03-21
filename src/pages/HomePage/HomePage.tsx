@@ -4,10 +4,12 @@ import { URL } from '../../typescript/types';
 import { getURL } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 
-export default function HomePage() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function HomePage({ userLoggedIn }: any) {
   const [searchTerm, setSearchTerm] = useState('');
   const [recipesList, setRecipesList] = useState([]);
   const [searchError, setSearchError] = useState('');
+  const [searchEntered, setSearchEntered] = useState(false);
 
   const limit = 1;
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
@@ -23,6 +25,7 @@ export default function HomePage() {
 
   const getSearchData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setSearchEntered(true);
     try {
       const response = await fetch(getURL(searchUrl));
       const jsonData = await response.json();
@@ -51,6 +54,7 @@ export default function HomePage() {
     <HomepageContext.Provider
       value={{
         searchTerm,
+        searchEntered,
         getSearchData,
         getRandomData,
         handleChange,
@@ -59,14 +63,35 @@ export default function HomePage() {
       <div className="page">
         <SearchBar />
 
-        {/* this code is for tests only --- to remove */}
-        {recipesList.length
-          ? recipesList.map((el: { title: string }) => (
-              <div key={el.title}>{el.title}</div>
-            ))
-          : 'Empty array :( '}
-        {searchError && 'There was an error with the network request'}
-        {/* end test only code */}
+        {!userLoggedIn && !searchEntered ? (
+          <>
+            {/* Splash page displayed when user is not logged in and no search has been entered yet */}
+            <div className="splash">
+              <p className="splash__paragraph">
+                Meal planner helps you create a healthy eating habit no matter
+                your constraints - be it your budget, food allergies, or
+                monotony.
+              </p>
+              <div className="splash__images">images</div>
+              <div className="splash__cta">
+                <button type="button" className="button--primary">
+                  Sign up
+                </button>
+              </div>
+            </div>
+          </>
+        ) : (
+          <>
+            {/* this code is for tests only --- to remove */}
+            {recipesList.length
+              ? recipesList.map((el: { title: string }) => (
+                  <div key={el.title}>{el.title}</div>
+                ))
+              : 'Empty array :( '}
+            {searchError && 'There was an error with the network request'}
+            {/* end test only code */}
+          </>
+        )}
       </div>
     </HomepageContext.Provider>
   );
