@@ -3,6 +3,7 @@ import SearchBar from '../../components/SearchBar/SearchBar';
 import { URL } from '../../typescript/types';
 import { getURL } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
+import './HomePage.scss';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HomePage({ userLoggedIn }: any) {
@@ -72,7 +73,50 @@ export default function HomePage({ userLoggedIn }: any) {
                 your constraints - be it your budget, food allergies, or
                 monotony.
               </p>
-              <div className="splash__images">images</div>
+              <div className="splash__maincontent">
+                <div className="splash__item">
+                  <div className="splash__paragraph">
+                    Find healthy recipes that fit your budget and dietary needs
+                  </div>
+                  <img
+                    className="splash__image"
+                    src={`${process.env.PUBLIC_URL}/images/splash1.jpg`}
+                    alt="Find healthy recipes that fit your budget and dietary needs"
+                  />
+                </div>
+                <div className="splash__item">
+                  <img
+                    className="splash__image"
+                    src={`${process.env.PUBLIC_URL}/images/splash2.jpg`}
+                    alt="Track your daily calorie and macronutrient intake"
+                  />
+                  <div className="splash__paragraph">
+                    Track your daily calorie and macronutrient intake
+                  </div>
+                </div>
+                <div className="splash__item">
+                  {' '}
+                  <div className="splash__paragraph">
+                    Automatically generate your shopping list
+                  </div>
+                  <img
+                    className="splash__image"
+                    src={`${process.env.PUBLIC_URL}/images/splash3.jpg`}
+                    alt="Automatically generate your shopping list"
+                  />
+                </div>
+                <div className="splash__item">
+                  {' '}
+                  <img
+                    className="splash__image"
+                    src={`${process.env.PUBLIC_URL}/images/splash4.jpg`}
+                    alt="Learn new recipes step by step"
+                  />
+                  <div className="splash__paragraph">
+                    Learn new recipes step by step
+                  </div>
+                </div>
+              </div>
               <div className="splash__cta">
                 <button type="button" className="button--primary">
                   Sign up
