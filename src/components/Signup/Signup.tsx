@@ -1,19 +1,25 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import { auth } from '../../firebase';
 import './Signup.scss';
 
 export default function Signup() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirmed, setPasswordConfirmed] = useState<string>('');
+  const [error, setError] = useState(null);
 
-  const signUpHandler = (e: React.FormEvent) => {
+  const signUpHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== passwordConfirmed) {
       console.log('passwords does not match');
       return;
     }
-    console.log('sign up');
+    try {
+      auth.createUserWithEmailAndPassword(email, password);
+    } catch (err) {
+      const errorMessage = err.message;
+    }
   };
 
   return (
