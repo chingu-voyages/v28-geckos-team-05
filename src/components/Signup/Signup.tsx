@@ -7,23 +7,24 @@ export default function Signup() {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [passwordConfirmed, setPasswordConfirmed] = useState<string>('');
-  const [error, setError] = useState(null);
+  const [error, setError] = useState<string>('');
 
   const signUpHandler = async (e: React.FormEvent) => {
     e.preventDefault();
     if (password !== passwordConfirmed) {
-      console.log('passwords does not match');
+      setError('passwords does not match');
       return;
     }
     try {
-      auth.createUserWithEmailAndPassword(email, password);
+      await auth.createUserWithEmailAndPassword(email, password);
     } catch (err) {
-      const errorMessage = err.message;
+      setError(err.message);
     }
   };
 
   return (
     <form className="signup__form-container" onSubmit={signUpHandler}>
+      {error && <div className="signup__error-container">{error}</div>}
       <div className="signup__input-container">
         <label htmlFor="username">email: </label>
         <input
