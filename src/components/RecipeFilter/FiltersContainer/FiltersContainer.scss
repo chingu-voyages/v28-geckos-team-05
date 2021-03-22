@@ -1,0 +1,23 @@
+@import '../../../styles/variables';
+
+.filters {
+  background-color: $color-app-bg;
+  display: flex;
+  width: fit-content;
+  margin: auto;
+  padding: 1rem;
+  border-radius: 0.5rem;
+
+  &__mask {
+    display: flex;
+    flex-direction: column;
+    &--close {
+      text-align: right;
+    }
+
+    &--inputs {
+      display: flex;
+      flex-direction: column;
+    }
+  }
+}

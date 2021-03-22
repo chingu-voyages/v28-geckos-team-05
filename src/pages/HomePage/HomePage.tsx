@@ -4,6 +4,7 @@ import { URL } from '../../typescript/types';
 import { getURL, getIdsBulk } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import SplashContent from '../../components/SplashContent/SplashContent';
+import RecipeFilter from '../../components/RecipeFilter/RecipeFilter';
 import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
 import Loader from '../../components/Loader/Loader';
 
@@ -105,7 +106,8 @@ export default function HomePage({ userLoggedIn }: any) {
             {searchTerm && !!recipesList.length && <RecipeCardList />}
             {searchError}
             {/* end test only code */}
-            Find recipes by filter
+
+            <RecipeFilter />
           </>
         )}
       </div>
