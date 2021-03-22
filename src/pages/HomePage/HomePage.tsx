@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { URL } from '../../typescript/types';
-import { getURL } from '../../utils';
+import { getURL, getIdsBulk } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import './HomePage.scss';
+import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
+import Loader from '../../components/Loader/Loader';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HomePage({ userLoggedIn }: any) {
+  const [textInput, setTextInput] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
   const [recipesList, setRecipesList] = useState([]);
   const [searchError, setSearchError] = useState('');
@@ -16,29 +19,55 @@ export default function HomePage({ userLoggedIn }: any) {
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
   const apiKey = process.env.REACT_APP_API_KEY;
   const searchUrl: URL = {
-    apiURL: `${baseUrl}/search?apiKey=${apiKey}&number=${limit}&query=${searchTerm}`,
+    apiURL: `${baseUrl}/search?apiKey=${apiKey}&number=${limit}&query=${textInput}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
+  };
+  const bulkUrl: URL = {
+    apiURL: `${baseUrl}/informationBulk?apiKey=${apiKey}`,
+    mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
   };
   const randomUrl: URL = {
     apiURL: `${baseUrl}/random?apiKey=${apiKey}&number=${limit}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
   };
 
+  let idsBulk = '';
+
   const getSearchData = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSearchEntered(true);
+    setSearchError('');
     try {
+      setSearchTerm(textInput);
+      setRecipesList([]);
       const response = await fetch(getURL(searchUrl));
       const jsonData = await response.json();
-      setRecipesList(jsonData.results);
-      setSearchTerm('');
+      idsBulk = getIdsBulk(jsonData.results);
     } catch (error) {
       setSearchError(error);
+    }
+    if (idsBulk.length) {
+      try {
+        const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
+        const jsonDataBulk = await responseBulk.json();
+        setRecipesList(jsonDataBulk);
+        setTextInput('');
+      } catch (error) {
+        setSearchError(error);
+      }
+    } else {
+      setTextInput('');
+      setSearchTerm('');
+      setSearchError(`no results for the search term : ${textInput}`);
     }
   };
 
   const getRandomData = async () => {
+    setSearchError('');
+
     try {
+      setSearchTerm('random recipes');
+      setRecipesList([]);
       const response = await fetch(getURL(randomUrl));
       const jsonData = await response.json();
       setRecipesList(jsonData.recipes);
@@ -48,7 +77,7 @@ export default function HomePage({ userLoggedIn }: any) {
   };
 
   function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setSearchTerm(e.target.value);
+    setTextInput(e.target.value);
   }
 
   return (
@@ -56,13 +85,14 @@ export default function HomePage({ userLoggedIn }: any) {
       value={{
         searchTerm,
         searchEntered,
+        recipesList,
         getSearchData,
         getRandomData,
         handleChange,
       }}
     >
       <div className="page">
-        <SearchBar />
+        <SearchBar textInput={textInput} />
 
         {!userLoggedIn && !searchEntered ? (
           <>
@@ -128,13 +158,9 @@ export default function HomePage({ userLoggedIn }: any) {
           </>
         ) : (
           <>
-            {/* this code is for tests only --- to remove */}
-            {recipesList.length
-              ? recipesList.map((el: { title: string }) => (
-                  <div key={el.title}>{el.title}</div>
-                ))
-              : 'Empty array :( '}
-            {searchError && 'There was an error with the network request'}
+            {searchTerm && !recipesList.length && <Loader />}
+            {searchTerm && !!recipesList.length && <RecipeCardList />}
+            {searchError}
             {/* end test only code */}
           </>
         )}
