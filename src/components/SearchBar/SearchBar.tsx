@@ -5,7 +5,12 @@ import { HomepageContext } from '../../context/GlobalContext';
 
 import './SearchBar.scss';
 
-export default function SearchBar() {
+type SearchProps = {
+  textInput: string;
+};
+
+export default function SearchBar(props: SearchProps) {
+  const { textInput } = props;
   const { searchTerm, getSearchData, getRandomData, handleChange } = useContext(
     HomepageContext
   );
@@ -25,18 +30,24 @@ export default function SearchBar() {
             <input
               type="text"
               placeholder="Insert your search term..."
-              value={searchTerm}
+              value={textInput}
               onChange={handleChange}
               required
             />
-            <button type="submit" className="search__submit" title={`start your research ${searchTerm && `for: ${searchTerm}`}`}>
+            <button
+              type="submit"
+              className="search__submit"
+              title={`start your research ${
+                searchTerm && `for: ${searchTerm}`
+              }`}
+            >
               search
             </button>
           </div>
           <button
             type="button"
             onClick={getRandomData}
-            className="search__random"
+            className="button--primary"
             title="start your random research"
           >
             I'm feeling lucky

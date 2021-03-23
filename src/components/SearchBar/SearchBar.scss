@@ -80,27 +80,17 @@
     font-size: 28px;
     color: $color-primary;
   }
-  &__submit,
-  &__random {
+  &__submit {
     cursor: pointer;
     background-color: $color-primary;
     color: #fff;
     padding: 12px;
     border: $input-border;
     transition: background-color 0.2s ease-in-out;
+    border-radius: $round-input-radius;
 
     &:hover {
       background-color: lighten($color-primary, 7%);
     }
-  }
-  &__submit {
-    border-radius: $round-input-radius;
-  }
-  &__random {
-    display: block;
-    margin: 10px auto;
-    border-radius: $standard-border-radius;
-    font-weight: 700;
-    font-size: 16px;
   }
 }
