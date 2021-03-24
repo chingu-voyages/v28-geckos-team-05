@@ -127,12 +127,14 @@ export default function RecipeFilter(props: any) {
                 className="filters__ingredients--input"
                 type="text"
                 placeholder="Ingredients to include"
+                value={ingredientsToInclude}
                 onChange={(e) => setIngredientsToInclude(e.target.value)}
               />
               <input
                 className="filters__ingredients--input"
                 type="text"
                 placeholder="Ingredients to exclude"
+                value={ingredientsToExclude}
                 onChange={(e) => setIngredientsToExclude(e.target.value)}
               />
             </div>

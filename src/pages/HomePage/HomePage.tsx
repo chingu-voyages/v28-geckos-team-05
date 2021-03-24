@@ -1,11 +1,7 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { URL } from '../../typescript/types';
-import {
-  getURL,
-  getIdsBulk,
-  areIngredientsListsIncompatible,
-} from '../../utils';
+import { getURL, getIdsBulk, filterIncludedIngredients } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import SplashContent from '../../components/SplashContent/SplashContent';
 import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
@@ -89,48 +85,40 @@ export default function HomePage({ userLoggedIn }: any) {
     ingredientsToInclude: string,
     ingredientsToExclude: string
   ) => {
-    // Check that no ingredient is both included and excluded. If so, remove it from includeIngredients
-    if (
-      areIngredientsListsIncompatible(
+    // Check that no ingredient is both included and excluded. If so, remove it from includedIngredients
+    const url: URL = {
+      apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&${nutritionFilters}&includeIngredients=${filterIncludedIngredients(
         ingredientsToInclude,
         ingredientsToExclude
-      )
-    ) {
-      setSearchError(
-        'You have both included and excluded an ingredient from the search parameters!'
-      );
-    } else {
-      const url: URL = {
-        apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&${nutritionFilters}&includeIngredients=${ingredientsToInclude}&excludeIngredients=${ingredientsToExclude}`,
-        mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
-      };
+      )}&excludeIngredients=${ingredientsToExclude}`,
+      mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
+    };
+
+    try {
+      setSearchTerm(textInput);
+      setRecipesList([]);
+      const response = await fetch(getURL(url));
+      const jsonData = await response.json();
+      idsBulk = getIdsBulk(jsonData.results);
+    } catch (error) {
+      setSearchError(error);
+    }
+
+    if (idsBulk.length) {
+      bulkUrl.apiURL += `&ids=${idsBulk}`;
 
       try {
-        setSearchTerm(textInput);
-        setRecipesList([]);
-        const response = await fetch(getURL(url));
-        const jsonData = await response.json();
-        idsBulk = getIdsBulk(jsonData.results);
+        const responseBulk = await fetch(getURL(bulkUrl));
+        const jsonDataBulk = await responseBulk.json();
+        setRecipesList(jsonDataBulk);
       } catch (error) {
         setSearchError(error);
       }
-
-      if (idsBulk.length) {
-        try {
-          const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
-          const jsonDataBulk = await responseBulk.json();
-          setRecipesList(jsonDataBulk);
-          setTextInput('');
-        } catch (error) {
-          setSearchError(error);
-        }
-      } else {
-        setTextInput('');
-        setSearchTerm('');
-        setSearchError(
-          `no results for the search term: ${textInput} (minCalories: , include ingredients: , exclude ingredients: )`
-        );
-      }
+    } else {
+      setSearchTerm('');
+      setSearchError(
+        `no results for the search term: ${textInput} (minCalories: , include ingredients: , exclude ingredients: )`
+      );
     }
   };
 
@@ -140,6 +128,8 @@ export default function HomePage({ userLoggedIn }: any) {
         searchTerm,
         searchEntered,
         recipesList,
+        ingredientsToInclude,
+        ingredientsToExclude,
         getSearchData,
         getRandomData,
         handleChange,
