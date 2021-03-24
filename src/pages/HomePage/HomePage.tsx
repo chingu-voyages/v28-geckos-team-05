@@ -4,7 +4,6 @@ import { URL } from '../../typescript/types';
 import { getURL, getIdsBulk } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import SplashContent from '../../components/SplashContent/SplashContent';
-import RecipeFilter from '../../components/RecipeFilter/RecipeFilter';
 import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
 import Loader from '../../components/Loader/Loader';
 
@@ -52,12 +51,10 @@ export default function HomePage({ userLoggedIn }: any) {
         const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
         const jsonDataBulk = await responseBulk.json();
         setRecipesList(jsonDataBulk);
-        setTextInput('');
       } catch (error) {
         setSearchError(error);
       }
     } else {
-      setTextInput('');
       setSearchTerm('');
       setSearchError(`no results for the search term : ${textInput}`);
     }
@@ -81,6 +78,48 @@ export default function HomePage({ userLoggedIn }: any) {
     setTextInput(e.target.value);
   }
 
+  const handleFilter = async (
+    nutritionFilters: string,
+    includeIngredientsFilter: string,
+    excludeIngredientsFilter: string
+  ) => {
+    console.log(
+      'filtered at HP: ',
+      nutritionFilters,
+      includeIngredientsFilter,
+      excludeIngredientsFilter
+    );
+
+    const url: URL = {
+      apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&${nutritionFilters}&${includeIngredientsFilter}&${excludeIngredientsFilter}`,
+      mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
+    };
+
+    try {
+      setSearchTerm(textInput);
+      setRecipesList([]);
+      const response = await fetch(getURL(url));
+      const jsonData = await response.json();
+      idsBulk = getIdsBulk(jsonData.results);
+    } catch (error) {
+      setSearchError(error);
+    }
+    if (idsBulk.length) {
+      try {
+        const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
+        const jsonDataBulk = await responseBulk.json();
+        setRecipesList(jsonDataBulk);
+        setTextInput('');
+      } catch (error) {
+        setSearchError(error);
+      }
+    } else {
+      setTextInput('');
+      setSearchTerm('');
+      setSearchError(`no results for the search term : ${textInput}`);
+    }
+  };
+
   return (
     <HomepageContext.Provider
       value={{
@@ -102,10 +141,10 @@ export default function HomePage({ userLoggedIn }: any) {
           </>
         ) : (
           <>
-            <RecipeFilter />
-
             {searchTerm && !recipesList.length && <Loader />}
-            {searchTerm && !!recipesList.length && <RecipeCardList />}
+            {searchTerm && !!recipesList.length && (
+              <RecipeCardList handleFilter={handleFilter} />
+            )}
             {searchError}
             {/* end test only code */}
           </>
