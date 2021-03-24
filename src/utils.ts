@@ -13,4 +13,9 @@ const getIdsBulk: (recipes: Recipe[]) => string = (recipes) => {
   return idsString;
 };
 
-export { getURL, getIdsBulk };
+const areIngredientsListsIncompatible: (s1: string, s2: string) => boolean = (
+  s1,
+  s2
+) => s1.split(',').some((el1) => s2.split(',').some((el2) => el1 === el2));
+
+export { getURL, getIdsBulk, areIngredientsListsIncompatible };

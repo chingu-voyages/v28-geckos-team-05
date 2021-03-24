@@ -47,15 +47,8 @@ export default function RecipeFilter(props: any) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(paramNames, paramValues);
 
-    // Check that no ingredient is both included and excluded
-
-    props.handleFilter(
-      'one',
-      `includeIngredients=${ingredientsToInclude}`,
-      `excludeIngredients=${ingredientsToExclude}`
-    );
+    props.handleFilter('one', ingredientsToInclude, ingredientsToExclude);
   };
 
   const handleChangeSelect = (

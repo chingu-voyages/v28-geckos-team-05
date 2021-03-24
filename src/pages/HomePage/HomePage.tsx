@@ -1,7 +1,11 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { URL } from '../../typescript/types';
-import { getURL, getIdsBulk } from '../../utils';
+import {
+  getURL,
+  getIdsBulk,
+  areIngredientsListsIncompatible,
+} from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import SplashContent from '../../components/SplashContent/SplashContent';
 import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
@@ -24,7 +28,7 @@ export default function HomePage({ userLoggedIn }: any) {
   };
   const bulkUrl: URL = {
     apiURL: `${baseUrl}/informationBulk?apiKey=${apiKey}`,
-    mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
+    mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/bulkinfo`,
   };
   const randomUrl: URL = {
     apiURL: `${baseUrl}/random?apiKey=${apiKey}&number=${limit}`,
@@ -47,8 +51,10 @@ export default function HomePage({ userLoggedIn }: any) {
       setSearchError(error);
     }
     if (idsBulk.length) {
+      bulkUrl.apiURL += `&ids=${idsBulk}`;
+
       try {
-        const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
+        const responseBulk = await fetch(getURL(bulkUrl));
         const jsonDataBulk = await responseBulk.json();
         setRecipesList(jsonDataBulk);
       } catch (error) {
@@ -80,43 +86,51 @@ export default function HomePage({ userLoggedIn }: any) {
 
   const handleFilter = async (
     nutritionFilters: string,
-    includeIngredientsFilter: string,
-    excludeIngredientsFilter: string
+    ingredientsToInclude: string,
+    ingredientsToExclude: string
   ) => {
-    console.log(
-      'filtered at HP: ',
-      nutritionFilters,
-      includeIngredientsFilter,
-      excludeIngredientsFilter
-    );
+    // Check that no ingredient is both included and excluded. If so, remove it from includeIngredients
+    if (
+      areIngredientsListsIncompatible(
+        ingredientsToInclude,
+        ingredientsToExclude
+      )
+    ) {
+      setSearchError(
+        'You have both included and excluded an ingredient from the search parameters!'
+      );
+    } else {
+      const url: URL = {
+        apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&${nutritionFilters}&includeIngredients=${ingredientsToInclude}&excludeIngredients=${ingredientsToExclude}`,
+        mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
+      };
 
-    const url: URL = {
-      apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&${nutritionFilters}&${includeIngredientsFilter}&${excludeIngredientsFilter}`,
-      mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
-    };
-
-    try {
-      setSearchTerm(textInput);
-      setRecipesList([]);
-      const response = await fetch(getURL(url));
-      const jsonData = await response.json();
-      idsBulk = getIdsBulk(jsonData.results);
-    } catch (error) {
-      setSearchError(error);
-    }
-    if (idsBulk.length) {
       try {
-        const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
-        const jsonDataBulk = await responseBulk.json();
-        setRecipesList(jsonDataBulk);
-        setTextInput('');
+        setSearchTerm(textInput);
+        setRecipesList([]);
+        const response = await fetch(getURL(url));
+        const jsonData = await response.json();
+        idsBulk = getIdsBulk(jsonData.results);
       } catch (error) {
         setSearchError(error);
       }
-    } else {
-      setTextInput('');
-      setSearchTerm('');
-      setSearchError(`no results for the search term : ${textInput}`);
+
+      if (idsBulk.length) {
+        try {
+          const responseBulk = await fetch(`${getURL(bulkUrl)}&ids=${idsBulk}`);
+          const jsonDataBulk = await responseBulk.json();
+          setRecipesList(jsonDataBulk);
+          setTextInput('');
+        } catch (error) {
+          setSearchError(error);
+        }
+      } else {
+        setTextInput('');
+        setSearchTerm('');
+        setSearchError(
+          `no results for the search term: ${textInput} (minCalories: , include ingredients: , exclude ingredients: )`
+        );
+      }
     }
   };
 
