@@ -5,7 +5,9 @@ import './RecipeFilter.scss';
 export default function RecipeFilter() {
   return (
     <div className="recipefilter">
-      <h2 className="recipefilter__header">Find recipes based on nutrients</h2>
+      <h2 className="recipefilter__header">
+        Filter recipes based on nutrients
+      </h2>
       <FiltersContainer />
     </div>
   );

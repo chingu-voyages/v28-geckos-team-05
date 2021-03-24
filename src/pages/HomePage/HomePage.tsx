@@ -16,11 +16,11 @@ export default function HomePage({ userLoggedIn }: any) {
   const [searchError, setSearchError] = useState('');
   const [searchEntered, setSearchEntered] = useState(false);
 
-  const limit = 1;
+  const limit = 12;
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
   const apiKey = process.env.REACT_APP_API_KEY;
   const searchUrl: URL = {
-    apiURL: `${baseUrl}/search?apiKey=${apiKey}&number=${limit}&query=${textInput}`,
+    apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&addRecipeNutrition=true`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
   };
   const bulkUrl: URL = {
@@ -102,12 +102,12 @@ export default function HomePage({ userLoggedIn }: any) {
           </>
         ) : (
           <>
+            <RecipeFilter />
+
             {searchTerm && !recipesList.length && <Loader />}
             {searchTerm && !!recipesList.length && <RecipeCardList />}
             {searchError}
             {/* end test only code */}
-
-            <RecipeFilter />
           </>
         )}
       </div>
