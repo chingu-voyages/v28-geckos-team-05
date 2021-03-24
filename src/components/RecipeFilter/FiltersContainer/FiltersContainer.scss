@@ -24,4 +24,19 @@
       display: flex;
     }
   }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__ingredients {
+    display: flex;
+    flex-direction: column;
+    margin-left: 2rem;
+  }
+
+  &__inputs {
+    display: flex;
+  }
 }

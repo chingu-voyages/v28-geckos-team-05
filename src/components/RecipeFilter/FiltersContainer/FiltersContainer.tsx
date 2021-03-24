@@ -2,8 +2,6 @@ import React, { useState } from 'react';
 import './FiltersContainer.scss';
 
 export default function FiltersContainer() {
-  const [paramNames, setParamNames] = useState(['']);
-  const [paramValues, setParamValues] = useState([0]);
   const [ingredientsToInclude, setIngredientsToInclude] = useState([]);
   const [ingredientsToExclude, setIngredientsToExclude] = useState([]);
   const paramLabels: string[] = [
@@ -43,6 +41,8 @@ export default function FiltersContainer() {
     'Sugar (g)',
     'Zinc (mg)',
   ];
+  const [paramNames, setParamNames] = useState([paramLabels[0]]);
+  const [paramValues, setParamValues] = useState([0]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -72,8 +72,8 @@ export default function FiltersContainer() {
 
   return (
     <div className="filters">
-      <div className="filters__container">
-        <form id="filtersForm" onSubmit={handleSubmit}>
+      <form id="filtersForm" onSubmit={handleSubmit} className="filters__form">
+        <div className="filters__inputs">
           <div className="filters__mask-button-container">
             <div className="filters__mask">
               <div className="filters__mask--close">
@@ -112,11 +112,23 @@ export default function FiltersContainer() {
             </div>
             <button type="button">Add</button>
           </div>
-          <button type="submit" className="button--primary">
-            Apply filters
-          </button>
-        </form>
-      </div>
+          <div className="filters__ingredients">
+            <input
+              className="filters__ingredients--input"
+              type="text"
+              placeholder="Ingredients to include"
+            />
+            <input
+              className="filters__ingredients--input"
+              type="text"
+              placeholder="Ingredients to exclude"
+            />
+          </div>
+        </div>
+        <button type="submit" className="button--primary">
+          Apply filters
+        </button>
+      </form>
     </div>
   );
 }
