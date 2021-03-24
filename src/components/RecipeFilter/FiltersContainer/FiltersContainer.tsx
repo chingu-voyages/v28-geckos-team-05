@@ -1,8 +1,12 @@
-import React, { FormEvent } from 'react';
+import React, { useState } from 'react';
 import './FiltersContainer.scss';
 
 export default function FiltersContainer() {
-  const paramNames: string[] = [
+  const [paramNames, setParamNames] = useState(['']);
+  const [paramValues, setParamValues] = useState([0]);
+  const [ingredientsToInclude, setIngredientsToInclude] = useState([]);
+  const [ingredientsToExclude, setIngredientsToExclude] = useState([]);
+  const paramLabels: string[] = [
     'Carbs (g)',
     'Protein (g)',
     'Calories',
@@ -42,8 +46,28 @@ export default function FiltersContainer() {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e);
-    console.dir(e.target);
+    console.log(paramNames, paramValues);
+  };
+
+  const handleChangeSelect = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    i: number
+  ) => {
+    const newParams = paramNames;
+
+    // eslint-disable-next-line
+    newParams[i] = e.target.value.split(' ')[0];
+    setParamNames(newParams);
+  };
+
+  const handleChangeInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => {
+    const newParams = paramValues;
+
+    newParams[i] = Number(e.target.value);
+    setParamValues(newParams);
   };
 
   return (
@@ -57,8 +81,13 @@ export default function FiltersContainer() {
               </div>
 
               <label htmlFor="mask1" className="filters__mask--inputs">
-                <select id="mask1" name="mask" className="filter__select">
-                  {paramNames.map((nutrient) => (
+                <select
+                  id="mask1"
+                  name="mask"
+                  className="filter__select"
+                  onChange={(e) => handleChangeSelect(e, 0)}
+                >
+                  {paramLabels.map((nutrient) => (
                     <React.Fragment key={nutrient}>
                       <option
                         id={`min${nutrient}`}
@@ -73,7 +102,12 @@ export default function FiltersContainer() {
                     </React.Fragment>
                   ))}
                 </select>
-                <input type="text" name="mask1" id="mask1" />
+                <input
+                  type="text"
+                  name="mask1"
+                  id="mask1"
+                  onChange={(e) => handleChangeInput(e, 0)}
+                />
               </label>
             </div>
             <button type="button">Add</button>
