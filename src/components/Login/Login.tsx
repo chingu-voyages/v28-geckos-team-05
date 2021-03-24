@@ -1,5 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { auth } from '../../firebase';
 import './Login.scss';
 
@@ -46,6 +47,12 @@ export default function Login() {
       <button className="login__button" type="submit" onClick={loginHandler}>
         Log in
       </button>
+      <div className="login__singup-text">
+        <span>Don't have account?</span>
+        <Link to="/signup">
+          <span className="login__singup-text__link">Sign In</span>
+        </Link>
+      </div>
     </form>
   );
 }
