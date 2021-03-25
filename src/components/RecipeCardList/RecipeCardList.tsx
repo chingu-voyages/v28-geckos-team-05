@@ -1,12 +1,10 @@
 import React, { useContext } from 'react';
 import { HomepageContext } from '../../context/GlobalContext';
-import RecipeFilter from '../RecipeFilter/RecipeFilter';
 import { Recipe } from '../../typescript/types';
 import RecipeCard from '../RecipeCard/RecipeCard';
 import './RecipeCardList.scss';
 
-// eslint-disable-next-line
-export default function RecipeCardList(props: any) {
+export default function RecipeCardList() {
   const { recipesList, searchTerm } = useContext(HomepageContext);
 
   return (
@@ -16,7 +14,6 @@ export default function RecipeCardList(props: any) {
         There are <strong>{recipesList.length}</strong> recipes that match your
         search parameters
       </p>
-      <RecipeFilter handleFilter={props.handleFilter} />
       <div className="items">
         {recipesList &&
           recipesList.map((recipe: Recipe) => (

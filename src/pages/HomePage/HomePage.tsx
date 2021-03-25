@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { URL } from '../../typescript/types';
-import { getURL, getIdsBulk, filterIncludedIngredients } from '../../utils';
+import { getURL, getIdsBulk } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import SplashContent from '../../components/SplashContent/SplashContent';
+import RecipeFilter from '../../components/RecipeFilter/RecipeFilter';
 import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
 import Loader from '../../components/Loader/Loader';
 
@@ -58,7 +59,7 @@ export default function HomePage({ userLoggedIn }: any) {
       }
     } else {
       setSearchTerm('');
-      setSearchError(`no results for the search term : ${textInput}`);
+      setSearchError(`no results for the search term: ${textInput}`);
     }
   };
 
@@ -87,10 +88,7 @@ export default function HomePage({ userLoggedIn }: any) {
   ) => {
     // Check that no ingredient is both included and excluded. If so, remove it from includedIngredients
     const url: URL = {
-      apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&${nutritionFilters}&includeIngredients=${filterIncludedIngredients(
-        ingredientsToInclude,
-        ingredientsToExclude
-      )}&excludeIngredients=${ingredientsToExclude}`,
+      apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&${nutritionFilters}&includeIngredients=${ingredientsToInclude}&excludeIngredients=${ingredientsToExclude}`,
       mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
     };
 
@@ -116,9 +114,7 @@ export default function HomePage({ userLoggedIn }: any) {
       }
     } else {
       setSearchTerm('');
-      setSearchError(
-        `no results for the search term: ${textInput} (minCalories: , include ingredients: , exclude ingredients: )`
-      );
+      setSearchError(`no results for the search term: ${textInput}`);
     }
   };
 
@@ -128,8 +124,6 @@ export default function HomePage({ userLoggedIn }: any) {
         searchTerm,
         searchEntered,
         recipesList,
-        ingredientsToInclude,
-        ingredientsToExclude,
         getSearchData,
         getRandomData,
         handleChange,
@@ -146,9 +140,8 @@ export default function HomePage({ userLoggedIn }: any) {
         ) : (
           <>
             {searchTerm && !recipesList.length && <Loader />}
-            {searchTerm && !!recipesList.length && (
-              <RecipeCardList handleFilter={handleFilter} />
-            )}
+            {searchTerm && <RecipeFilter handleFilter={handleFilter} />}
+            {searchTerm && !!recipesList.length && <RecipeCardList />}
             {searchError}
             {/* end test only code */}
           </>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { filterIncludedIngredients } from '../../utils';
 import './RecipeFilter.scss';
 
 // eslint-disable-next-line
@@ -47,6 +48,10 @@ export default function RecipeFilter(props: any) {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    setIngredientsToInclude(
+      filterIncludedIngredients(ingredientsToInclude, ingredientsToExclude)
+    );
 
     props.handleFilter('one', ingredientsToInclude, ingredientsToExclude);
   };
