@@ -16,7 +16,9 @@ interface RecipeFilterProps {
 }
 
 export default function RecipeFilter(props: RecipeFilterProps) {
-  const [filters, setFilters] = useState([{ name: 'minCarbs', value: 0 }]);
+  const [filters, setFilters] = useState([
+    { name: 'minCarbs', value: 0, key: uuidv4() },
+  ]);
   const [ingredientsToInclude, setIngredientsToInclude] = useState('');
   const [ingredientsToExclude, setIngredientsToExclude] = useState('');
 
@@ -40,15 +42,13 @@ export default function RecipeFilter(props: RecipeFilterProps) {
   };
 
   const handleAddNewMask = () => {
-    filters.push({ name: 'minCarbs', value: 0 });
+    filters.push({ name: 'minCarbs', value: 0, key: uuidv4() });
     setFilters([...filters]);
   };
 
   const handleRemoveMask = (i: number) => {
+    setFilters(filters.filter((el, idx) => i !== idx));
     console.log(i, filters);
-
-    filters.splice(i, 1);
-    setFilters([...filters]);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -79,8 +79,7 @@ export default function RecipeFilter(props: RecipeFilterProps) {
           <div className="filters__inputs">
             {filters.map((filter, i) => (
               <FilterCard
-                // eslint-disable-next-line
-                key={i}
+                key={filter.key}
                 index={i}
                 name={filter.name}
                 value={filter.value}

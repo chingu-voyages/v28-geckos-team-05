@@ -79,7 +79,6 @@ export default function FilterCard(props: FilterCardProps) {
             name={`mask${props.index}`}
             className="filters__mask--select"
             onChange={(e) => props.handleChangeSelect(e, props.index)}
-            // value={props.name}
           >
             {paramLabels.map((nutrient) => (
               <React.Fragment key={nutrient}>
