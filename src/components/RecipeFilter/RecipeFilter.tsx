@@ -5,8 +5,39 @@ import './RecipeFilter.scss';
 
 // eslint-disable-next-line
 export default function RecipeFilter(props: any) {
+  const [paramNames, setParamNames] = useState(['minCarbs']);
+  const [paramValues, setParamValues] = useState([0]);
   const [ingredientsToInclude, setIngredientsToInclude] = useState('');
   const [ingredientsToExclude, setIngredientsToExclude] = useState('');
+
+  const handleChangeSelect = (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    i: number
+  ) => {
+    const newParams = paramNames;
+
+    // eslint-disable-next-line
+    newParams[i] = e.target.value.split(' ')[0];
+    setParamNames(newParams);
+  };
+
+  const handleChangeInput = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => {
+    const newParams = paramValues;
+
+    newParams[i] = Number(e.target.value);
+    setParamValues(newParams);
+  };
+
+  const handleAddNewMask = () => {
+    console.log('add new mask');
+  };
+
+  const handleRemoveMask = (i: number) => {
+    console.log('remove mask');
+  };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +65,11 @@ export default function RecipeFilter(props: any) {
           className="filters__form"
         >
           <div className="filters__inputs">
-            <FilterCard />
+            <FilterCard
+              handleChangeSelect={handleChangeSelect}
+              handleChangeInput={handleChangeInput}
+              handleRemoveMask={handleRemoveMask}
+            />
 
             <div className="filters__ingredients">
               <input
@@ -57,9 +92,18 @@ export default function RecipeFilter(props: any) {
               />
             </div>
           </div>
-          <button type="submit" className="button--primary">
-            Apply filters
-          </button>
+          <div className="filters__buttons">
+            <button
+              type="button"
+              className="button--secondary"
+              onClick={props.handleAddNewMask}
+            >
+              Add another filter
+            </button>
+            <button type="submit" className="button--primary">
+              Apply filters
+            </button>
+          </div>
         </form>
       </div>
     </div>

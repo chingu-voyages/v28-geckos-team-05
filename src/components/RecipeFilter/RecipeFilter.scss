@@ -6,6 +6,7 @@
   width: fit-content;
   margin: auto;
   padding: 1rem;
+  padding-bottom: 0;
   border-radius: 0.5rem;
 
   &__mask {
@@ -38,6 +39,11 @@
 
   &__inputs {
     display: flex;
+  }
+
+  &__buttons {
+    display: flex;
+    justify-content: center;
   }
 }
 

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './FilterCard.scss';
 
-export default function FilterCard() {
+// eslint-disable-next-line
+export default function FilterCard(props: any) {
   const paramLabels: string[] = [
     'Carbs (g)',
     'Protein (g)',
@@ -39,35 +40,14 @@ export default function FilterCard() {
     'Sugar (g)',
     'Zinc (mg)',
   ];
-  const [paramNames, setParamNames] = useState(['minCarbs']);
-  const [paramValues, setParamValues] = useState([0]);
-
-  const handleChangeSelect = (
-    e: React.ChangeEvent<HTMLSelectElement>,
-    i: number
-  ) => {
-    const newParams = paramNames;
-
-    // eslint-disable-next-line
-    newParams[i] = e.target.value.split(' ')[0];
-    setParamNames(newParams);
-  };
-
-  const handleChangeInput = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    i: number
-  ) => {
-    const newParams = paramValues;
-
-    newParams[i] = Number(e.target.value);
-    setParamValues(newParams);
-  };
 
   return (
     <div className="filters__mask-button-container">
       <div className="filters__mask">
         <div className="filters__mask--close">
-          <button type="button">X</button>
+          <button type="button" onClick={props.handleRemoveMask}>
+            X
+          </button>
         </div>
 
         <label htmlFor="mask1" className="filters__mask--inputs">
@@ -75,7 +55,7 @@ export default function FilterCard() {
             id="mask1"
             name="mask"
             className="filter__select"
-            onChange={(e) => handleChangeSelect(e, 0)}
+            onChange={(e) => props.handleChangeSelect(e, 0)}
           >
             {paramLabels.map((nutrient) => (
               <React.Fragment key={nutrient}>
@@ -96,13 +76,12 @@ export default function FilterCard() {
             type="text"
             name="mask1"
             id="mask1"
-            onChange={(e) => handleChangeInput(e, 0)}
+            onChange={(e) => props.handleChangeInput(e, 0)}
             pattern="[0-9]{1,5}"
             title="Number up to five digits"
           />
         </label>
       </div>
-      <button type="button">Add</button>
     </div>
   );
 }
