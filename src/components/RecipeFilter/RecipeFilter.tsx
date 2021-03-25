@@ -122,6 +122,8 @@ export default function RecipeFilter(props: any) {
                     name="mask1"
                     id="mask1"
                     onChange={(e) => handleChangeInput(e, 0)}
+                    pattern="[0-9]{1,5}"
+                    title="Number up to five digits"
                   />
                 </label>
               </div>
@@ -134,6 +136,8 @@ export default function RecipeFilter(props: any) {
                 placeholder="Ingredients to include"
                 value={ingredientsToInclude}
                 onChange={(e) => setIngredientsToInclude(e.target.value)}
+                pattern="[\w\s]+(,[\w\s]+)*"
+                title="Comma-separated list of ingredients (no trailing comma)"
               />
               <input
                 className="filters__ingredients--input"
@@ -141,6 +145,8 @@ export default function RecipeFilter(props: any) {
                 placeholder="Ingredients to exclude"
                 value={ingredientsToExclude}
                 onChange={(e) => setIngredientsToExclude(e.target.value)}
+                pattern="[\w\s]+(,[\w\s]+)*"
+                title="Comma-separated list of ingredients (no trailing comma)"
               />
             </div>
           </div>
