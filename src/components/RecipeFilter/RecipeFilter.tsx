@@ -5,6 +5,7 @@ import {
   getNutrientParamsString,
 } from '../../utils';
 import FilterCard from '../FilterCard/FilterCard';
+import Tag from '../Tag/Tag';
 import './RecipeFilter.scss';
 
 interface RecipeFilterProps {
@@ -21,6 +22,9 @@ export default function RecipeFilter(props: RecipeFilterProps) {
   ]);
   const [ingredientsToInclude, setIngredientsToInclude] = useState('');
   const [ingredientsToExclude, setIngredientsToExclude] = useState('');
+  const [includedIngredientsTags, setIncludedIngredientsTags] = useState<
+    string[]
+  >([]);
 
   const handleChangeSelect = (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -64,6 +68,28 @@ export default function RecipeFilter(props: RecipeFilterProps) {
     );
   };
 
+  const handleChangeIncludedIngredients = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setIngredientsToInclude(e.target.value);
+    if (e.target.value[e.target.value.length - 1] === ',') {
+      const newIngredient = e.target.value.slice(0, -1);
+      setIngredientsToInclude('');
+
+      if (!includedIngredientsTags.includes(newIngredient)) {
+        const newIngredients = [...includedIngredientsTags];
+        newIngredients.push(newIngredient);
+        setIncludedIngredientsTags(newIngredients);
+      }
+    }
+  };
+
+  const handleCloseTag: (key: string) => void = (key) => {
+    setIncludedIngredientsTags(
+      includedIngredientsTags.filter((ingredient) => ingredient !== key)
+    );
+  };
+
   return (
     <div className="recipefilter">
       <h3 className="recipefilter__header">
@@ -92,14 +118,28 @@ export default function RecipeFilter(props: RecipeFilterProps) {
               <h5 className="filters__ingredients--title">
                 Ingredients filter
               </h5>
+              {!!includedIngredientsTags.length && (
+                <>
+                  <h6>Include: </h6>
+                  <div className="filters__ingredients--taglist">
+                    {includedIngredientsTags.map((ingredient) => (
+                      <Tag
+                        key={ingredient}
+                        text={ingredient}
+                        handleClick={handleCloseTag}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
               <input
                 className="filters__ingredients--input"
                 type="text"
                 placeholder="Ingredients to include"
                 value={ingredientsToInclude}
-                onChange={(e) => setIngredientsToInclude(e.target.value)}
+                onChange={handleChangeIncludedIngredients}
                 pattern="[\w\s]+(,[\w\s]+)*"
-                title="Comma-separated list of ingredients (no trailing comma)"
+                title="Comma-separated list of ingredients"
               />
               <input
                 className="filters__ingredients--input"
@@ -108,7 +148,7 @@ export default function RecipeFilter(props: RecipeFilterProps) {
                 value={ingredientsToExclude}
                 onChange={(e) => setIngredientsToExclude(e.target.value)}
                 pattern="[\w\s]+(,[\w\s]+)*"
-                title="Comma-separated list of ingredients (no trailing comma)"
+                title="Comma-separated list of ingredients"
               />
             </div>
           </div>

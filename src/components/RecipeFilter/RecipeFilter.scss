@@ -14,6 +14,8 @@
   &__mask {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
+
     &--close {
       text-align: right;
     }
@@ -40,6 +42,7 @@
     padding: 0.5rem;
     margin: 0.2rem;
     border-radius: 0.5rem;
+    max-width: 250px;
 
     &--title {
       text-align: center;
@@ -52,7 +55,12 @@
       padding: 2px;
       padding-left: 7px;
       margin: 0.15rem;
-      width: 10rem;
+      width: 97%;
+    }
+
+    &--taglist {
+      display: flex;
+      flex-wrap: wrap;
     }
   }
 

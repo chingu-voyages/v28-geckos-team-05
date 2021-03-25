@@ -1,0 +1,27 @@
+@import '../../styles/variables';
+
+.tag {
+  display: flex;
+  max-width: 100%;
+  background-color: $color-primary;
+  width: fit-content;
+  margin: 0.1em;
+  border-radius: 5px;
+
+  &__button {
+    background-color: $color-secondary;
+    display: inline-block;
+    border-radius: 5px;
+    cursor: pointer;
+    border: 0;
+    text-decoration: none;
+    padding: 0 0.1em;
+  }
+
+  &__text {
+    color: $color-page-bg;
+    display: inline-block;
+    font-size: 0.7em;
+    padding: 0.2em;
+  }
+}
