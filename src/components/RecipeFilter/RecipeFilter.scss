@@ -4,10 +4,12 @@
   background-color: $color-app-bg;
   display: flex;
   width: fit-content;
-  margin: auto;
   padding: 1rem;
   padding-bottom: 0;
   border-radius: 0.5rem;
+  margin: auto;
+  max-width: 95%;
+  justify-content: center;
 
   &__mask {
     display: flex;
@@ -37,7 +39,6 @@
     background-color: $color-card-bg;
     padding: 0.5rem;
     margin: 0.2rem;
-    margin-left: 2rem;
     border-radius: 0.5rem;
 
     &--title {
@@ -57,6 +58,8 @@
 
   &__inputs {
     display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 0.4rem;
   }
 
   &__buttons {
@@ -70,5 +73,7 @@
     text-align: center;
     margin-top: 1rem;
     margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: center;
   }
 }

@@ -61,7 +61,6 @@ export default function FilterCard(props: any) {
           <select
             id={`mask${props.index}`}
             name={`mask${props.index}`}
-            defaultValue={props.name}
             className="filters__mask--select"
             onChange={(e) => props.handleChangeSelect(e, props.index)}
           >

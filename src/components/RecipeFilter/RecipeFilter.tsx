@@ -72,7 +72,8 @@ export default function RecipeFilter(props: any) {
           <div className="filters__inputs">
             {filters.map((filter, i) => (
               <FilterCard
-                key={uuidv4()}
+                // eslint-disable-next-line
+                key={i}
                 index={i}
                 name={filter.name}
                 value={filter.value}
