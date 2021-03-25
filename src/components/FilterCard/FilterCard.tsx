@@ -5,7 +5,6 @@ import './FilterCard.scss';
 
 interface FilterCardProps {
   index: number;
-  name: string;
   value: number;
   handleChangeSelect: (
     e: React.ChangeEvent<HTMLSelectElement>,
@@ -56,8 +55,6 @@ export default function FilterCard(props: FilterCardProps) {
     'Sugar (g)',
     'Zinc (mg)',
   ];
-
-  console.log(props.name);
 
   return (
     <div className="filters__container">

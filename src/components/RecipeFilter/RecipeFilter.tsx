@@ -48,7 +48,6 @@ export default function RecipeFilter(props: RecipeFilterProps) {
 
   const handleRemoveMask = (i: number) => {
     setFilters(filters.filter((el, idx) => i !== idx));
-    console.log(i, filters);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -81,7 +80,6 @@ export default function RecipeFilter(props: RecipeFilterProps) {
               <FilterCard
                 key={filter.key}
                 index={i}
-                name={filter.name}
                 value={filter.value}
                 handleChangeSelect={handleChangeSelect}
                 handleChangeInput={handleChangeInput}
