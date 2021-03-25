@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { v4 as uuidv4 } from 'uuid';
 import {
   filterIncludedIngredients,
   getNutrientParamsString,
@@ -37,6 +38,8 @@ export default function RecipeFilter(props: any) {
   };
 
   const handleRemoveMask = (i: number) => {
+    console.log(i, filters);
+
     filters.splice(i, 1);
     setFilters([...filters]);
   };
@@ -69,8 +72,7 @@ export default function RecipeFilter(props: any) {
           <div className="filters__inputs">
             {filters.map((filter, i) => (
               <FilterCard
-                // eslint-disable-next-line
-                key={i}
+                key={uuidv4()}
                 index={i}
                 name={filter.name}
                 value={filter.value}

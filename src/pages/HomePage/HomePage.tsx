@@ -92,6 +92,8 @@ export default function HomePage({ userLoggedIn }: any) {
       mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
     };
 
+    console.log(nutritionFilters);
+
     try {
       setSearchTerm(textInput);
       setRecipesList([]);

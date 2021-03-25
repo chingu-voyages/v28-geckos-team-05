@@ -61,6 +61,7 @@ export default function FilterCard(props: any) {
           <select
             id={`mask${props.index}`}
             name={`mask${props.index}`}
+            defaultValue={props.name}
             className="filters__mask--select"
             onChange={(e) => props.handleChangeSelect(e, props.index)}
           >
@@ -88,6 +89,7 @@ export default function FilterCard(props: any) {
             placeholder="Enter amount"
             pattern="[0-9]{1,5}"
             title="Number up to five digits"
+            defaultValue={props.value}
             required
           />
         </label>
