@@ -1,4 +1,6 @@
 import React from 'react';
+import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './FilterCard.scss';
 
 // eslint-disable-next-line
@@ -42,14 +44,16 @@ export default function FilterCard(props: any) {
   ];
 
   return (
-    <div className="filters__mask-button-container">
+    <div className="filters__container">
       <div className="filters__mask">
         <div className="filters__mask--close">
           <button
             type="button"
             onClick={() => props.handleRemoveMask(props.index)}
+            title="Remove this filter"
+            className="filters__mask--close-button"
           >
-            X
+            <FontAwesomeIcon icon={faTrashAlt} />
           </button>
         </div>
 
@@ -57,7 +61,7 @@ export default function FilterCard(props: any) {
           <select
             id={`mask${props.index}`}
             name={`mask${props.index}`}
-            className="filter__select"
+            className="filters__mask--select"
             onChange={(e) => props.handleChangeSelect(e, props.index)}
           >
             {paramLabels.map((nutrient) => (
@@ -76,10 +80,12 @@ export default function FilterCard(props: any) {
             ))}
           </select>
           <input
+            className="filters__ingredients--input"
             type="text"
             name={`mask${props.index}`}
             id={`mask${props.index}`}
             onChange={(e) => props.handleChangeInput(e, props.index)}
+            placeholder="Enter amount"
             pattern="[0-9]{1,5}"
             title="Number up to five digits"
             required

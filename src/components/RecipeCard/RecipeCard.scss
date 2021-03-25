@@ -82,7 +82,7 @@
       }
     }
   }
-  
+
   &__image {
     width: 100%;
   }
@@ -95,7 +95,7 @@
     display: flex;
     align-items: center;
     justify-content: flex-start;
-    background-color: lighten(#dcc1ab, 6%);
+    background-color: lighten($color-card-bg, 6%);
     padding: 0.3rem 1rem;
     svg {
       color: #47525e;

@@ -81,6 +81,9 @@ export default function RecipeFilter(props: any) {
             ))}
 
             <div className="filters__ingredients">
+              <h5 className="filters__ingredients--title">
+                Ingredients filter
+              </h5>
               <input
                 className="filters__ingredients--input"
                 type="text"
@@ -104,12 +107,12 @@ export default function RecipeFilter(props: any) {
           <div className="filters__buttons">
             <button
               type="button"
-              className="button--secondary"
+              className="button--tertiary"
               onClick={handleAddNewMask}
             >
               Add another filter
             </button>
-            <button type="submit" className="button--primary">
+            <button type="submit" className="button--secondary">
               Apply filters
             </button>
           </div>
