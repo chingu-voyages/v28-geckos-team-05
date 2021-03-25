@@ -1,0 +1,20 @@
+@import '../../styles/variables';
+
+.filters {
+  &__mask {
+    display: flex;
+    flex-direction: column;
+    &--close {
+      text-align: right;
+    }
+
+    &--inputs {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-button-container {
+      display: flex;
+    }
+  }
+}
