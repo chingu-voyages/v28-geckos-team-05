@@ -3,8 +3,22 @@ import { faTrashAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './FilterCard.scss';
 
-// eslint-disable-next-line
-export default function FilterCard(props: any) {
+interface FilterCardProps {
+  index: number;
+  name: string;
+  value: number;
+  handleChangeSelect: (
+    e: React.ChangeEvent<HTMLSelectElement>,
+    i: number
+  ) => void;
+  handleChangeInput: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    i: number
+  ) => void;
+  handleRemoveMask: (i: number) => void;
+}
+
+export default function FilterCard(props: FilterCardProps) {
   const paramLabels: string[] = [
     'Carbs (g)',
     'Protein (g)',
@@ -43,6 +57,8 @@ export default function FilterCard(props: any) {
     'Zinc (mg)',
   ];
 
+  console.log(props.name);
+
   return (
     <div className="filters__container">
       <div className="filters__mask">
@@ -63,6 +79,7 @@ export default function FilterCard(props: any) {
             name={`mask${props.index}`}
             className="filters__mask--select"
             onChange={(e) => props.handleChangeSelect(e, props.index)}
+            // value={props.name}
           >
             {paramLabels.map((nutrient) => (
               <React.Fragment key={nutrient}>

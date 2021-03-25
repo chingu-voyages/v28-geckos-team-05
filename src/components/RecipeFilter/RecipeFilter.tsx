@@ -7,8 +7,15 @@ import {
 import FilterCard from '../FilterCard/FilterCard';
 import './RecipeFilter.scss';
 
-// eslint-disable-next-line
-export default function RecipeFilter(props: any) {
+interface RecipeFilterProps {
+  handleFilter: (
+    nutritionFilters: string,
+    ingredientsToInclude: string,
+    ingredientsToExclude: string
+  ) => Promise<void>;
+}
+
+export default function RecipeFilter(props: RecipeFilterProps) {
   const [filters, setFilters] = useState([{ name: 'minCarbs', value: 0 }]);
   const [ingredientsToInclude, setIngredientsToInclude] = useState('');
   const [ingredientsToExclude, setIngredientsToExclude] = useState('');
