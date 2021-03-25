@@ -1,9 +1,6 @@
 import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import {
-  filterIncludedIngredients,
-  getNutrientParamsString,
-} from '../../utils';
+import { getNutrientParamsString } from '../../utils';
 import FilterCard from '../FilterCard/FilterCard';
 import Tag from '../Tag/Tag';
 import './RecipeFilter.scss';
@@ -23,6 +20,9 @@ export default function RecipeFilter(props: RecipeFilterProps) {
   const [ingredientsToInclude, setIngredientsToInclude] = useState('');
   const [ingredientsToExclude, setIngredientsToExclude] = useState('');
   const [includedIngredientsTags, setIncludedIngredientsTags] = useState<
+    string[]
+  >([]);
+  const [excludedIngredientsTags, setExcludedIngredientsTags] = useState<
     string[]
   >([]);
 
@@ -57,37 +57,63 @@ export default function RecipeFilter(props: RecipeFilterProps) {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setIngredientsToInclude(
-      filterIncludedIngredients(ingredientsToInclude, ingredientsToExclude)
-    );
-
     props.handleFilter(
       getNutrientParamsString(filters),
-      filterIncludedIngredients(ingredientsToInclude, ingredientsToExclude),
+      ingredientsToInclude,
       ingredientsToExclude
     );
   };
 
-  const handleChangeIncludedIngredients = (
-    e: React.ChangeEvent<HTMLInputElement>
+  const handleChangeIngredients = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    changeInIncluded: boolean
   ) => {
-    setIngredientsToInclude(e.target.value);
-    if (e.target.value[e.target.value.length - 1] === ',') {
-      const newIngredient = e.target.value.slice(0, -1);
-      setIngredientsToInclude('');
+    if (changeInIncluded) {
+      setIngredientsToInclude(e.target.value);
 
-      if (!includedIngredientsTags.includes(newIngredient)) {
-        const newIngredients = [...includedIngredientsTags];
-        newIngredients.push(newIngredient);
-        setIncludedIngredientsTags(newIngredients);
+      if (e.target.value[e.target.value.length - 1] === ',') {
+        const newIngredient = e.target.value.slice(0, -1);
+        setIngredientsToInclude('');
+
+        if (
+          !includedIngredientsTags.includes(newIngredient) &&
+          !excludedIngredientsTags.includes(newIngredient)
+        ) {
+          const newIngredients = [...includedIngredientsTags];
+          newIngredients.push(newIngredient);
+          setIncludedIngredientsTags(newIngredients);
+        }
+      }
+    } else {
+      setIngredientsToExclude(e.target.value);
+
+      if (e.target.value[e.target.value.length - 1] === ',') {
+        const newIngredient = e.target.value.slice(0, -1);
+        setIngredientsToExclude('');
+
+        if (
+          !includedIngredientsTags.includes(newIngredient) &&
+          !excludedIngredientsTags.includes(newIngredient)
+        ) {
+          const newIngredients = [...excludedIngredientsTags];
+          newIngredients.push(newIngredient);
+          setExcludedIngredientsTags(newIngredients);
+        }
       }
     }
   };
 
-  const handleCloseTag: (key: string) => void = (key) => {
-    setIncludedIngredientsTags(
-      includedIngredientsTags.filter((ingredient) => ingredient !== key)
-    );
+  const handleCloseTag: (key: string, deleteFromIncluded: boolean) => void = (
+    key,
+    deleteFromIncluded
+  ) => {
+    deleteFromIncluded
+      ? setIncludedIngredientsTags(
+          includedIngredientsTags.filter((ingredient) => ingredient !== key)
+        )
+      : setExcludedIngredientsTags(
+          excludedIngredientsTags.filter((ingredient) => ingredient !== key)
+        );
   };
 
   return (
@@ -120,12 +146,13 @@ export default function RecipeFilter(props: RecipeFilterProps) {
               </h5>
               {!!includedIngredientsTags.length && (
                 <>
-                  <h6>Include: </h6>
+                  <h6>Include:</h6>
                   <div className="filters__ingredients--taglist">
                     {includedIngredientsTags.map((ingredient) => (
                       <Tag
                         key={ingredient}
                         text={ingredient}
+                        isIncludedTag={true}
                         handleClick={handleCloseTag}
                       />
                     ))}
@@ -135,18 +162,34 @@ export default function RecipeFilter(props: RecipeFilterProps) {
               <input
                 className="filters__ingredients--input"
                 type="text"
-                placeholder="Ingredients to include"
+                placeholder="Enter ingredients to include"
                 value={ingredientsToInclude}
-                onChange={handleChangeIncludedIngredients}
+                onChange={(e) => handleChangeIngredients(e, true)}
                 pattern="[\w\s]+(,[\w\s]+)*"
                 title="Comma-separated list of ingredients"
               />
+
+              {!!excludedIngredientsTags.length && (
+                <>
+                  <h6>Exclude:</h6>
+                  <div className="filters__ingredients--taglist">
+                    {excludedIngredientsTags.map((ingredient) => (
+                      <Tag
+                        key={ingredient}
+                        text={ingredient}
+                        isIncludedTag={false}
+                        handleClick={handleCloseTag}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
               <input
                 className="filters__ingredients--input"
                 type="text"
-                placeholder="Ingredients to exclude"
+                placeholder="Enter ingredients to exclude"
                 value={ingredientsToExclude}
-                onChange={(e) => setIngredientsToExclude(e.target.value)}
+                onChange={(e) => handleChangeIngredients(e, false)}
                 pattern="[\w\s]+(,[\w\s]+)*"
                 title="Comma-separated list of ingredients"
               />
