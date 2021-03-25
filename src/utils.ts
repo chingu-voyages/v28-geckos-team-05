@@ -22,4 +22,14 @@ const filterIncludedIngredients: (s1: string, s2: string) => string = (
     .filter((el1) => !s2.split(',').some((el2) => el1 === el2))
     .join(',');
 
-export { getURL, getIdsBulk, filterIncludedIngredients };
+const getNutrientParamsString: (
+  filters: { name: string; value: number }[]
+) => string = (filters) =>
+  filters.map((filter) => `${filter.name}=${filter.value}`).join('&');
+
+export {
+  getURL,
+  getIdsBulk,
+  filterIncludedIngredients,
+  getNutrientParamsString,
+};

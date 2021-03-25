@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { filterIncludedIngredients } from '../../utils';
+import {
+  filterIncludedIngredients,
+  getNutrientParamsString,
+} from '../../utils';
 import FilterCard from '../FilterCard/FilterCard';
 import './RecipeFilter.scss';
 
@@ -34,7 +37,6 @@ export default function RecipeFilter(props: any) {
   };
 
   const handleRemoveMask = (i: number) => {
-    console.log('remove mask');
     filters.splice(i, 1);
     setFilters([...filters]);
   };
@@ -47,7 +49,7 @@ export default function RecipeFilter(props: any) {
     );
 
     props.handleFilter(
-      'nutrientParams',
+      getNutrientParamsString(filters),
       filterIncludedIngredients(ingredientsToInclude, ingredientsToExclude),
       ingredientsToExclude
     );
@@ -70,6 +72,8 @@ export default function RecipeFilter(props: any) {
                 // eslint-disable-next-line
                 key={i}
                 index={i}
+                name={filter.name}
+                value={filter.value}
                 handleChangeSelect={handleChangeSelect}
                 handleChangeInput={handleChangeInput}
                 handleRemoveMask={handleRemoveMask}

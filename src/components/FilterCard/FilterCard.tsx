@@ -53,12 +53,12 @@ export default function FilterCard(props: any) {
           </button>
         </div>
 
-        <label htmlFor="mask1" className="filters__mask--inputs">
+        <label htmlFor={`mask${props.index}`} className="filters__mask--inputs">
           <select
-            id="mask1"
-            name="mask"
+            id={`mask${props.index}`}
+            name={`mask${props.index}`}
             className="filter__select"
-            onChange={(e) => props.handleChangeSelect(e, 0)}
+            onChange={(e) => props.handleChangeSelect(e, props.index)}
           >
             {paramLabels.map((nutrient) => (
               <React.Fragment key={nutrient}>
@@ -77,11 +77,12 @@ export default function FilterCard(props: any) {
           </select>
           <input
             type="text"
-            name="mask1"
-            id="mask1"
-            onChange={(e) => props.handleChangeInput(e, 0)}
+            name={`mask${props.index}`}
+            id={`mask${props.index}`}
+            onChange={(e) => props.handleChangeInput(e, props.index)}
             pattern="[0-9]{1,5}"
             title="Number up to five digits"
+            required
           />
         </label>
       </div>
