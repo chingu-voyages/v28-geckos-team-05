@@ -59,8 +59,8 @@ export default function RecipeFilter(props: RecipeFilterProps) {
 
     props.handleFilter(
       getNutrientParamsString(filters),
-      ingredientsToInclude,
-      ingredientsToExclude
+      includedIngredientsTags.join(','),
+      excludedIngredientsTags.join(',')
     );
   };
 
