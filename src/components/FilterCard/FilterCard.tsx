@@ -6,6 +6,11 @@ import './FilterCard.scss';
 interface FilterCardProps {
   index: number;
   value: number;
+  filters: {
+    name: string;
+    value: number;
+    key: string;
+  }[];
   handleChangeSelect: (
     e: React.ChangeEvent<HTMLSelectElement>,
     i: number
@@ -56,6 +61,10 @@ export default function FilterCard(props: FilterCardProps) {
     'Zinc (mg)',
   ];
 
+  const filters = [...props.filters];
+  filters.splice(props.index, 1);
+  const filterNames = filters.map((filter) => filter.name);
+
   return (
     <div className="filters__container">
       <div className="filters__mask">
@@ -83,11 +92,17 @@ export default function FilterCard(props: FilterCardProps) {
                   id={`min${nutrient}`}
                   key={`min${nutrient}`}
                   value={`min${nutrient}`}
+                  disabled={filterNames.includes(
+                    `min${nutrient}`.split(' ')[0]
+                  )}
                 >{`min ${nutrient}`}</option>
                 <option
                   id={`max${nutrient}`}
                   key={`max${nutrient}`}
                   value={`max${nutrient}`}
+                  disabled={filterNames.includes(
+                    `max${nutrient}`.split(' ')[0]
+                  )}
                 >{`max ${nutrient}`}</option>
               </React.Fragment>
             ))}

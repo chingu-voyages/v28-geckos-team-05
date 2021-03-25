@@ -81,6 +81,7 @@ export default function RecipeFilter(props: RecipeFilterProps) {
                 key={filter.key}
                 index={i}
                 value={filter.value}
+                filters={filters}
                 handleChangeSelect={handleChangeSelect}
                 handleChangeInput={handleChangeInput}
                 handleRemoveMask={handleRemoveMask}
