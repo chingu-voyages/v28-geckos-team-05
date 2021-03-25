@@ -45,7 +45,10 @@ export default function FilterCard(props: any) {
     <div className="filters__mask-button-container">
       <div className="filters__mask">
         <div className="filters__mask--close">
-          <button type="button" onClick={props.handleRemoveMask}>
+          <button
+            type="button"
+            onClick={() => props.handleRemoveMask(props.index)}
+          >
             X
           </button>
         </div>
@@ -63,12 +66,12 @@ export default function FilterCard(props: any) {
                   id={`min${nutrient}`}
                   key={`min${nutrient}`}
                   value={`min${nutrient}`}
-                >{`mininum ${nutrient}`}</option>
+                >{`min ${nutrient}`}</option>
                 <option
                   id={`max${nutrient}`}
                   key={`max${nutrient}`}
                   value={`max${nutrient}`}
-                >{`maximum ${nutrient}`}</option>
+                >{`max ${nutrient}`}</option>
               </React.Fragment>
             ))}
           </select>

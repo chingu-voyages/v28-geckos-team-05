@@ -5,8 +5,7 @@ import './RecipeFilter.scss';
 
 // eslint-disable-next-line
 export default function RecipeFilter(props: any) {
-  const [paramNames, setParamNames] = useState(['minCarbs']);
-  const [paramValues, setParamValues] = useState([0]);
+  const [filters, setFilters] = useState([{ name: 'minCarbs', value: 0 }]);
   const [ingredientsToInclude, setIngredientsToInclude] = useState('');
   const [ingredientsToExclude, setIngredientsToExclude] = useState('');
 
@@ -14,29 +13,30 @@ export default function RecipeFilter(props: any) {
     e: React.ChangeEvent<HTMLSelectElement>,
     i: number
   ) => {
-    const newParams = paramNames;
-
+    const newFilters = [...filters];
     // eslint-disable-next-line
-    newParams[i] = e.target.value.split(' ')[0];
-    setParamNames(newParams);
+    newFilters[i].name = e.target.value.split(' ')[0];
+    setFilters(newFilters);
   };
 
   const handleChangeInput = (
     e: React.ChangeEvent<HTMLInputElement>,
     i: number
   ) => {
-    const newParams = paramValues;
-
-    newParams[i] = Number(e.target.value);
-    setParamValues(newParams);
+    const newFilters = [...filters];
+    newFilters[i].value = Number(e.target.value);
+    setFilters(newFilters);
   };
 
   const handleAddNewMask = () => {
-    console.log('add new mask');
+    filters.push({ name: 'minCarbs', value: 0 });
+    setFilters([...filters]);
   };
 
   const handleRemoveMask = (i: number) => {
     console.log('remove mask');
+    filters.splice(i, 1);
+    setFilters([...filters]);
   };
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -65,11 +65,16 @@ export default function RecipeFilter(props: any) {
           className="filters__form"
         >
           <div className="filters__inputs">
-            <FilterCard
-              handleChangeSelect={handleChangeSelect}
-              handleChangeInput={handleChangeInput}
-              handleRemoveMask={handleRemoveMask}
-            />
+            {filters.map((filter, i) => (
+              <FilterCard
+                // eslint-disable-next-line
+                key={i}
+                index={i}
+                handleChangeSelect={handleChangeSelect}
+                handleChangeInput={handleChangeInput}
+                handleRemoveMask={handleRemoveMask}
+              />
+            ))}
 
             <div className="filters__ingredients">
               <input
@@ -96,7 +101,7 @@ export default function RecipeFilter(props: any) {
             <button
               type="button"
               className="button--secondary"
-              onClick={props.handleAddNewMask}
+              onClick={handleAddNewMask}
             >
               Add another filter
             </button>
