@@ -54,8 +54,40 @@ export default function RecipeFilter(props: RecipeFilterProps) {
     setFilters(filters.filter((el, idx) => i !== idx));
   };
 
+  const isIngredientValid: (
+    ingredient: string,
+    filterArray1: string[],
+    filterArray2: string[]
+  ) => boolean = (ingredient, filterArray1, filterArray2) =>
+    !!ingredient &&
+    !filterArray1.includes(ingredient) &&
+    !filterArray2.includes(ingredient);
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (
+      isIngredientValid(
+        ingredientsToInclude,
+        includedIngredientsTags,
+        excludedIngredientsTags
+      )
+    ) {
+      includedIngredientsTags.push(ingredientsToInclude);
+    }
+
+    if (
+      isIngredientValid(
+        ingredientsToExclude,
+        includedIngredientsTags,
+        excludedIngredientsTags
+      )
+    ) {
+      excludedIngredientsTags.push(ingredientsToExclude);
+    }
+
+    setIngredientsToInclude('');
+    setIngredientsToExclude('');
 
     props.handleFilter(
       getNutrientParamsString(filters),
@@ -76,12 +108,16 @@ export default function RecipeFilter(props: RecipeFilterProps) {
         setIngredientsToInclude('');
 
         if (
-          !includedIngredientsTags.includes(newIngredient) &&
-          !excludedIngredientsTags.includes(newIngredient)
+          isIngredientValid(
+            newIngredient,
+            includedIngredientsTags,
+            excludedIngredientsTags
+          )
         ) {
-          const newIngredients = [...includedIngredientsTags];
-          newIngredients.push(newIngredient);
-          setIncludedIngredientsTags(newIngredients);
+          setIncludedIngredientsTags([
+            ...includedIngredientsTags,
+            newIngredient,
+          ]);
         }
       }
     } else {
@@ -92,12 +128,16 @@ export default function RecipeFilter(props: RecipeFilterProps) {
         setIngredientsToExclude('');
 
         if (
-          !includedIngredientsTags.includes(newIngredient) &&
-          !excludedIngredientsTags.includes(newIngredient)
+          isIngredientValid(
+            newIngredient,
+            includedIngredientsTags,
+            excludedIngredientsTags
+          )
         ) {
-          const newIngredients = [...excludedIngredientsTags];
-          newIngredients.push(newIngredient);
-          setExcludedIngredientsTags(newIngredients);
+          setExcludedIngredientsTags([
+            ...excludedIngredientsTags,
+            newIngredient,
+          ]);
         }
       }
     }
