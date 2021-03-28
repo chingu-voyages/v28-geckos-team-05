@@ -25,4 +25,20 @@ type RecipeProps = {
   recipe: Recipe;
 };
 
-export type { URL, HomepageContent, Recipe, RecipeProps };
+type DatePickerProps = {
+  onChangeDate: (date: Date | [Date, Date] | null) => void;
+};
+
+type CalendarCustomInputProps = {
+  value: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+};
+
+export type {
+  URL,
+  HomepageContent,
+  Recipe,
+  RecipeProps,
+  DatePickerProps,
+  CalendarCustomInputProps,
+};

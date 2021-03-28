@@ -1,0 +1,38 @@
+@mixin basic-btn-props() {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin basic-round-btn-props($top-position, $icon-color) {
+  @include basic-btn-props;
+  top: $top-position;
+  width: 30px;
+  height: 30px;
+  border: 0;
+  border-radius: 50%;
+  background-color: #fff;
+  box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14),
+    0 3px 1px -2px rgba(0, 0, 0, 0.12), 0 1px 5px 0 rgba(0, 0, 0, 0.2);
+  transition: all 0.2s ease-in-out;
+  svg {
+    font-size: $font-size-large;
+    color: $icon-color;
+  }
+  &:hover {
+    top: calc(#{$top-position - 2});
+    background-color: $icon-color;
+    box-shadow: 0 4px 2px 0 rgba(0, 0, 0, 0.14),
+      0 5px 1px -2px rgba(0, 0, 0, 0.12), 0 3px 5px 0 rgba(0, 0, 0, 0.2);
+    svg {
+      color: #fff;
+    }
+  }
+}
+
+@mixin card-width($el-width, $el-gap) {
+  flex: 1 0 calc(#{$el-width} - #{$el-gap});
+  max-width: calc(#{$el-width} - #{$el-gap});
+}
