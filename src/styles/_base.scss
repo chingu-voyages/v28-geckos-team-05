@@ -31,7 +31,8 @@ a {
   margin-bottom: $footer-height;
 }
 
-.button--primary {
+.button {
+  &--primary {
     cursor: pointer;
     background-color: $color-primary;
     color: #fff;
@@ -47,4 +48,33 @@ a {
     &:hover {
       background-color: lighten($color-primary, 7%);
     }
+  }
+
+  &--secondary {
+    cursor: pointer;
+    background-color: $color-secondary;
+    color: #fff;
+    padding: 8px;
+    border: $input-border;
+    transition: background-color 0.2s ease-in-out;
+    display: block;
+    margin: 5px;
+    border-radius: $standard-border-radius;
+    font-weight: 700;
+    font-size: 13px;
+  }
+
+  &--tertiary {
+    cursor: pointer;
+    background-color: $color-page-bg;
+    color: $color-primary;
+    padding: 8px;
+    border: $input-border;
+    transition: background-color 0.2s ease-in-out;
+    display: block;
+    margin: 5px;
+    border-radius: $standard-border-radius;
+    font-weight: 700;
+    font-size: 13px;
+  }
 }

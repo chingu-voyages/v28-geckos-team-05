@@ -13,4 +13,9 @@ const getIdsBulk: (recipes: Recipe[]) => string = (recipes) => {
   return idsString;
 };
 
-export { getURL, getIdsBulk };
+const getNutrientParamsString: (
+  filters: { name: string; value: number }[]
+) => string = (filters) =>
+  filters.map((filter) => `${filter.name}=${filter.value}`).join('&');
+
+export { getURL, getIdsBulk, getNutrientParamsString };
