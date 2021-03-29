@@ -33,5 +33,8 @@ export const getFavorites = async (userId: string) => {
     favorites.push(doc.data() as Recipe);
   });
 
-  return favorites;
+  return favorites.map((rec) => ({
+    ...rec,
+    aggregateLikes: String(rec.aggregateLikes),
+  }));
 };

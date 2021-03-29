@@ -19,8 +19,6 @@ export default function RecipeCard(props: RecipeProps) {
   const addToFavorites = (rec: Recipe) => {
     const userId = getUserId();
     !!userId && storeFavorite(rec, userId);
-
-    console.log('added to favorites');
   };
 
   return (
