@@ -37,7 +37,7 @@ type CalendarCustomInputProps = {
 type CalendarDay = {
     dateString: string;
     timeStamp: Date;
-    recipesIds: string[]
+    recipes: string[];
 }
 
 export type {

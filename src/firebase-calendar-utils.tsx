@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { Recipe, CalendarDay } from './typescript/types';
+import { Recipe } from './typescript/types';
 import { db, auth } from './firebase';
 
 export const getUserId = () => {
@@ -26,21 +26,7 @@ export const stockCalendarData = async (
   }
 
   const userRef = await db.collection('user-data').doc(userId);
-  // const userDoc = await userRef.get();
-
-  /* const dayRef = await userRef.collection(dateMeal);
-  const id = recipe.id.toString();
-
-  await dayRef.doc(id).set({
-    title: recipe.title,
-    image: recipe.image,
-    readyInMinutes: recipe.readyInMinutes,
-    servings: recipe.servings,
-    aggregateLikes: recipe.aggregateLikes,
-  }); */
-
   const calendarRef = await userRef.collection('calendar');
-
   const calendarData = await calendarRef.limit(1).get();
 
   if (calendarData.empty) {
@@ -49,7 +35,8 @@ export const stockCalendarData = async (
 
   const dayRef = await calendarRef.doc(dateMeal);
   const dayDoc = await dayRef.get();
-  const id = recipe.id.toString();
+  const { id } = recipe;
+  const recipeIdString: string = id.toString();
 
   if (!dayDoc.exists) {
     await dayRef.set({
@@ -62,31 +49,13 @@ export const stockCalendarData = async (
       recipes_list: firebase.firestore.FieldValue.arrayUnion(id),
     });
   }
-};
 
-export const getCalendarData = async () => {
-    const userId = getUserId();
+  const recipeRef = await db.collection('recipes').doc(recipeIdString);
+  const recipeDoc = await recipeRef.get();
 
-    if(userId) {
-        const calendarData: CalendarDay[] = [];
-        const userRef = await db.collection('user-data').doc(userId);
-        const calendarRef = await userRef.collection('calendar');
-    
-        const calendarSnapshot = await calendarRef.get();
-    
-        calendarSnapshot.forEach((doc) => {
-            const dayDetail = doc.data();
-            calendarData.push(
-                {
-                    dateString: doc.id,
-                    timeStamp: dayDetail.date,
-                    recipesIds: dayDetail.recipes
-                }
-            );
-
-            return calendarData;
-        });
-    }
-
-    return null;
+  if (!recipeDoc.exists) {
+    await recipeRef.set({
+      ...recipe,
+    });
+  }
 };

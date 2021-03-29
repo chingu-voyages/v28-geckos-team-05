@@ -78,3 +78,17 @@ a {
     font-size: 13px;
   }
 }
+
+.list__wrapper {
+  margin: 1.8rem 1rem;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: $page-inner-padding 0;
+  .recipe {
+    margin-right: 1.5rem;
+  }
+}
