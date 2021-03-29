@@ -34,6 +34,12 @@ type CalendarCustomInputProps = {
   onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
 };
 
+type CalendarDay = {
+    dateString: string;
+    timeStamp: Date;
+    recipesIds: string[]
+}
+
 export type {
   URL,
   HomepageContent,
@@ -41,4 +47,7 @@ export type {
   RecipeProps,
   DatePickerProps,
   CalendarCustomInputProps,
+  CalendarDay
 };
+
+

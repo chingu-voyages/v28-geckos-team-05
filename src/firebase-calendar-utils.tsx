@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { Recipe } from './typescript/types';
+import { Recipe, CalendarDay } from './typescript/types';
 import { db, auth } from './firebase';
 
 export const getUserId = () => {
@@ -16,9 +16,6 @@ export const stockCalendarData = async (
 ) => {
   let dateMeal = '';
 
-  // serve solo per gestire le date del datepicker
-  // che possono essere di differenti tipi
-  // lo sposterò in una funzione esterna domani
   if (Array.isArray(date)) {
     const firstDate = date[0];
     [dateMeal] = firstDate.toISOString().split('T');
@@ -65,4 +62,31 @@ export const stockCalendarData = async (
       recipes_list: firebase.firestore.FieldValue.arrayUnion(id),
     });
   }
+};
+
+export const getCalendarData = async () => {
+    const userId = getUserId();
+
+    if(userId) {
+        const calendarData: CalendarDay[] = [];
+        const userRef = await db.collection('user-data').doc(userId);
+        const calendarRef = await userRef.collection('calendar');
+    
+        const calendarSnapshot = await calendarRef.get();
+    
+        calendarSnapshot.forEach((doc) => {
+            const dayDetail = doc.data();
+            calendarData.push(
+                {
+                    dateString: doc.id,
+                    timeStamp: dayDetail.date,
+                    recipesIds: dayDetail.recipes
+                }
+            );
+
+            return calendarData;
+        });
+    }
+
+    return null;
 };

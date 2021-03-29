@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import DatePicker from 'react-datepicker';
 
@@ -9,7 +9,7 @@ import { DatePickerProps } from '../../typescript/types';
 import CalendarCustomInput from '../CalendarCustomInput/CalendarCustomInput';
 
 const DatePickerCalendar = (props: DatePickerProps) => {
-  const [startDate, setStartDate] = useState(new Date());
+  const startDate = new Date();
   return (
     <DatePicker
       selected={startDate}
