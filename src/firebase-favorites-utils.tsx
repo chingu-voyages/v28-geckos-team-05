@@ -38,3 +38,8 @@ export const getFavorites = async (userId: string) => {
     aggregateLikes: String(rec.aggregateLikes),
   }));
 };
+
+export const removeFromFavorites = async (userId: string, recipeId: string) => {
+  const userRef = await db.collection('user-data').doc(userId);
+  await userRef.collection('favorites').doc(recipeId).delete();
+};

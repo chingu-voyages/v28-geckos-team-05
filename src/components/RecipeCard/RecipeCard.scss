@@ -28,7 +28,7 @@
     @include element-width(25%, $card-outer-padding);
   }
 
-  &__button-wishlist {
+  &__button {
     @include basic-btn-props;
     top: 10px;
     right: 10px;
@@ -51,6 +51,24 @@
 
       svg {
         color: #fff;
+      }
+    }
+
+    &-wishlist {
+      svg {
+        color: #f44336;
+      }
+      &:hover {
+        background-color: #f44336;
+      }
+    }
+
+    &-remove {
+      svg {
+        color: #4b4b4b;
+      }
+      &:hover {
+        background-color: #4b4b4b;
       }
     }
   }

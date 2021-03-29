@@ -23,6 +23,7 @@ type Recipe = {
 
 type RecipeProps = {
   recipe: Recipe;
+  showBinIcon: boolean;
 };
 
 export type { URL, HomepageContent, Recipe, RecipeProps };

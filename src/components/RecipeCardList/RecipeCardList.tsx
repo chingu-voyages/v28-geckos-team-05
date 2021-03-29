@@ -17,7 +17,7 @@ export default function RecipeCardList() {
       <div className="items">
         {recipesList &&
           recipesList.map((recipe: Recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
+            <RecipeCard key={recipe.id} recipe={recipe} showBinIcon={false} />
           ))}
       </div>
     </div>

@@ -23,7 +23,7 @@ export default function FavoritesPage() {
       <h1>Favorites</h1>
       <div className="recipes__container">
         {recipesList.map((recipe: Recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
+          <RecipeCard key={recipe.id} recipe={recipe} showBinIcon={true} />
         ))}
       </div>
     </div>

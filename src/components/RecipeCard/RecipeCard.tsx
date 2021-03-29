@@ -7,9 +7,14 @@ import {
   faClock,
   faUsers,
   faThumbsUp,
+  faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { Recipe, RecipeProps } from '../../typescript/types';
-import { getUserId, storeFavorite } from '../../firebase-favorites-utils';
+import {
+  getUserId,
+  removeFromFavorites,
+  storeFavorite,
+} from '../../firebase-favorites-utils';
 
 import './RecipeCard.scss';
 
@@ -21,18 +26,35 @@ export default function RecipeCard(props: RecipeProps) {
     !!userId && storeFavorite(rec, userId);
   };
 
+  const handleClickRemove = (recipeId: number) => {
+    const userId = getUserId();
+    !!userId && removeFromFavorites(userId, String(recipeId));
+    document.location.reload();
+  };
+
   return (
     <div className="recipe">
       <div className="recipe__image-wrapper">
         <img className="recipe__image" src={recipe.image} alt={recipe.title} />
       </div>
-      <button
-        type="button"
-        className="recipe__button-wishlist"
-        onClick={() => addToFavorites(recipe)}
-      >
-        <FontAwesomeIcon icon={faHeart} />
-      </button>
+
+      {props.showBinIcon ? (
+        <button
+          type="button"
+          className="recipe__button recipe__button-remove"
+          onClick={() => handleClickRemove(recipe.id)}
+        >
+          <FontAwesomeIcon icon={faTrashAlt} />
+        </button>
+      ) : (
+        <button
+          type="button"
+          className="recipe__button recipe__button-wishlist"
+          onClick={() => addToFavorites(recipe)}
+        >
+          <FontAwesomeIcon icon={faHeart} />
+        </button>
+      )}
 
       <article className="recipe__content">
         <Link
