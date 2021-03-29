@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { HomepageContext } from '../../context/GlobalContext';
 import { Recipe } from '../../typescript/types';
 import RecipeCard from '../RecipeCard/RecipeCard';
@@ -16,7 +17,15 @@ export default function RecipeCardList() {
       <div className="items">
         {recipesList &&
           recipesList.map((recipe: Recipe) => (
-            <RecipeCard key={recipe.id} recipe={recipe} />
+            <Link
+              to={{
+                pathname: `/recipe/${recipe.id}`,
+                state: recipe,
+              }}
+              key={recipe.id}
+            >
+              <RecipeCard key={recipe.id} recipe={recipe} />
+            </Link>
           ))}
       </div>
     </div>

@@ -16,15 +16,10 @@ import './RecipeCard.scss';
 
 export default function RecipeCard(props: RecipeProps) {
   const { recipe } = props;
-
   return (
     <div className="recipe">
       <div className="recipe__image-wrapper">
-        <img
-          className="recipe__image"
-          src={recipe.image}
-          alt={recipe.title}
-        />
+        <img className="recipe__image" src={recipe.image} alt={recipe.title} />
       </div>
       <button type="button" className="recipe__button-wishlist">
         <FontAwesomeIcon icon={faHeart} />
@@ -38,9 +33,7 @@ export default function RecipeCard(props: RecipeProps) {
         >
           <FontAwesomeIcon icon={faArrowRight} />
         </Link>
-        <h2 className="recipe__title">
-          {recipe.title}
-        </h2>
+        <h2 className="recipe__title">{recipe.title}</h2>
         <p className="recipe__text" />
       </article>
       <aside className="recipe__infos">
