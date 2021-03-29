@@ -44,12 +44,17 @@ function Header({ userLoggedIn }: any) {
             <Link to="/about" className="navbar__menuItem">
               ABOUT
             </Link>
-            <Link to="/calendar" className="navbar__menuItem">
-              CALENDAR
-            </Link>
-            <Link to="/favorites" className="navbar__menuItem">
-              FAVORITES
-            </Link>
+
+            {userLoggedIn && (
+              <>
+                <Link to="/calendar" className="navbar__menuItem">
+                  CALENDAR
+                </Link>
+                <Link to="/favorites" className="navbar__menuItem">
+                  FAVORITES
+                </Link>
+              </>
+            )}
           </div>
           <div className="navbar-container--right">
             {!userLoggedIn ? (

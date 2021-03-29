@@ -4,6 +4,7 @@ import { auth } from './firebase';
 import HomePage from './pages/HomePage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';
+import FavoritesPage from './pages/FavoritesPage/FavoritesPage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
@@ -30,6 +31,7 @@ const App = () => {
           />
           <Route path="/about" exact component={AboutPage} />
           <Route path="/calendar" exact component={CalendarPage} />
+          <Route path="/favorites" exact component={FavoritesPage} />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
           <Route component={NotFound} />

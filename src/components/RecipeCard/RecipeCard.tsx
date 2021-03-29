@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHeart,
@@ -9,24 +8,31 @@ import {
   faUsers,
   faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
-
-import { RecipeProps } from '../../typescript/types';
+import { Recipe, RecipeProps } from '../../typescript/types';
+import { getUserId, storeFavorite } from '../../firebase-favorites-utils';
 
 import './RecipeCard.scss';
 
 export default function RecipeCard(props: RecipeProps) {
   const { recipe } = props;
 
+  const addToFavorites = (rec: Recipe) => {
+    const userId = getUserId();
+    !!userId && storeFavorite(rec, userId);
+
+    console.log('added to favorites');
+  };
+
   return (
     <div className="recipe">
       <div className="recipe__image-wrapper">
-        <img
-          className="recipe__image"
-          src={recipe.image}
-          alt={recipe.title}
-        />
+        <img className="recipe__image" src={recipe.image} alt={recipe.title} />
       </div>
-      <button type="button" className="recipe__button-wishlist">
+      <button
+        type="button"
+        className="recipe__button-wishlist"
+        onClick={() => addToFavorites(recipe)}
+      >
         <FontAwesomeIcon icon={faHeart} />
       </button>
 
@@ -38,9 +44,7 @@ export default function RecipeCard(props: RecipeProps) {
         >
           <FontAwesomeIcon icon={faArrowRight} />
         </Link>
-        <h2 className="recipe__title">
-          {recipe.title}
-        </h2>
+        <h2 className="recipe__title">{recipe.title}</h2>
         <p className="recipe__text" />
       </article>
       <aside className="recipe__infos">
