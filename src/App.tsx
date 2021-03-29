@@ -1,25 +1,43 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { auth } from './firebase';
+import HomePage from './pages/HomePage/HomePage';
+import AboutPage from './pages/AboutPage/AboutPage';
+import CalendarPage from './pages/CalendarPage/CalendarPage';
+import Header from './components/Header/Header';
+import Footer from './components/Footer/Footer';
+import Login from './components/Login/Login';
+import Signup from './components/Signup/Signup';
+import NotFound from './components/NotFound/NotFound';
+import './App.scss';
 
-const App = () => (
-  <div className="App">
-    <header className="App-header">
-      <img src={logo} className="App-logo" alt="logo" />
-      <p>
-        Edit <code>src/App.tsx</code> and save to reload.
-      </p>
+const App = () => {
+  const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
 
-      <a
-        className="App-link"
-        href="https://reactjs.org"
-        target="_blank"
-        rel="noopener noreferrer"
-      >
-        Learn React
-      </a>
-    </header>
-  </div>
-);
+  auth.onAuthStateChanged((user) => {
+    user ? setUserLoggedIn(true) : setUserLoggedIn(false);
+  });
+
+  return (
+    <div className="app">
+      <Router>
+        <Header userLoggedIn={userLoggedIn} />
+        <Switch>
+          <Route
+            path="/"
+            exact
+            render={() => <HomePage userLoggedIn={userLoggedIn} />}
+          />
+          <Route path="/about" exact component={AboutPage} />
+          <Route path="/calendar" exact component={CalendarPage} />
+          <Route path="/login" exact component={Login} />
+          <Route path="/signup" exact component={Signup} />
+          <Route component={NotFound} />
+        </Switch>
+        <Footer />
+      </Router>
+    </div>
+  );
+};
 
 export default App;

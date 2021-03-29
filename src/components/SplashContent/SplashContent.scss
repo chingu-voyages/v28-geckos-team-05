@@ -1,0 +1,48 @@
+@import '../../styles/variables';
+
+.splash {
+  padding: 0.7rem;
+
+  &__maincontent {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  &__image {
+    height: 18vh;
+    border: 1px solid $color-primary;
+    margin: 1rem 0;
+  }
+
+  &__paragraph {
+    padding: 0.5rem;
+  }
+}
+
+@media screen and (min-width: $bp-min-desktop) {
+  .splash {
+    &__maincontent {
+      grid-template-columns: 50% 50%;
+      grid-template-rows: 50% 50%;
+    }
+
+    &__item {
+      flex-direction: row;
+    }
+
+    &__image {
+    height: 18vh;
+    border: 2px solid $color-primary;
+    margin: 0;
+    }
+  }
+}
