@@ -40,6 +40,11 @@ type CalendarDay = {
     recipes: string[];
 }
 
+type CalendarDayListProps = {
+  date: string;
+  recipeList: string[];
+};
+
 export type {
   URL,
   HomepageContent,
@@ -47,7 +52,8 @@ export type {
   RecipeProps,
   DatePickerProps,
   CalendarCustomInputProps,
-  CalendarDay
+  CalendarDay,
+  CalendarDayListProps
 };
 
 

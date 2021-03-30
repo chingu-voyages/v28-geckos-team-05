@@ -1,24 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { CalendarDay } from '../../typescript/types';
 import { db } from '../../firebase';
-import { getUserId } from '../../firebase-calendar-utils';
+import { convertDateFromTimestamp } from '../../utils';
 
+import Loader from '../../components/Loader/Loader';
+
+import { getUserId } from '../../firebase-calendar-utils';
 import CalendarDayList from '../../components/CalendarDayList/CalendarDayList';
 
-export default function CalendarPage() {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function CalendarPage({ userLoggedIn }: any) {
   const [calendarList, setCalendarList] = useState<CalendarDay[]>();
 
   useEffect(() => {
     const queryDb = async () => {
       const userId = getUserId();
+      const calendarData: CalendarDay[] = [];
 
       if (userId) {
         const userRef = db.collection('user-data').doc(userId);
         const calendarRef = userRef.collection('calendar');
-
         const calendarSnapshot = await calendarRef.get();
-
-        const calendarData: CalendarDay[] = [];
 
         calendarSnapshot.forEach((doc) => {
           const dayDetail = doc.data();
@@ -34,23 +36,26 @@ export default function CalendarPage() {
       }
     };
 
-    queryDb();
-  }, [setCalendarList]);
+    if (userLoggedIn) queryDb();
+  }, [userLoggedIn, setCalendarList]);
 
   return (
     <div className="page">
-      {calendarList &&
+      {calendarList ? (
         calendarList.map((calendarDay) => (
           <div className="list__wrapper" key={calendarDay.dateString}>
-            <h2>{calendarDay.dateString}</h2>
+            <h2>{convertDateFromTimestamp(calendarDay.timeStamp)}</h2>
             {calendarDay.recipes && (
-              <CalendarDayList    
+              <CalendarDayList
                 recipeList={calendarDay.recipes}
                 date={calendarDay.dateString}
               />
             )}
           </div>
-        ))}
+        ))
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 }

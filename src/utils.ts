@@ -18,4 +18,34 @@ const getNutrientParamsString: (
 ) => string = (filters) =>
   filters.map((filter) => `${filter.name}=${filter.value}`).join('&');
 
-export { getURL, getIdsBulk, getNutrientParamsString };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const convertDateFromTimestamp = ({ seconds }: any) => {
+  const a = new Date(seconds * 1000);
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const year = a.getFullYear();
+  const month = months[a.getMonth()];
+  const date = a.getDate();
+  const time = `${month} ${date}, ${year}`;
+
+  return time;
+};
+
+export {
+  getURL,
+  getIdsBulk,
+  getNutrientParamsString,
+  convertDateFromTimestamp,
+};

@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase';
-import { Recipe } from '../../typescript/types';
+import { Recipe, CalendarDayListProps } from '../../typescript/types';
+
+import Loader from '../Loader/Loader';
+
 import RecipeCard from '../RecipeCard/RecipeCard';
 
-type CalProps = {
-  date: string;
-  recipeList: string[];
-};
-
-export default function CalendarDayList(props: CalProps) {
+export default function CalendarDayList(props: CalendarDayListProps) {
   const { recipeList, date } = props;
   const [recipeDayList, setRecipeDayList] = useState<Recipe[]>([]);
 
@@ -31,10 +29,10 @@ export default function CalendarDayList(props: CalProps) {
 
   return (
     <div className="items">
-      {recipeDayList &&
+      {recipeDayList ?
         recipeDayList.map((recipe) => (
           <RecipeCard key={`${recipe.id}-${date}`} recipe={recipe} />
-        ))}
+        )) : <Loader />}
     </div>
   );
 }
