@@ -45,9 +45,27 @@ const convertDateFromTimestamp: ({ seconds }: any) => string = ({
   return time;
 };
 
+const convertDateToString: (date: Date | [Date, Date] | null) => string = (
+  date
+) => {
+  let dateString = '';
+
+  if (Array.isArray(date)) {
+    const firstDate = date[0];
+    [dateString] = firstDate.toISOString().split('T');
+  } else if (date instanceof Date) {
+    [dateString] = date.toISOString().split('T');
+  } else {
+    [dateString] = new Date().toISOString().split('T');
+  }
+
+  return dateString;
+};
+
 export {
   getURL,
   getIdsBulk,
   getNutrientParamsString,
   convertDateFromTimestamp,
+  convertDateToString,
 };

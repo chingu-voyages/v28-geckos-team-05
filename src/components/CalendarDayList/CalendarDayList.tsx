@@ -3,7 +3,6 @@ import { db } from '../../firebase';
 import { Recipe, CalendarDayListProps } from '../../typescript/types';
 
 import Loader from '../Loader/Loader';
-
 import RecipeCard from '../RecipeCard/RecipeCard';
 
 export default function CalendarDayList(props: CalendarDayListProps) {
@@ -14,15 +13,17 @@ export default function CalendarDayList(props: CalendarDayListProps) {
     const recipes: Recipe[] = [];
 
     const getRecipeDayList = async () => {
-      if(recipeList.length) {
-        const recipeRef = db.collection('recipes').where("id", "in", recipeList);
+      if (recipeList.length) {
+        const recipeRef = db
+          .collection('recipes')
+          .where('id', 'in', recipeList);
         const recipeSnapshot = await recipeRef.get();
-  
-        recipeSnapshot.forEach(doc => {
+
+        recipeSnapshot.forEach((doc) => {
           const recipeData = doc.data() as Recipe;
           recipes.push(recipeData);
-        })
-  
+        });
+
         setRecipeDayList(recipes);
       }
     };
@@ -31,10 +32,17 @@ export default function CalendarDayList(props: CalendarDayListProps) {
 
   return (
     <div className="items">
-      {recipeDayList ?
+      {recipeDayList ? (
         recipeDayList.map((recipe) => (
-          <RecipeCard key={`${recipe.id}-${date}`} recipe={recipe} storedDate={date} />
-        )) : <Loader />}
+          <RecipeCard
+            key={`${recipe.id}-${date}`}
+            recipe={recipe}
+            storedDate={date}
+          />
+        ))
+      ) : (
+        <Loader />
+      )}
     </div>
   );
 }

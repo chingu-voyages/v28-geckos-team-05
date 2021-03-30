@@ -11,8 +11,9 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { getUserId } from '../../firebase';
+import { convertDateToString } from '../../utils';
 import {
-  getUserId,
   stockCalendarData,
   removeRecipeFromCalendar,
 } from '../../firebase-calendar-utils';
@@ -36,7 +37,7 @@ export default function RecipeCard(props: RecipeProps) {
 
       if (stocked) {
         setActiveNotification(true);
-        setActiveDate('data fissa');
+        setActiveDate(convertDateToString(date));
 
         setTimeout(() => {
           setActiveNotification(false);
@@ -60,8 +61,8 @@ export default function RecipeCard(props: RecipeProps) {
   return (
     <div className="recipe">
       {activeNotification && (
-        <div className="notification">
-          {`Recipe added to calendar on Date ${activeDate}`}
+        <div className="calendar__notification">
+          Recipe added to calendar <br /> on Date <strong>{activeDate}</strong>
         </div>
       )}
       <div className="recipe__image-wrapper">
