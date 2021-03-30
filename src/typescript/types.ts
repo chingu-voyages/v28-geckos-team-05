@@ -23,6 +23,7 @@ type Recipe = {
 
 type RecipeProps = {
   recipe: Recipe;
+  storedDate?: string
 };
 
 type DatePickerProps = {

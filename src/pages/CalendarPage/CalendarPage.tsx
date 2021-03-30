@@ -13,30 +13,54 @@ export default function CalendarPage({ userLoggedIn }: any) {
   const [calendarList, setCalendarList] = useState<CalendarDay[]>();
 
   useEffect(() => {
-    const queryDb = async () => {
-      const userId = getUserId();
-      const calendarData: CalendarDay[] = [];
+    const userId = getUserId();
 
-      if (userId) {
-        const userRef = db.collection('user-data').doc(userId);
-        const calendarRef = userRef.collection('calendar');
-        const calendarSnapshot = await calendarRef.get();
+    if (userId) {
+      const unsubscribe = db
+        .collection('user-data')
+        .doc(userId)
+        .collection('calendar')
+        .onSnapshot((calendarSnapshot) => {
+          const calendarData: CalendarDay[] = [];
 
-        calendarSnapshot.forEach((doc) => {
-          const dayDetail = doc.data();
+          calendarSnapshot.forEach((doc) => {
+            const dayDetail = doc.data();
 
-          calendarData.push({
-            dateString: doc.id,
-            timeStamp: dayDetail.date,
-            recipes: dayDetail.recipes_list,
+            calendarData.push({
+              dateString: doc.id,
+              timeStamp: dayDetail.date,
+              recipes: dayDetail.recipes_list,
+            });
           });
+
+          setCalendarList(calendarData);
         });
+    }
 
-        setCalendarList(calendarData);
-      }
-    };
+    // const queryDb = async () => {
+    //   // const userId = getUserId();
+    //   // const calendarData: CalendarDay[] = [];
 
-    if (userLoggedIn) queryDb();
+    //   if (userId) {
+    //     const userRef = db.collection('user-data').doc(userId);
+    //     const calendarRef = userRef.collection('calendar');
+    //     const calendarSnapshot = await calendarRef.get();
+
+    //     calendarSnapshot.forEach((doc) => {
+    //       const dayDetail = doc.data();
+
+    //       calendarData.push({
+    //         dateString: doc.id,
+    //         timeStamp: dayDetail.date,
+    //         recipes: dayDetail.recipes_list,
+    //       });
+    //     });
+
+    //     setCalendarList(calendarData);
+    //   }
+    // };
+
+    // if (userLoggedIn) queryDb();
   }, [userLoggedIn, setCalendarList]);
 
   return (

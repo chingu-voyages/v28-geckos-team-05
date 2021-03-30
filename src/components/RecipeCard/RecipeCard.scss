@@ -25,6 +25,11 @@
     right: 10px;
   }
 
+  &__button-remove {
+    @include basic-round-btn-props(10px, #f44336);
+    left: 50px;
+  }
+
   &__image {
     width: 100%;
   }

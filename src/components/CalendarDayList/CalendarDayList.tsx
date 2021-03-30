@@ -14,15 +14,17 @@ export default function CalendarDayList(props: CalendarDayListProps) {
     const recipes: Recipe[] = [];
 
     const getRecipeDayList = async () => {
-      const recipeRef = db.collection('recipes').where("id", "in", recipeList);
-      const recipeSnapshot = await recipeRef.get();
-
-      recipeSnapshot.forEach(doc => {
-        const recipeData = doc.data() as Recipe;
-        recipes.push(recipeData);
-      })
-
-      setRecipeDayList(recipes);
+      if(recipeList.length) {
+        const recipeRef = db.collection('recipes').where("id", "in", recipeList);
+        const recipeSnapshot = await recipeRef.get();
+  
+        recipeSnapshot.forEach(doc => {
+          const recipeData = doc.data() as Recipe;
+          recipes.push(recipeData);
+        })
+  
+        setRecipeDayList(recipes);
+      }
     };
     getRecipeDayList();
   }, [recipeList, setRecipeDayList]);
@@ -31,7 +33,7 @@ export default function CalendarDayList(props: CalendarDayListProps) {
     <div className="items">
       {recipeDayList ?
         recipeDayList.map((recipe) => (
-          <RecipeCard key={`${recipe.id}-${date}`} recipe={recipe} />
+          <RecipeCard key={`${recipe.id}-${date}`} recipe={recipe} storedDate={date} />
         )) : <Loader />}
     </div>
   );

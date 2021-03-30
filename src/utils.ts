@@ -19,7 +19,9 @@ const getNutrientParamsString: (
   filters.map((filter) => `${filter.name}=${filter.value}`).join('&');
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-const convertDateFromTimestamp = ({ seconds }: any) => {
+const convertDateFromTimestamp: ({ seconds }: any) => string = ({
+  seconds,
+}) => {
   const a = new Date(seconds * 1000);
   const months = [
     'January',
