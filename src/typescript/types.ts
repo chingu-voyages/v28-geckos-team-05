@@ -46,6 +46,12 @@ type CalendarDayListProps = {
   recipeList: string[];
 };
 
+type BtnRemoveProps = {
+  userId: string;
+  recipeId: number;
+  storedDate: string;
+}  
+
 export type {
   URL,
   HomepageContent,
@@ -54,7 +60,8 @@ export type {
   DatePickerProps,
   CalendarCustomInputProps,
   CalendarDay,
-  CalendarDayListProps
+  CalendarDayListProps,
+  BtnRemoveProps
 };
 
 

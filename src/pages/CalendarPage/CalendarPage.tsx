@@ -37,7 +37,8 @@ export default function CalendarPage({ userLoggedIn }: any) {
 
   return (
     <div className="page">
-      {calendarList ? (
+      {calendarList &&
+        !!calendarList.length &&
         calendarList.map((calendarDay) => (
           <div className="list__wrapper" key={calendarDay.dateString}>
             <h2>{convertDateFromTimestamp(calendarDay.timeStamp)}</h2>
@@ -48,10 +49,11 @@ export default function CalendarPage({ userLoggedIn }: any) {
               />
             )}
           </div>
-        ))
-      ) : (
-        <Loader />
-      )}
+        ))}
+      {calendarList &&
+        !calendarList.length &&
+        'No recipes in the calendar yet :('}
+      {!calendarList && <Loader />}
     </div>
   );
 }
