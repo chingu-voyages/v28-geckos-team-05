@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import './SplashContent.scss';
 
 export default function SplashContent() {
@@ -55,9 +56,11 @@ export default function SplashContent() {
         </div>
       </div>
       <div className="splash__cta">
-        <button type="button" className="button--primary">
-          Sign up
-        </button>
+        <Link to="/signup">
+          <button type="button" className="button--primary">
+            Sign up
+          </button>
+        </Link>
       </div>
     </div>
   );
