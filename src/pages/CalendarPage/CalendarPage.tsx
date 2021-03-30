@@ -52,7 +52,7 @@ export default function CalendarPage({ userLoggedIn }: any) {
         ))}
       {calendarList &&
         !calendarList.length &&
-        'No recipes in the calendar yet :('}
+        'No recipes in the calendar :('}
       {!calendarList && <Loader />}
     </div>
   );
