@@ -29,7 +29,7 @@ export default function RecipeCard(props: RecipeProps) {
   const handleClickRemove = (recipeId: number) => {
     const userId = getUserId();
     !!userId && removeFromFavorites(userId, String(recipeId));
-    document.location.reload();
+    // document.location.reload();
   };
 
   return (
