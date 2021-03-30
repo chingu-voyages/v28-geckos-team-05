@@ -24,6 +24,7 @@ type Recipe = {
 type RecipeProps = {
   recipe: Recipe;
   showBinIcon: boolean;
+  handleClickRemove?: (recipeId: number) => void;
 };
 
 export type { URL, HomepageContent, Recipe, RecipeProps };

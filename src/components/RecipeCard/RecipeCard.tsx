@@ -10,11 +10,7 @@ import {
   faTrashAlt,
 } from '@fortawesome/free-solid-svg-icons';
 import { Recipe, RecipeProps } from '../../typescript/types';
-import {
-  getUserId,
-  removeFromFavorites,
-  storeFavorite,
-} from '../../firebase-favorites-utils';
+import { getUserId, storeFavorite } from '../../firebase-favorites-utils';
 
 import './RecipeCard.scss';
 
@@ -26,11 +22,7 @@ export default function RecipeCard(props: RecipeProps) {
     !!userId && storeFavorite(rec, userId);
   };
 
-  const handleClickRemove = (recipeId: number) => {
-    const userId = getUserId();
-    !!userId && removeFromFavorites(userId, String(recipeId));
-    // document.location.reload();
-  };
+  const { handleClickRemove } = props;
 
   return (
     <div className="recipe">
@@ -38,7 +30,7 @@ export default function RecipeCard(props: RecipeProps) {
         <img className="recipe__image" src={recipe.image} alt={recipe.title} />
       </div>
 
-      {props.showBinIcon ? (
+      {props.showBinIcon && !!handleClickRemove ? (
         <button
           type="button"
           className="recipe__button recipe__button-remove"
