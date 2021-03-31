@@ -83,7 +83,10 @@ export default function RecipeCard(props: RecipeProps) {
         <Link
           className="recipe__button-details"
           title="Detail of the recipe"
-          to={`recipe-detail/${recipe.id}`}
+          to={{
+            pathname: `/recipe/${recipe.id}`,
+            state: recipe,
+          }}
         >
           <FontAwesomeIcon icon={faArrowRight} />
         </Link>

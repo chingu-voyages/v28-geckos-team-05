@@ -17,15 +17,7 @@ export default function RecipeCardList() {
       <div className="items">
         {recipesList &&
           recipesList.map((recipe: Recipe) => (
-            <Link
-              to={{
-                pathname: `/recipe/${recipe.id}`,
-                state: recipe,
-              }}
-              key={recipe.id}
-            >
-              <RecipeCard key={recipe.id} recipe={recipe} />
-            </Link>
+            <RecipeCard key={recipe.id} recipe={recipe} />
           ))}
       </div>
     </div>
