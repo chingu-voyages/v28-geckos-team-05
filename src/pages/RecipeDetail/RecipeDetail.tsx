@@ -1,7 +1,7 @@
+/* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
-import RecipeCard from '../../components/RecipeCard/RecipeCard';
 
 import './RecipeDetail.scss';
 
@@ -43,7 +43,17 @@ export default function RecipeDetail(props: any) {
         <div className="recipe-detail__section-title">instructions</div>
         <div className="recipe-detail__instructions-content-container">
           {recipe.analyzedInstructions[0].steps.map((step: any) => (
-            <span key={step.number}>{step.step}</span>
+            <div className="recipe-detail__instruction-step" key={step.number}>
+              <label className="recipe-detail__checkbox">
+                <input
+                  className="recipe-detail__checkbox__input"
+                  type="checkbox"
+                  defaultChecked={false}
+                />
+                <span className="recipe-detail__checkbox__checkmark" />
+              </label>
+              <span>{step.step}</span>
+            </div>
           ))}
         </div>
       </div>

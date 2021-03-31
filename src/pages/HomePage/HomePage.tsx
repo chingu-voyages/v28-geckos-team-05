@@ -23,7 +23,7 @@ export default function HomePage({ userLoggedIn }: any) {
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
   };
   const bulkUrl: URL = {
-    apiURL: `${baseUrl}/informationBulk?apiKey=${apiKey}`,
+    apiURL: `${baseUrl}/informationBulk?apiKey=${apiKey}&includeNutrition=true`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
   };
   const randomUrl: URL = {
