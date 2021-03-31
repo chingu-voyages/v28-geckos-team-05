@@ -18,4 +18,54 @@ const getNutrientParamsString: (
 ) => string = (filters) =>
   filters.map((filter) => `${filter.name}=${filter.value}`).join('&');
 
-export { getURL, getIdsBulk, getNutrientParamsString };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+const convertDateFromTimestamp: ({ seconds }: any) => string = ({
+  seconds,
+}) => {
+  const a = new Date(seconds * 1000);
+  const months = [
+    'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+  ];
+  const year = a.getFullYear();
+  const month = months[a.getMonth()];
+  const date = a.getDate();
+  const time = `${month} ${date}, ${year}`;
+
+  return time;
+};
+
+const convertDateToString: (date: Date | [Date, Date] | null) => string = (
+  date
+) => {
+  let dateString = '';
+
+  if (Array.isArray(date)) {
+    const firstDate = date[0];
+    [dateString] = firstDate.toISOString().split('T');
+  } else if (date instanceof Date) {
+    [dateString] = date.toISOString().split('T');
+  } else {
+    [dateString] = new Date().toISOString().split('T');
+  }
+
+  return dateString;
+};
+
+export {
+  getURL,
+  getIdsBulk,
+  getNutrientParamsString,
+  convertDateFromTimestamp,
+  convertDateToString,
+};

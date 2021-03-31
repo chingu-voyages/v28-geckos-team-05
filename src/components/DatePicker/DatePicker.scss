@@ -1,0 +1,12 @@
+@import '../../styles/variables';
+@import '../../styles/mixins';
+
+.datePicker {
+  @include basic-round-btn-props(10px, #000000);
+  left: 10px;
+  button.calendar-icon {
+    cursor: pointer;
+    background-color: transparent;
+    border: 0;
+  }
+}

@@ -29,7 +29,11 @@ const App = () => {
             render={() => <HomePage userLoggedIn={userLoggedIn} />}
           />
           <Route path="/about" exact component={AboutPage} />
-          <Route path="/calendar" exact component={CalendarPage} />
+          <Route
+            path="/calendar"
+            exact
+            render={() => <CalendarPage userLoggedIn={userLoggedIn} />}
+          />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
           <Route component={NotFound} />

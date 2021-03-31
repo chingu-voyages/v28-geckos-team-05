@@ -23,6 +23,45 @@ type Recipe = {
 
 type RecipeProps = {
   recipe: Recipe;
+  storedDate?: string
 };
 
-export type { URL, HomepageContent, Recipe, RecipeProps };
+type DatePickerProps = {
+  onChangeDate: (date: Date | [Date, Date] | null) => void;
+};
+
+type CalendarCustomInputProps = {
+  value: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+};
+
+type CalendarDay = {
+    dateString: string;
+    timeStamp: Date;
+    recipes: string[];
+}
+
+type CalendarDayListProps = {
+  date: string;
+  recipeList: string[];
+};
+
+type BtnRemoveProps = {
+  userId: string;
+  recipeId: number;
+  storedDate: string;
+}  
+
+export type {
+  URL,
+  HomepageContent,
+  Recipe,
+  RecipeProps,
+  DatePickerProps,
+  CalendarCustomInputProps,
+  CalendarDay,
+  CalendarDayListProps,
+  BtnRemoveProps
+};
+
+
