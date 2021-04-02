@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useParams, useLocation } from 'react-router-dom';
 import DatePickerCalendar from '../../components/DatePicker/DatePicker';
 
@@ -23,6 +23,13 @@ export default function RecipeDetail(props: any) {
 
   return (
     <div className="recipe-detail">
+      <div className="recipe-detail__add-to-calendar-container">
+        {userId && (
+          <div className="datePicker">
+            <DatePickerCalendar onChangeDate={onChangeDate} />
+          </div>
+        )}
+      </div>
       <div className="recipe-detail__title">{recipe.title}</div>
       <div className="recipe-detail__header-container">
         <img
@@ -65,13 +72,6 @@ export default function RecipeDetail(props: any) {
             </div>
           ))}
         </div>
-      </div>
-      <div className="recipe-detail__add-to-calendar-container">
-        {userId && (
-          <div className="datePicker">
-            <DatePickerCalendar onChangeDate={onChangeDate} />
-          </div>
-        )}
       </div>
     </div>
   );
