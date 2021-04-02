@@ -43,10 +43,11 @@ type CalendarCustomInputProps = {
 };
 
 type CalendarDay = {
-  dateString: string;
-  timeStamp: Date;
-  recipes: string[];
-};
+    dateString: string;
+    timeStamp: Date;
+    recipes: string[];
+    cost: number;
+}
 
 type CalendarDayListProps = {
   date: string;
