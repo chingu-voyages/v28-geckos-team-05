@@ -24,7 +24,7 @@ export const stockCalendarData = async (
     const dayRef = calendarRef.doc(dateMeal);
     const dayDoc = await dayRef.get();
 
-    const { id } = recipe;
+    const { id, pricePerServing } = recipe;
     const recipeIdString = id.toString();
 
     // if doc for this date does not exists create it and
@@ -34,11 +34,13 @@ export const stockCalendarData = async (
       await dayRef.set({
         date,
         recipes_list: firebase.firestore.FieldValue.arrayUnion(id),
+        cost: recipe.pricePerServing
       });
     } else {
       await dayRef.update({
         date,
         recipes_list: firebase.firestore.FieldValue.arrayUnion(id),
+        cost: firebase.firestore.FieldValue.increment(pricePerServing)
       });
     }
 
@@ -69,6 +71,7 @@ export const addRecipeToRecipes = async (
 export const removeRecipeFromCalendar = async (
   recipeId: number,
   userId: string,
+  recipePricePerServing: number,
   storedDate: string
 ) => {
   const userRef = db.collection('user-data').doc(userId);
@@ -78,6 +81,7 @@ export const removeRecipeFromCalendar = async (
 
   await dayRef.update({
     recipes_list: firebase.firestore.FieldValue.arrayRemove(recipeId),
+    cost: firebase.firestore.FieldValue.increment(-recipePricePerServing)
   });
 
   // if the id is the last one of the recipes_list array

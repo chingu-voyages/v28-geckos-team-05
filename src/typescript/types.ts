@@ -24,6 +24,7 @@ type Recipe = {
   servings: number;
   title: string;
   aggregateLikes: string;
+  pricePerServing: number;
 };
 
 type RecipeProps = {
@@ -56,8 +57,9 @@ type BtnRemoveProps = {
   userId: string;
   recipeId: number;
   storedDate?: string;
+  recipePricePerServing: number;
   handleRemove?: (recipeId: number) => void;
-};
+};  
 
 export type {
   URL,

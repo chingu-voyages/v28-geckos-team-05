@@ -10,12 +10,13 @@ import { BtnRemoveProps } from '../../typescript/types';
 export default function BtnRemoveRecipe({
   userId,
   recipeId,
+  recipePricePerServing,
   storedDate,
   handleRemove,
 }: BtnRemoveProps) {
   const onRemoveRecipe = () => {
     if (userId) {
-      !!storedDate && removeRecipeFromCalendar(recipeId, userId, storedDate);
+      !!storedDate && removeRecipeFromCalendar(recipeId, userId, recipePricePerServing, storedDate);
       !storedDate &&
         handleRemove &&
         removeFromFavorites(userId, String(recipeId)) &&

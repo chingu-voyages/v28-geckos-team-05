@@ -77,6 +77,7 @@ export default function RecipeCard(props: RecipeProps) {
       {location.pathname === '/calendar' && userId && (
         <BtnRemoveRecipe
           recipeId={recipe.id}
+          recipePricePerServing={recipe.pricePerServing}
           userId={userId}
           storedDate={storedDate}
         />
