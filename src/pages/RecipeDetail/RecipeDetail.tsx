@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React from 'react';
-import { useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import DatePickerCalendar from '../../components/DatePicker/DatePicker';
 
 import useCalendarHandler from '../../Hooks/useCalendarHandler';
