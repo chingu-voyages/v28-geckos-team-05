@@ -9,17 +9,10 @@ import useCalendarHandler from '../../Hooks/useCalendarHandler';
 import './RecipeDetail.scss';
 
 export default function RecipeDetail(props: any) {
-  const { id } = useParams<Record<string, string | undefined>>();
   const location = useLocation();
   const { recipe, storedDate }: any = location.state;
 
-  const {
-    userId,
-    newStoredDate,
-    activeDate,
-    activeNotification,
-    onChangeDate,
-  } = useCalendarHandler({ recipe, storedDate });
+  const { userId, onChangeDate } = useCalendarHandler({ recipe, storedDate });
 
   return (
     <div className="recipe-detail">

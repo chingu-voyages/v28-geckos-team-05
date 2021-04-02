@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import { getUserId } from '../firebase';
 import { stockCalendarData } from '../firebase-calendar-utils';

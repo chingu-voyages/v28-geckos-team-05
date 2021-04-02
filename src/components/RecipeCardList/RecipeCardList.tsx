@@ -1,5 +1,4 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { HomepageContext } from '../../context/GlobalContext';
 import { Recipe } from '../../typescript/types';
 import RecipeCard from '../RecipeCard/RecipeCard';
