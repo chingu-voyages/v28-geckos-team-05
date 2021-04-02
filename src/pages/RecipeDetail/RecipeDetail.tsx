@@ -2,15 +2,24 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from 'react';
 import { useParams, useLocation } from 'react-router-dom';
+import DatePickerCalendar from '../../components/DatePicker/DatePicker';
+
+import useCalendarHandler from '../../Hooks/useCalendarHandler';
 
 import './RecipeDetail.scss';
 
 export default function RecipeDetail(props: any) {
   const { id } = useParams<Record<string, string | undefined>>();
   const location = useLocation();
-  const recipe: any = location.state;
+  const { recipe, storedDate }: any = location.state;
 
-  console.log(recipe);
+  const {
+    userId,
+    newStoredDate,
+    activeDate,
+    activeNotification,
+    onChangeDate,
+  } = useCalendarHandler({ recipe, storedDate });
 
   return (
     <div className="recipe-detail">
@@ -56,6 +65,13 @@ export default function RecipeDetail(props: any) {
             </div>
           ))}
         </div>
+      </div>
+      <div className="recipe-detail__add-to-calendar-container">
+        {userId && (
+          <div className="datePicker">
+            <DatePickerCalendar onChangeDate={onChangeDate} />
+          </div>
+        )}
       </div>
     </div>
   );

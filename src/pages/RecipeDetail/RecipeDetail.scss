@@ -85,6 +85,11 @@
         grid-template-columns: minmax(20px, auto) 1fr;
     }
 
+    &__add-to-calendar-container {
+        margin-bottom: 3rem;
+        position: relative;
+    }
+
     // checkbox
     
     &__checkbox {

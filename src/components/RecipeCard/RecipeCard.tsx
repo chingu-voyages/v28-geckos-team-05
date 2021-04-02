@@ -85,7 +85,7 @@ export default function RecipeCard(props: RecipeProps) {
           title="Detail of the recipe"
           to={{
             pathname: `/recipe/${recipe.id}`,
-            state: recipe,
+            state: { recipe, storedDate },
           }}
         >
           <FontAwesomeIcon icon={faArrowRight} />
