@@ -9,7 +9,11 @@ import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
 import Signup from './components/Signup/Signup';
 import NotFound from './components/NotFound/NotFound';
+import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import './App.scss';
+
+// mockData
+import { recipeDetail } from './mock/recipeDetail';
 
 const App = () => {
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
@@ -33,6 +37,10 @@ const App = () => {
             path="/calendar"
             exact
             render={() => <CalendarPage userLoggedIn={userLoggedIn} />}
+          />
+          <Route
+            path="/recipe/:id"
+            render={() => <RecipeDetail recipeList={recipeDetail} />}
           />
           <Route path="/login" exact component={Login} />
           <Route path="/signup" exact component={Signup} />
