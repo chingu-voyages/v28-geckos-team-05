@@ -4,6 +4,7 @@ import { auth } from './firebase';
 import HomePage from './pages/HomePage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';
+import FavoritesPage from './pages/FavoritesPage/FavoritesPage';
 import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 import Login from './components/Login/Login';
@@ -38,6 +39,7 @@ const App = () => {
             exact
             render={() => <CalendarPage userLoggedIn={userLoggedIn} />}
           />
+          <Route path="/favorites" exact component={FavoritesPage} />
           <Route
             path="/recipe/:id"
             render={() => <RecipeDetail recipeList={recipeDetail} />}
