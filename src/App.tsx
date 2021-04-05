@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { auth } from './firebase/firebase';
+import { auth, getUserId } from './firebase/firebase';
+import { loadUserSettings } from './firebase/settings';
 import HomePage from './pages/HomePage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';
@@ -19,7 +20,12 @@ const App = () => {
   const [userLoggedIn, setUserLoggedIn] = useState<boolean>(false);
 
   auth.onAuthStateChanged((user) => {
-    user ? setUserLoggedIn(true) : setUserLoggedIn(false);
+    if (user) {
+      setUserLoggedIn(true);
+      // load user settings from DB
+      const userId = getUserId();
+      !!userId && loadUserSettings(userId);
+    } else setUserLoggedIn(false);
   });
 
   return (

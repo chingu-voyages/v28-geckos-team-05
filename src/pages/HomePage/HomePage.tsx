@@ -15,6 +15,8 @@ export default function HomePage({ userLoggedIn }: any) {
   const [recipesList, setRecipesList] = useState([]);
   const [searchError, setSearchError] = useState('');
   const [searchEntered, setSearchEntered] = useState(false);
+  const [userDiet, setUserDiet] = useState('');
+  const [userIntolerances, setUserIntolerances] = useState('');
 
   const limit = 12;
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
@@ -124,6 +126,8 @@ export default function HomePage({ userLoggedIn }: any) {
         searchTerm,
         searchEntered,
         recipesList,
+        userDiet,
+        userIntolerances,
         getSearchData,
         getRandomData,
         handleChange,
