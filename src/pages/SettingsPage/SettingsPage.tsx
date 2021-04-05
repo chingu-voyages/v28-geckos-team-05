@@ -1,20 +1,21 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import './SettingsPage.scss';
 
 export default function SettingsPage() {
   const intoleranceStrings = [
-    'diary',
-    'egg',
-    'gluten',
-    'grain',
-    'peanut',
-    'seafood',
-    'sesame',
-    'shellfish',
-    'soy',
-    'sulfite',
-    'tree nut',
-    'wheat',
+    'Diary',
+    'Egg',
+    'Gluten',
+    'Grain',
+    'Peanut',
+    'Seafood',
+    'Sesame',
+    'Shellfish',
+    'Soy',
+    'Sulfite',
+    'Tree nut',
+    'Wheat',
   ];
   const dietStrings = [
     'No diet',
@@ -32,9 +33,25 @@ export default function SettingsPage() {
   const [intolerances, setIntolerances] = useState(
     intoleranceStrings.map((s) => ({ name: s, selected: false }))
   );
-  const [diets, setDiets] = useState(
-    dietStrings.map((s) => ({ name: s, selected: false }))
-  );
+  const [diet, setDiet] = useState('');
+
+  const handleChangeDiet = async (newDiet: string) => {
+    console.log('Change diet to ', newDiet);
+    setDiet(newDiet);
+    // change on DB
+  };
+
+  const handleCheckboxClick = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setIntolerances(
+      intolerances.map((intoleranceObj) =>
+        intoleranceObj.name === e.target.id
+          ? { name: e.target.id, selected: e.target.checked }
+          : intoleranceObj
+      )
+    );
+  };
 
   return (
     <div className="page">
@@ -42,8 +59,25 @@ export default function SettingsPage() {
 
       <h2 className="page__h2">Your Diet</h2>
       <p className="page__paragraph">
-        Select a page below by which to filter all your recipe search results
+        Select a diet below by which to filter all your recipe search results
       </p>
+      <div className="select-input">
+        <label htmlFor="diet-select">
+          <select
+            id="diet-select"
+            name="diet-select"
+            value={diet}
+            onChange={(e) => handleChangeDiet(e.target.value)}
+          >
+            {dietStrings.map((dietName) => (
+              <>
+                <option>{dietName}</option>
+              </>
+            ))}
+          </select>
+        </label>
+      </div>
+
       <h2 className="page__h2">Your Intolerances</h2>
       <p className="page__paragraph">
         Select any number of food intolerances so we can filter out your search
@@ -53,6 +87,21 @@ export default function SettingsPage() {
         </Link>
         )
       </p>
+      <div className="checkbox__container">
+        {intolerances.map((intoleranceObj) => (
+          <div key={intoleranceObj.name} className="checkbox__item">
+            <label htmlFor={intoleranceObj.name}>
+              <input
+                type="checkbox"
+                name="intolerances"
+                id={intoleranceObj.name}
+                onChange={(e) => handleCheckboxClick(e)}
+              />
+              {intoleranceObj.name}
+            </label>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
