@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Recipe } from '../../typescript/types';
+import { getUserId } from '../../firebase';
 import {
-  getUserId,
   getFavorites,
   removeFromFavorites,
 } from '../../firebase-favorites-utils';
@@ -30,10 +30,16 @@ export default function FavoritesPage() {
   return (
     <div className="page">
       <h1 className="page__title">Favorites</h1>
-      <div className="recipes__container">
-        {recipesList.map((recipe: Recipe) => (
-          <RecipeCard key={recipe.id} recipe={recipe} />
-        ))}
+      <div className="items__container">
+        <div className="items">
+          {recipesList.map((recipe: Recipe) => (
+            <RecipeCard
+              key={recipe.id}
+              recipe={recipe}
+              handleRemove={handleClickRemove}
+            />
+          ))}
+        </div>
       </div>
     </div>
   );

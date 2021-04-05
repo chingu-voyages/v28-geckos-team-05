@@ -11,11 +11,15 @@ export default function BtnRemoveRecipe({
   userId,
   recipeId,
   storedDate,
+  handleRemove,
 }: BtnRemoveProps) {
   const onRemoveRecipe = () => {
     if (userId) {
       !!storedDate && removeRecipeFromCalendar(recipeId, userId, storedDate);
-      !storedDate && removeFromFavorites(userId, String(recipeId));
+      !storedDate &&
+        handleRemove &&
+        removeFromFavorites(userId, String(recipeId)) &&
+        handleRemove(recipeId);
     }
   };
 

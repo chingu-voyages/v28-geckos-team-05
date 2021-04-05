@@ -24,6 +24,7 @@ type Recipe = {
 type RecipeProps = {
   recipe: Recipe;
   storedDate?: string;
+  handleRemove?: (recipeId: number) => void;
 };
 
 type DatePickerProps = {
@@ -50,6 +51,7 @@ type BtnRemoveProps = {
   userId: string;
   recipeId: number;
   storedDate?: string;
+  handleRemove?: (recipeId: number) => void;
 };
 
 export type {

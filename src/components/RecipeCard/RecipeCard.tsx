@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHeart,
@@ -10,10 +9,11 @@ import {
   faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 
+import { storeFavorite } from '../../firebase-favorites-utils';
 import { getUserId } from '../../firebase';
 import { convertDateToString } from '../../utils';
 import { stockCalendarData } from '../../firebase-calendar-utils';
-import { RecipeProps } from '../../typescript/types';
+import { Recipe, RecipeProps } from '../../typescript/types';
 
 import './RecipeCard.scss';
 
@@ -44,6 +44,11 @@ export default function RecipeCard(props: RecipeProps) {
     }
   };
 
+  const addToFavorites = (rec: Recipe) => {
+    const uId = getUserId();
+    !!uId && storeFavorite(rec, uId);
+  };
+
   useEffect(() => {
     setUserId(getUserId());
 
@@ -61,7 +66,11 @@ export default function RecipeCard(props: RecipeProps) {
         <img className="recipe__image" src={recipe.image} alt={recipe.title} />
       </div>
 
-      <button type="button" className="recipe__button-wishlist">
+      <button
+        type="button"
+        className="recipe__button-wishlist"
+        onClick={() => addToFavorites(recipe)}
+      >
         <FontAwesomeIcon icon={faHeart} />
       </button>
 
@@ -74,7 +83,11 @@ export default function RecipeCard(props: RecipeProps) {
       )}
 
       {location.pathname === '/favorites' && userId && (
-        <BtnRemoveRecipe recipeId={recipe.id} userId={userId} />
+        <BtnRemoveRecipe
+          recipeId={recipe.id}
+          userId={userId}
+          handleRemove={props.handleRemove}
+        />
       )}
 
       {userId && (

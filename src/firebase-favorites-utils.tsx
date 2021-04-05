@@ -1,12 +1,5 @@
 import { Recipe } from './typescript/types';
-import { db, auth } from './firebase';
-
-export const getUserId = () => {
-  if (auth.currentUser !== null) {
-    return auth.currentUser?.uid;
-  }
-  return null;
-};
+import { db } from './firebase';
 
 export const storeFavorite = async (recipe: Recipe, userId: string) => {
   const userRef = await db.collection('user-data').doc(userId);

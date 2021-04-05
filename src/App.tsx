@@ -12,8 +12,6 @@ import Signup from './components/Signup/Signup';
 import NotFound from './components/NotFound/NotFound';
 import RecipeDetail from './pages/RecipeDetail/RecipeDetail';
 import './App.scss';
-
-// mockData
 import { recipeDetail } from './mock/recipeDetail';
 
 const App = () => {
