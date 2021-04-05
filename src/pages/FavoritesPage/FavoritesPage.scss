@@ -1,0 +1,12 @@
+.page__title {
+  text-align: center;
+  margin: 1rem;
+}
+
+.recipes__container {
+  margin: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  width: 95%;
+  justify-content: flex-start;
+}

@@ -17,7 +17,7 @@ import { RecipeProps } from '../../typescript/types';
 
 import './RecipeCard.scss';
 
-import BtnRemoveFromCalendar from '../BtnRemoveFromCalendar/BtnRemoveFromCalendar';
+import BtnRemoveRecipe from '../BtnRemoveFromCalendar/BtnRemoveRecipe';
 import AddCalendarNotification from '../AddCalendarNotification/AddCalendarNotification';
 import DatePickerCalendar from '../DatePicker/DatePicker';
 
@@ -66,11 +66,15 @@ export default function RecipeCard(props: RecipeProps) {
       </button>
 
       {location.pathname === '/calendar' && userId && (
-        <BtnRemoveFromCalendar
+        <BtnRemoveRecipe
           recipeId={recipe.id}
           userId={userId}
           storedDate={storedDate}
         />
+      )}
+
+      {location.pathname === '/favorites' && userId && (
+        <BtnRemoveRecipe recipeId={recipe.id} userId={userId} />
       )}
 
       {userId && (

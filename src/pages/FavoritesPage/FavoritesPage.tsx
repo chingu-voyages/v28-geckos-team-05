@@ -6,6 +6,7 @@ import {
   removeFromFavorites,
 } from '../../firebase-favorites-utils';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
+import './FavoritesPage.scss';
 
 export default function FavoritesPage() {
   const [recipesList, setRecipesList] = useState<Recipe[]>([]);
