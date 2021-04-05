@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../../firebase';
+import { db } from '../../firebase/firebase';
 import { Recipe, CalendarDayListProps } from '../../typescript/types';
 
 import Loader from '../Loader/Loader';

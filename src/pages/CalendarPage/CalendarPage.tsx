@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CalendarDay } from '../../typescript/types';
-import { db, getUserId } from '../../firebase';
+import { db, getUserId } from '../../firebase/firebase';
 import { convertDateFromTimestamp } from '../../utils';
 
 import Loader from '../../components/Loader/Loader';
@@ -50,9 +50,7 @@ export default function CalendarPage({ userLoggedIn }: any) {
             )}
           </div>
         ))}
-      {calendarList &&
-        !calendarList.length &&
-        'No recipes in the calendar :('}
+      {calendarList && !calendarList.length && 'No recipes in the calendar :('}
       {!calendarList && <Loader />}
     </div>
   );

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 
-import { getUserId } from '../firebase';
-import { stockCalendarData } from '../firebase-calendar-utils';
+import { getUserId } from '../firebase/firebase';
+import { stockCalendarData } from '../firebase/calendar';
 import { convertDateToString } from '../utils';
 import { RecipeProps } from '../typescript/types';
 

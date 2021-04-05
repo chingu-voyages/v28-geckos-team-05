@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faHeart,
@@ -10,14 +9,15 @@ import {
   faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { getUserId } from '../../firebase';
+import { storeFavorite } from '../../firebase/favorites';
+import { getUserId } from '../../firebase/firebase';
 import { convertDateToString } from '../../utils';
-import { stockCalendarData } from '../../firebase-calendar-utils';
-import { RecipeProps } from '../../typescript/types';
+import { stockCalendarData } from '../../firebase/calendar';
+import { Recipe, RecipeProps } from '../../typescript/types';
 
 import './RecipeCard.scss';
 
-import BtnRemoveFromCalendar from '../BtnRemoveFromCalendar/BtnRemoveFromCalendar';
+import BtnRemoveRecipe from '../BtnRemoveFromCalendar/BtnRemoveRecipe';
 import AddCalendarNotification from '../AddCalendarNotification/AddCalendarNotification';
 import DatePickerCalendar from '../DatePicker/DatePicker';
 
@@ -44,6 +44,11 @@ export default function RecipeCard(props: RecipeProps) {
     }
   };
 
+  const addToFavorites = (rec: Recipe) => {
+    const uId = getUserId();
+    !!uId && storeFavorite(rec, uId);
+  };
+
   useEffect(() => {
     setUserId(getUserId());
 
@@ -61,15 +66,27 @@ export default function RecipeCard(props: RecipeProps) {
         <img className="recipe__image" src={recipe.image} alt={recipe.title} />
       </div>
 
-      <button type="button" className="recipe__button-wishlist">
+      <button
+        type="button"
+        className="recipe__button-wishlist"
+        onClick={() => addToFavorites(recipe)}
+      >
         <FontAwesomeIcon icon={faHeart} />
       </button>
 
       {location.pathname === '/calendar' && userId && (
-        <BtnRemoveFromCalendar
+        <BtnRemoveRecipe
           recipeId={recipe.id}
           userId={userId}
           storedDate={storedDate}
+        />
+      )}
+
+      {location.pathname === '/favorites' && userId && (
+        <BtnRemoveRecipe
+          recipeId={recipe.id}
+          userId={userId}
+          handleRemove={props.handleRemove}
         />
       )}
 

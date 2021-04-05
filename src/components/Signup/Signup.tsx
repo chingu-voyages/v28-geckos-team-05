@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
-import { auth } from '../../firebase';
+import { auth } from '../../firebase/firebase';
 import './Signup.scss';
 
 export default function Signup() {

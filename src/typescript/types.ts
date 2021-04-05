@@ -23,7 +23,8 @@ type Recipe = {
 
 type RecipeProps = {
   recipe: Recipe;
-  storedDate?: string
+  storedDate?: string;
+  handleRemove?: (recipeId: number) => void;
 };
 
 type DatePickerProps = {
@@ -36,10 +37,10 @@ type CalendarCustomInputProps = {
 };
 
 type CalendarDay = {
-    dateString: string;
-    timeStamp: Date;
-    recipes: string[];
-}
+  dateString: string;
+  timeStamp: Date;
+  recipes: string[];
+};
 
 type CalendarDayListProps = {
   date: string;
@@ -49,8 +50,9 @@ type CalendarDayListProps = {
 type BtnRemoveProps = {
   userId: string;
   recipeId: number;
-  storedDate: string;
-}  
+  storedDate?: string;
+  handleRemove?: (recipeId: number) => void;
+};
 
 export type {
   URL,
@@ -61,7 +63,5 @@ export type {
   CalendarCustomInputProps,
   CalendarDay,
   CalendarDayListProps,
-  BtnRemoveProps
+  BtnRemoveProps,
 };
-
-

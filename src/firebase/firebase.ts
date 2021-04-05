@@ -23,5 +23,4 @@ export const getUserId = () => {
   return null;
 };
 
-
 export default app;
