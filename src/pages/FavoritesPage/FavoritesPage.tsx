@@ -1,10 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Recipe } from '../../typescript/types';
-import { getUserId } from '../../firebase';
-import {
-  getFavorites,
-  removeFromFavorites,
-} from '../../firebase-favorites-utils';
+import { getUserId } from '../../firebase/firebase';
+import { getFavorites, removeFromFavorites } from '../../firebase/favorites';
 import RecipeCard from '../../components/RecipeCard/RecipeCard';
 import './FavoritesPage.scss';
 

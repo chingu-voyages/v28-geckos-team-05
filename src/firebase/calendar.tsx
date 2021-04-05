@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
-import { Recipe } from './typescript/types';
+import { Recipe } from '../typescript/types';
 import { db } from './firebase';
-import { convertDateToString } from './utils';
+import { convertDateToString } from '../utils';
 
 export const stockCalendarData = async (
   date: Date | [Date, Date] | null,

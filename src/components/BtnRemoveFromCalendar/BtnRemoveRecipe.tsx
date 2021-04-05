@@ -3,8 +3,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import './BtnRemoveRecipe.scss';
 
-import { removeRecipeFromCalendar } from '../../firebase-calendar-utils';
-import { removeFromFavorites } from '../../firebase-favorites-utils';
+import { removeRecipeFromCalendar } from '../../firebase/calendar';
+import { removeFromFavorites } from '../../firebase/favorites';
 import { BtnRemoveProps } from '../../typescript/types';
 
 export default function BtnRemoveRecipe({

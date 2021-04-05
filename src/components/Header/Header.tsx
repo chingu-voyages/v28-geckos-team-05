@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 import NavigationModal from '../NavigationModal/NavigationModal';
-import { auth } from '../../firebase';
+import { auth } from '../../firebase/firebase';
 
 import './Header.scss';
 

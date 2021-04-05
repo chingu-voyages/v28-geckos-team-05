@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import { auth } from './firebase';
+import { auth } from './firebase/firebase';
 import HomePage from './pages/HomePage/HomePage';
 import AboutPage from './pages/AboutPage/AboutPage';
 import CalendarPage from './pages/CalendarPage/CalendarPage';

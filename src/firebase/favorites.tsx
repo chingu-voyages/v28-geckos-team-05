@@ -1,4 +1,4 @@
-import { Recipe } from './typescript/types';
+import { Recipe } from '../typescript/types';
 import { db } from './firebase';
 
 export const storeFavorite = async (recipe: Recipe, userId: string) => {

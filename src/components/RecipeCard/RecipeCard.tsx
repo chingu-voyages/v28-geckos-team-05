@@ -9,10 +9,10 @@ import {
   faThumbsUp,
 } from '@fortawesome/free-solid-svg-icons';
 
-import { storeFavorite } from '../../firebase-favorites-utils';
-import { getUserId } from '../../firebase';
+import { storeFavorite } from '../../firebase/favorites';
+import { getUserId } from '../../firebase/firebase';
 import { convertDateToString } from '../../utils';
-import { stockCalendarData } from '../../firebase-calendar-utils';
+import { stockCalendarData } from '../../firebase/calendar';
 import { Recipe, RecipeProps } from '../../typescript/types';
 
 import './RecipeCard.scss';
