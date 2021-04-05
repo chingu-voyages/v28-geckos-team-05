@@ -53,7 +53,13 @@ function Header({ userLoggedIn }: any) {
               FAVORITES
             </Link>
           </div>
+
           <div className="navbar-container--right">
+            {userLoggedIn && (
+              <Link to="/settings" className="navbar__menuItem">
+                Settings
+              </Link>
+            )}
             {!userLoggedIn ? (
               <Link to="/login" className="navbar__menuItem">
                 Login

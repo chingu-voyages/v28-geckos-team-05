@@ -29,6 +29,11 @@ a {
   background-color: $color-page-bg;
   min-height: 100vh - $header-height - $footer-height;
   margin-bottom: $footer-height;
+
+  &__title {
+    text-align: center;
+    margin: 1rem;
+  }
 }
 
 .button {
