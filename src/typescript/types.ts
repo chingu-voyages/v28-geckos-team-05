@@ -3,6 +3,11 @@ type URL = {
   mockURL: string;
 };
 
+type UserSettings = {
+  userDiet: string;
+  userIntolerances: string;
+};
+
 type HomepageContent = {
   searchTerm: string;
   searchEntered: boolean;
@@ -64,4 +69,5 @@ export type {
   CalendarDay,
   CalendarDayListProps,
   BtnRemoveProps,
+  UserSettings,
 };
