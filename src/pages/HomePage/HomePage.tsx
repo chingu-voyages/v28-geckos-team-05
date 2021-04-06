@@ -18,16 +18,21 @@ export default function HomePage({ userLoggedIn }: any) {
   const [searchError, setSearchError] = useState('');
   const [searchEntered, setSearchEntered] = useState(false);
   const [userSettings, setUserSettings] = useState<UserSettings>({
-    diet: 'starting',
-    intolerances: 'starting',
+    userDiet: 'starting',
+    userIntolerances: 'starting',
   });
 
   const limit = 12;
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
   const apiKey = process.env.REACT_APP_API_KEY;
-  const searchUrl: URL = {
-    apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&addRecipeNutrition=true&diet=${userSettings.diet}&intolerances=${userSettings.intolerances}`,
-    mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
+
+  const getSearchUrl: () => URL = () => {
+    console.log('getSearchUrl: settings = ', userSettings);
+
+    return {
+      apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&addRecipeNutrition=true&diet=${userSettings.userDiet}&intolerances=${userSettings.userIntolerances}`,
+      mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
+    };
   };
 
   const bulkUrl: URL = {
@@ -45,11 +50,14 @@ export default function HomePage({ userLoggedIn }: any) {
     e.preventDefault();
     setSearchEntered(true);
     setSearchError('');
+
+    console.log('getSearchData: settings = ', userSettings);
+
     try {
       setSearchTerm(textInput);
       setRecipesList([]);
-      const response = await fetch(getURL(searchUrl));
-      console.log('DEBUG prod searchURL: ', searchUrl.apiURL);
+      const response = await fetch(getURL(getSearchUrl()));
+      console.log('DEBUG prod searchURL: ', getSearchUrl().apiURL);
 
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);
@@ -139,8 +147,9 @@ export default function HomePage({ userLoggedIn }: any) {
         console.log('useEffect: loaded settings ', res);
         setUserSettings(res);
       });
-    console.log('Set user settings to: ', userSettings);
   }, []);
+
+  console.log('User settings: ', userSettings);
 
   return (
     <HomepageContext.Provider

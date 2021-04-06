@@ -22,7 +22,10 @@ export const loadUserSettings = async (userId: string) => {
 
   const settingsRef = await userRef.collection('settings');
   const snapshot = await settingsRef.get();
-  let settings: UserSettings = { diet: 'initial', intolerances: 'initial' };
+  let settings: UserSettings = {
+    userDiet: 'initial',
+    userIntolerances: 'initial',
+  };
 
   snapshot.forEach((doc) => {
     settings = doc.data() as UserSettings;

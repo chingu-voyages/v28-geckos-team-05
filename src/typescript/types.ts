@@ -4,8 +4,8 @@ type URL = {
 };
 
 type UserSettings = {
-  diet: string;
-  intolerances: string;
+  userDiet: string;
+  userIntolerances: string;
 };
 
 type HomepageContent = {
