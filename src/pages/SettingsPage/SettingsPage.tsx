@@ -119,6 +119,7 @@ export default function SettingsPage() {
       loadSettings().then((res) => {
         res && populateLocalUserSettings(res);
       });
+    // eslint-disable-next-line
   }, [userId]);
 
   return (
@@ -138,9 +139,7 @@ export default function SettingsPage() {
             onChange={(e) => handleChangeDiet(e.target.value)}
           >
             {dietStrings.map((dietName) => (
-              <>
-                <option>{dietName}</option>
-              </>
+              <option key={dietName}>{dietName}</option>
             ))}
           </select>
         </label>
