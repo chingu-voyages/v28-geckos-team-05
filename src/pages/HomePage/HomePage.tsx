@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { URL } from '../../typescript/types';
+import { URL, UserSettings } from '../../typescript/types';
 import { getURL, getIdsBulk } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import SplashContent from '../../components/SplashContent/SplashContent';
 import RecipeFilter from '../../components/RecipeFilter/RecipeFilter';
 import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
 import Loader from '../../components/Loader/Loader';
+import { loadUserSettings } from '../../firebase/settings';
+import { getUserId } from '../../firebase/firebase';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HomePage({ userLoggedIn }: any) {
@@ -15,16 +17,19 @@ export default function HomePage({ userLoggedIn }: any) {
   const [recipesList, setRecipesList] = useState([]);
   const [searchError, setSearchError] = useState('');
   const [searchEntered, setSearchEntered] = useState(false);
-  const [userDiet, setUserDiet] = useState('');
-  const [userIntolerances, setUserIntolerances] = useState('');
+  const [userSettings, setUserSettings] = useState<UserSettings>({
+    diet: 'starting',
+    intolerances: 'starting',
+  });
 
   const limit = 12;
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
   const apiKey = process.env.REACT_APP_API_KEY;
   const searchUrl: URL = {
-    apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&addRecipeNutrition=true`,
+    apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&addRecipeNutrition=true&diet=${userSettings.diet}&intolerances=${userSettings.intolerances}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
   };
+
   const bulkUrl: URL = {
     apiURL: `${baseUrl}/informationBulk?apiKey=${apiKey}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/bulkinfo`,
@@ -44,6 +49,8 @@ export default function HomePage({ userLoggedIn }: any) {
       setSearchTerm(textInput);
       setRecipesList([]);
       const response = await fetch(getURL(searchUrl));
+      console.log('DEBUG prod searchURL: ', searchUrl.apiURL);
+
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);
     } catch (error) {
@@ -120,14 +127,27 @@ export default function HomePage({ userLoggedIn }: any) {
     }
   };
 
+  useEffect(() => {
+    const loadSettings = async (userId: string) => {
+      const result = await loadUserSettings(userId);
+      return result;
+    };
+
+    const userId = getUserId();
+    !!userId &&
+      loadSettings(userId).then((res) => {
+        console.log('useEffect: loaded settings ', res);
+        setUserSettings(res);
+      });
+    console.log('Set user settings to: ', userSettings);
+  }, []);
+
   return (
     <HomepageContext.Provider
       value={{
         searchTerm,
         searchEntered,
         recipesList,
-        userDiet,
-        userIntolerances,
         getSearchData,
         getRandomData,
         handleChange,

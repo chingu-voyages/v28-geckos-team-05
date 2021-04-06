@@ -1,3 +1,4 @@
+import { UserSettings } from '../typescript/types';
 import { db } from './firebase';
 
 export const storeSettings = async (
@@ -21,17 +22,12 @@ export const loadUserSettings = async (userId: string) => {
 
   const settingsRef = await userRef.collection('settings');
   const snapshot = await settingsRef.get();
-  const settings: string[] = [];
+  let settings: UserSettings = { diet: 'initial', intolerances: 'initial' };
 
   snapshot.forEach((doc) => {
-    // settings.push(doc.data() as string);
-    console.log('loaded from DB: ', doc.data());
+    settings = doc.data() as UserSettings;
   });
 
+  console.log('loaded from DB: ', settings);
   return settings;
-};
-
-export const removeFromFavorites = async (userId: string, recipeId: string) => {
-  const userRef = await db.collection('user-data').doc(userId);
-  await userRef.collection('favorites').doc(recipeId).delete();
 };

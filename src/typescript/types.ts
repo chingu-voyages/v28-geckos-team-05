@@ -3,12 +3,15 @@ type URL = {
   mockURL: string;
 };
 
+type UserSettings = {
+  diet: string;
+  intolerances: string;
+};
+
 type HomepageContent = {
   searchTerm: string;
   searchEntered: boolean;
   recipesList: Recipe[];
-  userDiet: string;
-  userIntolerances: string;
   getSearchData: (e: React.FormEvent<HTMLFormElement>) => void;
   getRandomData: () => void;
   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -66,4 +69,5 @@ export type {
   CalendarDay,
   CalendarDayListProps,
   BtnRemoveProps,
+  UserSettings,
 };
