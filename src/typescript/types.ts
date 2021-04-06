@@ -58,7 +58,7 @@ type BtnRemoveProps = {
   userId: string;
   recipeId: number;
   storedDate?: string;
-  recipePricePerServing: number;
+  recipePricePerServing?: number;
   handleRemove?: (recipeId: number) => void;
 };  
 

@@ -51,7 +51,9 @@ export default function CalendarPage({ userLoggedIn }: any) {
             )}
 
             <div className="list__summary">
-              {calendarDay.cost && <p>Estimated price: ${calendarDay.cost}</p>}
+              {calendarDay.cost && (
+                <p>Estimated price: ${calendarDay.cost.toFixed(2)}</p>
+              )}
             </div>
           </div>
         ))}
