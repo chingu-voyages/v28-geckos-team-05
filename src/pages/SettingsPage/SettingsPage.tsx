@@ -96,7 +96,6 @@ export default function SettingsPage() {
       intoleranceArr.forEach((intolerance) => {
         if (encodeURI(intoleranceString.toLowerCase()) === intolerance) {
           // set corresponding checkbox to true
-
           newIntolerances = newIntolerances.map((intoleranceObj) =>
             intoleranceObj.name === intoleranceString
               ? { name: intoleranceString, selected: true }
@@ -124,51 +123,53 @@ export default function SettingsPage() {
 
   return (
     <div className="page">
-      <h1 className="page__title">User settings</h1>
+      <div className="page__content-wrapper">
+        <h1 className="page__title">User settings</h1>
 
-      <h2 className="page__h2">Your Diet</h2>
-      <p className="page__paragraph">
-        Select a diet below by which to filter all your recipe search results
-      </p>
-      <div className="select-input">
-        <label htmlFor="diet-select">
-          <select
-            id="diet-select"
-            name="diet-select"
-            value={diet}
-            onChange={(e) => handleChangeDiet(e.target.value)}
-          >
-            {dietStrings.map((dietName) => (
-              <option key={dietName}>{dietName}</option>
-            ))}
-          </select>
-        </label>
-      </div>
+        <h2 className="page__h2">Your Diet</h2>
+        <p className="page__paragraph">
+          Select a diet below by which to filter all your recipe search results
+        </p>
+        <div className="select-input">
+          <label htmlFor="diet-select">
+            <select
+              id="diet-select"
+              name="diet-select"
+              value={diet}
+              onChange={(e) => handleChangeDiet(e.target.value)}
+            >
+              {dietStrings.map((dietName) => (
+                <option key={dietName}>{dietName}</option>
+              ))}
+            </select>
+          </label>
+        </div>
 
-      <h2 className="page__h2">Your Intolerances</h2>
-      <p className="page__paragraph">
-        Select any number of food intolerances so we can filter out your search
-        results appropriately (please see{' '}
-        <Link to="/about">
-          <strong>disclaimer</strong>
-        </Link>
-        )
-      </p>
-      <div className="checkbox__container">
-        {intolerances.map((intoleranceObj) => (
-          <div key={intoleranceObj.name} className="checkbox__item">
-            <label htmlFor={intoleranceObj.name}>
-              <input
-                type="checkbox"
-                name="intolerances"
-                id={intoleranceObj.name}
-                onChange={(e) => handleCheckboxClick(e)}
-                checked={intoleranceObj.selected}
-              />
-              {intoleranceObj.name}
-            </label>
-          </div>
-        ))}
+        <h2 className="page__h2">Your Intolerances</h2>
+        <p className="page__paragraph">
+          Select any number of food intolerances so we can filter out your
+          search results appropriately (please see{' '}
+          <Link to="/about">
+            <strong>disclaimer</strong>
+          </Link>
+          )
+        </p>
+        <div className="checkbox__container">
+          {intolerances.map((intoleranceObj) => (
+            <div key={intoleranceObj.name} className="checkbox__item">
+              <label htmlFor={intoleranceObj.name}>
+                <input
+                  type="checkbox"
+                  name="intolerances"
+                  id={intoleranceObj.name}
+                  onChange={(e) => handleCheckboxClick(e)}
+                  checked={intoleranceObj.selected}
+                />
+                <span className="checkbox__label">{intoleranceObj.name}</span>
+              </label>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );
