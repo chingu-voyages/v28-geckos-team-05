@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { getUserId } from '../../firebase/firebase';
+import { storeSettings } from '../../firebase/settings';
 import './SettingsPage.scss';
 
 export default function SettingsPage() {
@@ -30,27 +32,51 @@ export default function SettingsPage() {
     'Primal',
     'Whole 30',
   ];
-  const [intolerances, setIntolerances] = useState(
+
+  type IntoleranceObj = {
+    name: string;
+    selected: boolean;
+  };
+
+  const [intolerances, setIntolerances] = useState<IntoleranceObj[]>(
     intoleranceStrings.map((s) => ({ name: s, selected: false }))
   );
   const [diet, setDiet] = useState('');
 
+  const getIntoleranceString = (intoleranceObjArray: IntoleranceObj[]) =>
+    intoleranceObjArray
+      .filter((intObj) => intObj.selected)
+      .map((intObj) => encodeURI(intObj.name.toLowerCase()))
+      .join(',');
+
   const handleChangeDiet = async (newDiet: string) => {
-    console.log('Change diet to ', newDiet);
     setDiet(newDiet);
+
     // change on DB
+    const userId = getUserId();
+    !!userId &&
+      storeSettings(
+        encodeURI(newDiet.toLowerCase()),
+        getIntoleranceString(intolerances),
+        userId
+      );
   };
 
   const handleCheckboxClick = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setIntolerances(
-      intolerances.map((intoleranceObj) =>
-        intoleranceObj.name === e.target.id
-          ? { name: e.target.id, selected: e.target.checked }
-          : intoleranceObj
-      )
+    const newIntolerances = intolerances.map((intoleranceObj) =>
+      intoleranceObj.name === e.target.id
+        ? { name: e.target.id, selected: e.target.checked }
+        : intoleranceObj
     );
+
+    setIntolerances(newIntolerances);
+
+    // change on DB
+    const userId = getUserId();
+    !!userId &&
+      storeSettings(diet, getIntoleranceString(newIntolerances), userId);
   };
 
   return (

@@ -25,15 +25,12 @@ export default function HomePage({ userLoggedIn }: any) {
   const limit = 12;
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
   const apiKey = process.env.REACT_APP_API_KEY;
+  const userId = getUserId();
 
-  const getSearchUrl: () => URL = () => {
-    console.log('getSearchUrl: settings = ', userSettings);
-
-    return {
-      apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&addRecipeNutrition=true&diet=${userSettings.userDiet}&intolerances=${userSettings.userIntolerances}`,
-      mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
-    };
-  };
+  const getSearchUrl: () => URL = () => ({
+    apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&addRecipeNutrition=true&diet=${userSettings.userDiet}&intolerances=${userSettings.userIntolerances}`,
+    mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
+  });
 
   const bulkUrl: URL = {
     apiURL: `${baseUrl}/informationBulk?apiKey=${apiKey}`,
@@ -50,8 +47,6 @@ export default function HomePage({ userLoggedIn }: any) {
     e.preventDefault();
     setSearchEntered(true);
     setSearchError('');
-
-    console.log('getSearchData: settings = ', userSettings);
 
     try {
       setSearchTerm(textInput);
@@ -136,20 +131,16 @@ export default function HomePage({ userLoggedIn }: any) {
   };
 
   useEffect(() => {
-    const loadSettings = async (userId: string) => {
-      const result = await loadUserSettings(userId);
+    const loadSettings = async () => {
+      const result = !!userId && (await loadUserSettings(userId));
       return result;
     };
 
-    const userId = getUserId();
     !!userId &&
-      loadSettings(userId).then((res) => {
-        console.log('useEffect: loaded settings ', res);
-        setUserSettings(res);
+      loadSettings().then((res) => {
+        res && setUserSettings(res);
       });
-  }, []);
-
-  console.log('User settings: ', userSettings);
+  }, [userId]);
 
   return (
     <HomepageContext.Provider
