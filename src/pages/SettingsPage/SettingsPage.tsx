@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { UserSettings } from '../../typescript/types';
 import { getUserId } from '../../firebase/firebase';
-import { storeSettings } from '../../firebase/settings';
+import { storeSettings, loadUserSettings } from '../../firebase/settings';
 import './SettingsPage.scss';
 
 export default function SettingsPage() {
@@ -38,6 +39,8 @@ export default function SettingsPage() {
     selected: boolean;
   };
 
+  const userId = getUserId();
+
   const [intolerances, setIntolerances] = useState<IntoleranceObj[]>(
     intoleranceStrings.map((s) => ({ name: s, selected: false }))
   );
@@ -53,7 +56,6 @@ export default function SettingsPage() {
     setDiet(newDiet);
 
     // change on DB
-    const userId = getUserId();
     !!userId &&
       storeSettings(
         encodeURI(newDiet.toLowerCase()),
@@ -74,10 +76,50 @@ export default function SettingsPage() {
     setIntolerances(newIntolerances);
 
     // change on DB
-    const userId = getUserId();
     !!userId &&
       storeSettings(diet, getIntoleranceString(newIntolerances), userId);
   };
+
+  const populateLocalUserSettings = (settings: UserSettings) => {
+    // populate diet
+    dietStrings.forEach((dietString) => {
+      if (encodeURI(dietString.toLowerCase()) === settings.userDiet) {
+        setDiet(dietString);
+      }
+    });
+
+    // populate intolerances
+    const intoleranceArr = settings.userIntolerances.split(',');
+    let newIntolerances = [...intolerances];
+
+    intoleranceStrings.forEach((intoleranceString) => {
+      intoleranceArr.forEach((intolerance) => {
+        if (encodeURI(intoleranceString.toLowerCase()) === intolerance) {
+          // set corresponding checkbox to true
+
+          newIntolerances = newIntolerances.map((intoleranceObj) =>
+            intoleranceObj.name === intoleranceString
+              ? { name: intoleranceString, selected: true }
+              : intoleranceObj
+          );
+        }
+      });
+    });
+
+    setIntolerances(newIntolerances);
+  };
+
+  useEffect(() => {
+    const loadSettings = async () => {
+      const result = !!userId && (await loadUserSettings(userId));
+      return result;
+    };
+
+    !!userId &&
+      loadSettings().then((res) => {
+        res && populateLocalUserSettings(res);
+      });
+  }, [userId]);
 
   return (
     <div className="page">
@@ -122,6 +164,7 @@ export default function SettingsPage() {
                 name="intolerances"
                 id={intoleranceObj.name}
                 onChange={(e) => handleCheckboxClick(e)}
+                checked={intoleranceObj.selected}
               />
               {intoleranceObj.name}
             </label>

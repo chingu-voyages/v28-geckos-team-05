@@ -52,7 +52,6 @@ export default function HomePage({ userLoggedIn }: any) {
       setSearchTerm(textInput);
       setRecipesList([]);
       const response = await fetch(getURL(getSearchUrl()));
-      console.log('DEBUG prod searchURL: ', getSearchUrl().apiURL);
 
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);

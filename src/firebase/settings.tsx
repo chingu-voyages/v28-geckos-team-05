@@ -16,8 +16,6 @@ export const storeSettings = async (
 };
 
 export const loadUserSettings = async (userId: string) => {
-  console.log('loading user settings...');
-
   const userRef = await db.collection('user-data').doc(userId);
 
   const settingsRef = await userRef.collection('settings');
@@ -31,6 +29,5 @@ export const loadUserSettings = async (userId: string) => {
     settings = doc.data() as UserSettings;
   });
 
-  console.log('loaded from DB: ', settings);
   return settings;
 };
