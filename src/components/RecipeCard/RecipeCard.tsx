@@ -11,7 +11,7 @@ import {
 
 import { storeFavorite } from '../../firebase/favorites';
 import { getUserId } from '../../firebase/firebase';
-import { convertDateToString } from '../../utils';
+import { convertDateToString, convertCentsToDollars } from '../../utils';
 import { stockCalendarData } from '../../firebase/calendar';
 import { Recipe, RecipeProps } from '../../typescript/types';
 
@@ -111,6 +111,12 @@ export default function RecipeCard(props: RecipeProps) {
         <h2 className="recipe__title">{recipe.title}</h2>
         <p className="recipe__text" />
       </article>
+      <div className="recipe__price">
+        <span>
+          <strong>{convertCentsToDollars(recipe.pricePerServing)}</strong> per
+          serving
+        </span>
+      </div>
       <aside className="recipe__infos">
         <span>
           <FontAwesomeIcon icon={faClock} />

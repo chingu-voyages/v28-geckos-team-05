@@ -62,10 +62,21 @@ const convertDateToString: (date: Date | [Date, Date] | null) => string = (
   return dateString;
 };
 
+const convertCentsToDollars: (cents: number) => string = (cents) => {
+  const dollarsNumber = cents / 100;
+  const dollarsString = dollarsNumber.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  return dollarsString;
+};
+
 export {
   getURL,
   getIdsBulk,
   getNutrientParamsString,
   convertDateFromTimestamp,
   convertDateToString,
+  convertCentsToDollars,
 };
