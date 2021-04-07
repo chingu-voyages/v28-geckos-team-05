@@ -13,32 +13,30 @@ export const stockCalendarData = async (
   try {
     const userRef = db.collection('user-data').doc(userId);
     const calendarRef = userRef.collection('calendar');
-
-    // if calendar subcollection doesn't exists for this user
-    // create it with empty value
-    const calendarData = await calendarRef.limit(1).get();
-    if (calendarData.empty) {
-      calendarRef.doc(dateMeal).set({});
-    }
-
     const dayRef = calendarRef.doc(dateMeal);
     const dayDoc = await dayRef.get();
+    const dayData = dayDoc.data();
 
-    const { id } = recipe;
+    const { id, pricePerServing } = recipe;
     const recipeIdString = id.toString();
+    const updatedRecipeList = firebase.firestore.FieldValue.arrayUnion(id);
 
     // if doc for this date does not exists create it and
     //        initialize the array with the first id
+    //        and the price
     // if exists update the array adding the id
+    //        and the price
     if (!dayDoc.exists) {
       await dayRef.set({
         date,
-        recipes_list: firebase.firestore.FieldValue.arrayUnion(id),
+        recipes_list: updatedRecipeList,
+        cost: pricePerServing,
       });
     } else {
       await dayRef.update({
         date,
-        recipes_list: firebase.firestore.FieldValue.arrayUnion(id),
+        recipes_list: updatedRecipeList,
+        cost: updatePrice(pricePerServing, id, dayData?.recipes_list),
       });
     }
 
@@ -69,7 +67,8 @@ export const addRecipeToRecipes = async (
 export const removeRecipeFromCalendar = async (
   recipeId: number,
   userId: string,
-  storedDate: string
+  storedDate: string,
+  recipePricePerServing: number = 0
 ) => {
   const userRef = db.collection('user-data').doc(userId);
   const calendarRef = userRef.collection('calendar');
@@ -78,6 +77,7 @@ export const removeRecipeFromCalendar = async (
 
   await dayRef.update({
     recipes_list: firebase.firestore.FieldValue.arrayRemove(recipeId),
+    cost: firebase.firestore.FieldValue.increment(-recipePricePerServing),
   });
 
   // if the id is the last one of the recipes_list array
@@ -96,4 +96,16 @@ export const removeDayFromCalendar = async (
       dayRef.delete();
     }
   }
+};
+
+export const updatePrice = (
+  price: number,
+  id: number,
+  recipes_list: number[]
+) => {
+  if (!recipes_list.includes(id)) {
+    return firebase.firestore.FieldValue.increment(price);
+  }
+
+  return firebase.firestore.FieldValue.increment(0);
 };

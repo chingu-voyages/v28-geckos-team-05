@@ -79,6 +79,7 @@ export default function RecipeCard(props: RecipeProps) {
           recipeId={recipe.id}
           userId={userId}
           storedDate={storedDate}
+          recipePricePerServing={recipe.pricePerServing}
         />
       )}
 

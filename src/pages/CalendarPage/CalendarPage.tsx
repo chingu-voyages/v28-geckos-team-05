@@ -27,6 +27,7 @@ export default function CalendarPage({ userLoggedIn }: any) {
               dateString: doc.id,
               timeStamp: dayDetail.date,
               recipes: dayDetail.recipes_list,
+              cost: dayDetail.cost,
             });
           });
 
@@ -48,6 +49,12 @@ export default function CalendarPage({ userLoggedIn }: any) {
                 date={calendarDay.dateString}
               />
             )}
+
+            <div className="list__summary">
+              {calendarDay.cost && (
+                <p>Estimated price: ${calendarDay.cost.toFixed(2)}</p>
+              )}
+            </div>
           </div>
         ))}
       {calendarList && !calendarList.length && 'No recipes in the calendar :('}
