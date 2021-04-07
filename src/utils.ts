@@ -96,6 +96,16 @@ const getRandomApiKey = () => {
   return '';
 };
 
+const convertCentsToDollars: (cents: number) => string = (cents) => {
+  const dollarsNumber = cents / 100;
+  const dollarsString = dollarsNumber.toLocaleString('en-US', {
+    style: 'currency',
+    currency: 'USD',
+  });
+
+  return dollarsString;
+};
+
 export {
   getURL,
   getIdsBulk,
@@ -103,4 +113,5 @@ export {
   convertDateFromTimestamp,
   convertDateToString,
   getRandomApiKey,
+  convertCentsToDollars,
 };

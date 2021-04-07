@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { CalendarDay } from '../../typescript/types';
 import { db, getUserId } from '../../firebase/firebase';
-import { convertDateFromTimestamp } from '../../utils';
+import { convertDateFromTimestamp, convertCentsToDollars } from '../../utils';
 
 import Loader from '../../components/Loader/Loader';
 import CalendarDayList from '../../components/CalendarDayList/CalendarDayList';
@@ -52,7 +52,9 @@ export default function CalendarPage({ userLoggedIn }: any) {
 
             <div className="list__summary">
               {calendarDay.cost && (
-                <p>Estimated price: ${calendarDay.cost.toFixed(2)}</p>
+                <p>
+                  Estimated price: {convertCentsToDollars(calendarDay.cost)}
+                </p>
               )}
             </div>
           </div>

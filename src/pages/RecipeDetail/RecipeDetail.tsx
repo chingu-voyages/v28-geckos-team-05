@@ -3,6 +3,7 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 import DatePickerCalendar from '../../components/DatePicker/DatePicker';
+import { convertCentsToDollars } from '../../utils';
 
 import useCalendarHandler from '../../Hooks/useCalendarHandler';
 
@@ -31,7 +32,9 @@ export default function RecipeDetail(props: any) {
           alt={recipe.title}
         />
         <div className="recipe-detail__header-container__info">
-          <span>$ {recipe.pricePerServing} per serving</span>
+          <span>
+            {convertCentsToDollars(recipe.pricePerServing)} per serving
+          </span>
           <span className="recipe-detail__dot" />
           <span>{recipe.readyInMinutes} minutes</span>
         </div>
