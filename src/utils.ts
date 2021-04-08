@@ -62,6 +62,40 @@ const convertDateToString: (date: Date | [Date, Date] | null) => string = (
   return dateString;
 };
 
+const shuffleArray = (array: string[]) => {
+  const arr = [...array];
+  let currentIndex = arr.length;
+  let temporaryValue;
+  let randomIndex;
+
+  while (currentIndex !== 0) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+
+    temporaryValue = arr[currentIndex];
+    arr[currentIndex] = arr[randomIndex];
+    arr[randomIndex] = temporaryValue;
+  }
+
+  return arr;
+};
+
+let count = 0;
+const getRandomApiKey = () => {
+  const apiKeys = process.env.REACT_APP_API_KEYS?.split(',');
+  const shuffledApiKeys = apiKeys && shuffleArray(apiKeys);
+
+  const getRandomKey = (cnt: number) =>
+    shuffledApiKeys && shuffledApiKeys[cnt % shuffledApiKeys.length];
+
+  if (shuffledApiKeys) {
+    count += 1;
+    return getRandomKey(count);
+  }
+
+  return '';
+};
+
 const convertCentsToDollars: (cents: number) => string = (cents) => {
   const dollarsNumber = cents / 100;
   const dollarsString = dollarsNumber.toLocaleString('en-US', {
@@ -78,5 +112,6 @@ export {
   getNutrientParamsString,
   convertDateFromTimestamp,
   convertDateToString,
+  getRandomApiKey,
   convertCentsToDollars,
 };

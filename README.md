@@ -14,7 +14,7 @@ Install the dependencies locally:
 
 `cd v28-geckos-team-05/ && npm i`
 
-Create an .env file (see .env.sample). The `REACT_APP_MOCK_API` variable determines whether the api calls are being mocked locally. If the variable is not set to true, `REACT_APP_API_KEY` will need to be set to a Spoonacular Api key (you will need to create an account at https://spoonacular.com/food-api)
+Create an .env file (see .env.sample). The `REACT_APP_MOCK_API` variable determines whether the api calls are being mocked locally. If the variable is not set to true, `REACT_APP_API_KEYS` will need to be set to a list of comma-separated Spoonacular Api keys (you will need to create an account at https://spoonacular.com/food-api)
 
 You will also need to create a Firestore database and set the related environment variables accordingly.
 

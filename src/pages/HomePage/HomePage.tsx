@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { URL, UserSettings } from '../../typescript/types';
-import { getURL, getIdsBulk } from '../../utils';
+import { getURL, getIdsBulk, getRandomApiKey } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import SplashContent from '../../components/SplashContent/SplashContent';
 import RecipeFilter from '../../components/RecipeFilter/RecipeFilter';
@@ -24,20 +24,21 @@ export default function HomePage({ userLoggedIn }: any) {
 
   const limit = 12;
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
-  const apiKey = process.env.REACT_APP_API_KEY;
   const userId = getUserId();
 
   const getSearchUrl: () => URL = () => ({
-    apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&addRecipeNutrition=true&diet=${userSettings.userDiet}&intolerances=${userSettings.userIntolerances}`,
+    apiURL: `${baseUrl}/complexSearch?apiKey=${getRandomApiKey()}&number=${limit}&query=${textInput}&addRecipeNutrition=true&diet=${
+      userSettings.userDiet
+    }&intolerances=${userSettings.userIntolerances}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
   });
 
   const bulkUrl: URL = {
-    apiURL: `${baseUrl}/informationBulk?apiKey=${apiKey}`,
+    apiURL: `${baseUrl}/informationBulk?apiKey=${getRandomApiKey()}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/bulkinfo`,
   };
   const randomUrl: URL = {
-    apiURL: `${baseUrl}/random?apiKey=${apiKey}&number=${limit}`,
+    apiURL: `${baseUrl}/random?apiKey=${getRandomApiKey()}&number=${limit}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
   };
 
@@ -99,7 +100,7 @@ export default function HomePage({ userLoggedIn }: any) {
   ) => {
     // Check that no ingredient is both included and excluded. If so, remove it from includedIngredients
     const url: URL = {
-      apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&${nutritionFilters}&includeIngredients=${ingredientsToInclude}&excludeIngredients=${ingredientsToExclude}`,
+      apiURL: `${baseUrl}/complexSearch?apiKey=${getRandomApiKey()}&number=${limit}&query=${textInput}&${nutritionFilters}&includeIngredients=${ingredientsToInclude}&excludeIngredients=${ingredientsToExclude}`,
       mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
     };
 
