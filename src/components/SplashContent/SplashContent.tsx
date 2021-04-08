@@ -1,7 +1,11 @@
 import React from 'react';
 import './SplashContent.scss';
 
-export default function SplashContent() {
+interface SplashProps {
+  userLoggedIn: boolean;
+}
+
+export default function SplashContent({ userLoggedIn }: SplashProps) {
   return (
     <div className="splash">
       <p className="splash__paragraph">
@@ -54,11 +58,13 @@ export default function SplashContent() {
           </div>
         </div>
       </div>
-      <div className="splash__cta">
-        <button type="button" className="button--primary">
-          Sign up
-        </button>
-      </div>
+      {!userLoggedIn && (
+        <div className="splash__cta">
+          <button type="button" className="button--primary">
+            Sign up
+          </button>
+        </div>
+      )}
     </div>
   );
 }
