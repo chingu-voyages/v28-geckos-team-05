@@ -3,6 +3,11 @@ type URL = {
   mockURL: string;
 };
 
+type UserSettings = {
+  userDiet: string;
+  userIntolerances: string;
+};
+
 type HomepageContent = {
   searchTerm: string;
   searchEntered: boolean;
@@ -19,10 +24,53 @@ type Recipe = {
   servings: number;
   title: string;
   aggregateLikes: string;
+  pricePerServing: number;
 };
 
 type RecipeProps = {
   recipe: Recipe;
+  storedDate?: string;
+  handleRemove?: (recipeId: number) => void;
 };
 
-export type { URL, HomepageContent, Recipe, RecipeProps };
+type DatePickerProps = {
+  onChangeDate: (date: Date | [Date, Date] | null) => void;
+};
+
+type CalendarCustomInputProps = {
+  value: string;
+  onClick: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+};
+
+type CalendarDay = {
+    dateString: string;
+    timeStamp: Date;
+    recipes: string[];
+    cost: number;
+}
+
+type CalendarDayListProps = {
+  date: string;
+  recipeList: string[];
+};
+
+type BtnRemoveProps = {
+  userId: string;
+  recipeId: number;
+  storedDate?: string;
+  recipePricePerServing?: number;
+  handleRemove?: (recipeId: number) => void;
+};  
+
+export type {
+  URL,
+  HomepageContent,
+  Recipe,
+  RecipeProps,
+  DatePickerProps,
+  CalendarCustomInputProps,
+  CalendarDay,
+  CalendarDayListProps,
+  BtnRemoveProps,
+  UserSettings,
+};

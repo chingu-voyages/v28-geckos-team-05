@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
-import { URL } from '../../typescript/types';
-import { getURL, getIdsBulk } from '../../utils';
+import { URL, UserSettings } from '../../typescript/types';
+import { getURL, getIdsBulk, getRandomApiKey } from '../../utils';
 import { HomepageContext } from '../../context/GlobalContext';
 import SplashContent from '../../components/SplashContent/SplashContent';
 import RecipeFilter from '../../components/RecipeFilter/RecipeFilter';
 import RecipeCardList from '../../components/RecipeCardList/RecipeCardList';
 import Loader from '../../components/Loader/Loader';
+import { loadUserSettings } from '../../firebase/settings';
+import { getUserId } from '../../firebase/firebase';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default function HomePage({ userLoggedIn }: any) {
@@ -15,20 +17,28 @@ export default function HomePage({ userLoggedIn }: any) {
   const [recipesList, setRecipesList] = useState([]);
   const [searchError, setSearchError] = useState('');
   const [searchEntered, setSearchEntered] = useState(false);
+  const [userSettings, setUserSettings] = useState<UserSettings>({
+    userDiet: 'starting',
+    userIntolerances: 'starting',
+  });
 
   const limit = 12;
   const baseUrl = process.env.REACT_APP_API_BASE_RECIPES_URL;
-  const apiKey = process.env.REACT_APP_API_KEY;
-  const searchUrl: URL = {
-    apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&addRecipeNutrition=true`,
+  const userId = getUserId();
+
+  const getSearchUrl: () => URL = () => ({
+    apiURL: `${baseUrl}/complexSearch?apiKey=${getRandomApiKey()}&number=${limit}&query=${textInput}&addRecipeNutrition=true&diet=${
+      userSettings.userDiet
+    }&intolerances=${userSettings.userIntolerances}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
-  };
+  });
+
   const bulkUrl: URL = {
-    apiURL: `${baseUrl}/informationBulk?apiKey=${apiKey}`,
+    apiURL: `${baseUrl}/informationBulk?apiKey=${getRandomApiKey()}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/bulkinfo`,
   };
   const randomUrl: URL = {
-    apiURL: `${baseUrl}/random?apiKey=${apiKey}&number=${limit}`,
+    apiURL: `${baseUrl}/random?apiKey=${getRandomApiKey()}&number=${limit}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
   };
 
@@ -38,10 +48,12 @@ export default function HomePage({ userLoggedIn }: any) {
     e.preventDefault();
     setSearchEntered(true);
     setSearchError('');
+
     try {
       setSearchTerm(textInput);
       setRecipesList([]);
-      const response = await fetch(getURL(searchUrl));
+      const response = await fetch(getURL(getSearchUrl()));
+
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);
     } catch (error) {
@@ -88,7 +100,7 @@ export default function HomePage({ userLoggedIn }: any) {
   ) => {
     // Check that no ingredient is both included and excluded. If so, remove it from includedIngredients
     const url: URL = {
-      apiURL: `${baseUrl}/complexSearch?apiKey=${apiKey}&number=${limit}&query=${textInput}&${nutritionFilters}&includeIngredients=${ingredientsToInclude}&excludeIngredients=${ingredientsToExclude}`,
+      apiURL: `${baseUrl}/complexSearch?apiKey=${getRandomApiKey()}&number=${limit}&query=${textInput}&${nutritionFilters}&includeIngredients=${ingredientsToInclude}&excludeIngredients=${ingredientsToExclude}`,
       mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/search`,
     };
 
@@ -118,6 +130,18 @@ export default function HomePage({ userLoggedIn }: any) {
     }
   };
 
+  useEffect(() => {
+    const loadSettings = async () => {
+      const result = !!userId && (await loadUserSettings(userId));
+      return result;
+    };
+
+    !!userId &&
+      loadSettings().then((res) => {
+        res && setUserSettings(res);
+      });
+  }, [userId]);
+
   return (
     <HomepageContext.Provider
       value={{
@@ -132,15 +156,15 @@ export default function HomePage({ userLoggedIn }: any) {
       <div className="page">
         <SearchBar textInput={textInput} />
 
-        {!userLoggedIn && !searchEntered ? (
+        {!searchEntered ? (
           <>
             {/* Splash page displayed when user is not logged in and no search has been entered yet */}
-            <SplashContent />
+            <SplashContent userLoggedIn={userLoggedIn} />
           </>
         ) : (
           <>
-            {searchTerm && !recipesList.length && <Loader />}
             {searchTerm && <RecipeFilter handleFilter={handleFilter} />}
+            {searchTerm && !recipesList.length && <Loader />}
             {searchTerm && !!recipesList.length && <RecipeCardList />}
             {searchError}
             {/* end test only code */}

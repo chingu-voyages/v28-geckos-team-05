@@ -15,4 +15,12 @@ const app = firebase.initializeApp({
 
 export const auth = app.auth();
 export const db = app.firestore();
+
+export const getUserId = () => {
+  if (auth.currentUser !== null) {
+    return auth.currentUser?.uid;
+  }
+  return null;
+};
+
 export default app;

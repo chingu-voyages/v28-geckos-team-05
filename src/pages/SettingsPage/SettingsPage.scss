@@ -1,0 +1,15 @@
+.checkbox {
+  &__container {
+    margin-top: 2rem;
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  &__item {
+    width: 50%;
+  }
+
+  &__label {
+    margin-left: 0.5rem;
+  }
+}

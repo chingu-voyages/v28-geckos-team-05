@@ -29,6 +29,20 @@ a {
   background-color: $color-page-bg;
   min-height: 100vh - $header-height - $footer-height;
   margin-bottom: $footer-height;
+
+  &__title {
+    text-align: center;
+    margin: 1rem;
+  }
+
+  &__content-wrapper {
+    margin: 1rem;
+  }
+
+  &__h2 {
+    margin-top: 1rem;
+    margin-bottom: 0.5rem;
+  }
 }
 
 .button {
@@ -76,5 +90,27 @@ a {
     border-radius: $standard-border-radius;
     font-weight: 700;
     font-size: 13px;
+  }
+}
+
+.list__wrapper {
+  margin: 1.8rem 1rem;
+}
+
+.items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: $page-inner-padding 0;
+  .recipe {
+    margin-right: 1.5rem;
+  }
+  .recipe:nth-child(2n) {
+    margin-right: 0;
+  }
+  @media (min-width: $bp-min-desktop) {
+    .recipe:nth-child(2n) {
+      margin-right: 1.5rem;
+    }
   }
 }

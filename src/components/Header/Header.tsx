@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBars, faHome } from '@fortawesome/free-solid-svg-icons';
 import NavigationModal from '../NavigationModal/NavigationModal';
-import { auth } from '../../firebase';
+import { auth } from '../../firebase/firebase';
 
 import './Header.scss';
 
@@ -44,14 +44,22 @@ function Header({ userLoggedIn }: any) {
             <Link to="/about" className="navbar__menuItem">
               ABOUT
             </Link>
-            <Link to="/calendar" className="navbar__menuItem">
-              CALENDAR
-            </Link>
+            {userLoggedIn && (
+              <Link to="/calendar" className="navbar__menuItem">
+                CALENDAR
+              </Link>
+            )}
             <Link to="/favorites" className="navbar__menuItem">
               FAVORITES
             </Link>
           </div>
+
           <div className="navbar-container--right">
+            {userLoggedIn && (
+              <Link to="/settings" className="navbar__menuItem">
+                Settings
+              </Link>
+            )}
             {!userLoggedIn ? (
               <Link to="/login" className="navbar__menuItem">
                 Login
