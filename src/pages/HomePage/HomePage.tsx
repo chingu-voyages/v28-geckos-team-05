@@ -77,6 +77,7 @@ export default function HomePage({ userLoggedIn }: any) {
 
   const getRandomData = async () => {
     setSearchError('');
+    setSearchEntered(true);
 
     try {
       setSearchTerm('random recipes');
