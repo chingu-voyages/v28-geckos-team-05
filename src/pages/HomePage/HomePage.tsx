@@ -157,15 +157,15 @@ export default function HomePage({ userLoggedIn }: any) {
       <div className="page">
         <SearchBar textInput={textInput} />
 
-        {!userLoggedIn && !searchEntered ? (
+        {!searchEntered ? (
           <>
             {/* Splash page displayed when user is not logged in and no search has been entered yet */}
-            <SplashContent />
+            <SplashContent userLoggedIn={userLoggedIn} />
           </>
         ) : (
           <>
-            {searchTerm && !recipesList.length && <Loader />}
             {searchTerm && <RecipeFilter handleFilter={handleFilter} />}
+            {searchTerm && !recipesList.length && <Loader />}
             {searchTerm && !!recipesList.length && <RecipeCardList />}
             {searchError}
             {/* end test only code */}
