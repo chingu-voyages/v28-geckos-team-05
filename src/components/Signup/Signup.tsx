@@ -65,7 +65,7 @@ export default function Signup() {
             onChange={(e) => setPasswordConfirmed(e.target.value)}
           />
         </div>
-        <button className="login__button" type="submit">
+        <button disabled={loading} className="login__button" type="submit">
           {loading ? <span>Signing up...</span> : <span>Sign up</span>}
         </button>
       </form>
