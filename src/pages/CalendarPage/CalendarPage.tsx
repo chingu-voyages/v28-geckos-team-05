@@ -57,7 +57,10 @@ export default function CalendarPage({ userLoggedIn }: any) {
                   <p>
                     Estimated price: {convertCentsToDollars(calendarDay.cost)}
                   </p>
-                  <p>Estimated Calorie intake: {calendarDay.calories}</p>
+                  <p>
+                    {`Estimated Calorie intake:
+                    ${Math.round(calendarDay.calories * 100) / 100} kcal`}
+                  </p>
                 </>
               )}
             </div>
