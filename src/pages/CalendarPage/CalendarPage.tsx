@@ -28,6 +28,7 @@ export default function CalendarPage({ userLoggedIn }: any) {
               timeStamp: dayDetail.date,
               recipes: dayDetail.recipes_list,
               cost: dayDetail.cost,
+              calories: dayDetail.calories,
             });
           });
 
@@ -56,7 +57,7 @@ export default function CalendarPage({ userLoggedIn }: any) {
                   <p>
                     Estimated price: {convertCentsToDollars(calendarDay.cost)}
                   </p>
-                  <p>Estimated Calorie intake: </p>
+                  <p>Estimated Calorie intake: {calendarDay.calories}</p>
                 </>
               )}
             </div>
