@@ -52,9 +52,12 @@ export default function CalendarPage({ userLoggedIn }: any) {
 
             <div className="list__summary">
               {calendarDay.cost && (
-                <p>
-                  Estimated price: {convertCentsToDollars(calendarDay.cost)}
-                </p>
+                <>
+                  <p>
+                    Estimated price: {convertCentsToDollars(calendarDay.cost)}
+                  </p>
+                  <p>Estimated Calorie intake: </p>
+                </>
               )}
             </div>
           </div>
