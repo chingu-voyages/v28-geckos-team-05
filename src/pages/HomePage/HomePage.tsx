@@ -34,11 +34,12 @@ export default function HomePage({ userLoggedIn }: any) {
   });
 
   const bulkUrl: URL = {
-    apiURL: `${baseUrl}/informationBulk?apiKey=${getRandomApiKey()}`,
+    apiURL: `${baseUrl}/informationBulk?apiKey=${getRandomApiKey()}&includeNutrition=true`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/bulkinfo`,
   };
   const randomUrl: URL = {
-    apiURL: `${baseUrl}/random?apiKey=${getRandomApiKey()}&number=${limit}`,
+    apiURL: `${baseUrl}/complexSearch?apiKey=${getRandomApiKey()}&number=${limit}&addRecipeNutrition=true&sort=random`,
+    // apiURL: `${baseUrl}/random?apiKey=${getRandomApiKey()}&number=${limit}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
   };
 
@@ -77,13 +78,14 @@ export default function HomePage({ userLoggedIn }: any) {
 
   const getRandomData = async () => {
     setSearchError('');
+    setSearchEntered(true);
 
     try {
       setSearchTerm('random recipes');
       setRecipesList([]);
       const response = await fetch(getURL(randomUrl));
       const jsonData = await response.json();
-      setRecipesList(jsonData.recipes);
+      setRecipesList(jsonData.results);
     } catch (error) {
       setSearchError(error);
     }

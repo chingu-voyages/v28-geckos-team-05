@@ -13,6 +13,7 @@ export default function BtnRemoveRecipe({
   storedDate,
   handleRemove,
   recipePricePerServing,
+  calorieAmount,
 }: BtnRemoveProps) {
   const onRemoveRecipe = () => {
     if (userId) {
@@ -21,7 +22,8 @@ export default function BtnRemoveRecipe({
           recipeId,
           userId,
           storedDate,
-          recipePricePerServing
+          recipePricePerServing,
+          calorieAmount
         );
       !storedDate &&
         handleRemove &&

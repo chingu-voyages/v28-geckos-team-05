@@ -2,6 +2,11 @@
 
 .login {
 
+    &__error {
+        color: $color-warning;
+        margin-top: 1rem;
+    }
+    
     &__form-container {
         margin-top: 10rem;
         display: flex;

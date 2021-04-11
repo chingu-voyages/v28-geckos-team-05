@@ -12,7 +12,10 @@ import {
 import { storeFavorite } from '../../firebase/favorites';
 import { getUserId } from '../../firebase/firebase';
 import { convertDateToString, convertCentsToDollars } from '../../utils';
-import { stockCalendarData } from '../../firebase/calendar';
+import {
+  stockCalendarData,
+  extractCalorieAmount,
+} from '../../firebase/calendar';
 import { Recipe, RecipeProps } from '../../typescript/types';
 
 import './RecipeCard.scss';
@@ -80,6 +83,7 @@ export default function RecipeCard(props: RecipeProps) {
           userId={userId}
           storedDate={storedDate}
           recipePricePerServing={recipe.pricePerServing}
+          calorieAmount={extractCalorieAmount(recipe)}
         />
       )}
 
