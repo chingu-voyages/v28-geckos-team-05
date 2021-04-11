@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import firebase from 'firebase/app';
 import { Recipe } from '../typescript/types';
 import { db } from './firebase';
@@ -17,6 +18,7 @@ export const stockCalendarData = async (
     const dayDoc = await dayRef.get();
     const dayData = dayDoc.data();
 
+    const calorieAmount = extractCalorieAmount(recipe);
     const { id, pricePerServing } = recipe;
     const recipeIdString = id.toString();
     const updatedRecipeList = firebase.firestore.FieldValue.arrayUnion(id);
@@ -31,12 +33,14 @@ export const stockCalendarData = async (
         date,
         recipes_list: updatedRecipeList,
         cost: pricePerServing,
+        calories: calorieAmount,
       });
     } else {
       await dayRef.update({
         date,
         recipes_list: updatedRecipeList,
-        cost: updatePrice(pricePerServing, id, dayData?.recipes_list),
+        cost: updateAmount(pricePerServing, id, dayData?.recipes_list),
+        calories: updateAmount(calorieAmount, id, dayData?.recipes_list),
       });
     }
 
@@ -64,11 +68,22 @@ export const addRecipeToRecipes = async (
   }
 };
 
+export const extractCalorieAmount = (recipe: any) => {
+  const { nutrition: { nutrients } = { nutrients: [] } } = recipe;
+
+  if (nutrients.length === 0) return 0;
+
+  const calories = nutrients.filter((item: any) => item.name === 'Calories');
+
+  return calories[0].amount;
+};
+
 export const removeRecipeFromCalendar = async (
   recipeId: number,
   userId: string,
   storedDate: string,
-  recipePricePerServing: number = 0
+  recipePricePerServing: number = 0,
+  calorieAmount: number = 0
 ) => {
   const userRef = db.collection('user-data').doc(userId);
   const calendarRef = userRef.collection('calendar');
@@ -78,6 +93,7 @@ export const removeRecipeFromCalendar = async (
   await dayRef.update({
     recipes_list: firebase.firestore.FieldValue.arrayRemove(recipeId),
     cost: firebase.firestore.FieldValue.increment(-recipePricePerServing),
+    calories: firebase.firestore.FieldValue.increment(-calorieAmount),
   });
 
   // if the id is the last one of the recipes_list array
@@ -98,7 +114,7 @@ export const removeDayFromCalendar = async (
   }
 };
 
-export const updatePrice = (
+export const updateAmount = (
   price: number,
   id: number,
   recipes_list: number[]

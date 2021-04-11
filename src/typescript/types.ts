@@ -25,6 +25,7 @@ type Recipe = {
   title: string;
   aggregateLikes: string;
   pricePerServing: number;
+  nutrition: number;
 };
 
 type RecipeProps = {
@@ -43,11 +44,12 @@ type CalendarCustomInputProps = {
 };
 
 type CalendarDay = {
-    dateString: string;
-    timeStamp: Date;
-    recipes: string[];
-    cost: number;
-}
+  dateString: string;
+  timeStamp: Date;
+  recipes: string[];
+  cost: number;
+  calories: number;
+};
 
 type CalendarDayListProps = {
   date: string;
@@ -59,8 +61,9 @@ type BtnRemoveProps = {
   recipeId: number;
   storedDate?: string;
   recipePricePerServing?: number;
+  calorieAmount?: number;
   handleRemove?: (recipeId: number) => void;
-};  
+};
 
 export type {
   URL,
