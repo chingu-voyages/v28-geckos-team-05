@@ -58,23 +58,25 @@ export default function HomePage({ userLoggedIn }: any) {
 
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);
+
+      if (idsBulk.length) {
+        bulkUrl.apiURL += `&ids=${idsBulk}`;
+
+        try {
+          const responseBulk = await fetch(getURL(bulkUrl));
+          const jsonDataBulk = await responseBulk.json();
+          setRecipesList(jsonDataBulk);
+        } catch (error) {
+          setSearchError(error.toString());
+        }
+      } else {
+        setSearchTerm('');
+        !searchError &&
+          setSearchError(`no results for the search term: ${textInput}`);
+      }
     } catch (error) {
       setSearchError(error.toString());
-    }
-
-    if (idsBulk.length) {
-      bulkUrl.apiURL += `&ids=${idsBulk}`;
-
-      try {
-        const responseBulk = await fetch(getURL(bulkUrl));
-        const jsonDataBulk = await responseBulk.json();
-        setRecipesList(jsonDataBulk);
-      } catch (error) {
-        setSearchError(error.toString());
-      }
-    } else {
       setSearchTerm('');
-      setSearchError(`no results for the search term: ${textInput}`);
     }
   };
 
@@ -114,23 +116,25 @@ export default function HomePage({ userLoggedIn }: any) {
       const response = await fetch(getURL(url));
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);
+
+      if (idsBulk.length) {
+        bulkUrl.apiURL += `&ids=${idsBulk}`;
+
+        try {
+          const responseBulk = await fetch(getURL(bulkUrl));
+          const jsonDataBulk = await responseBulk.json();
+          setRecipesList(jsonDataBulk);
+        } catch (error) {
+          setSearchError(error.toString());
+        }
+      } else {
+        setSearchTerm('');
+        !searchError &&
+          setSearchError(`no results for the search term: ${textInput}`);
+      }
     } catch (error) {
       setSearchError(error.toString());
-    }
-
-    if (idsBulk.length) {
-      bulkUrl.apiURL += `&ids=${idsBulk}`;
-
-      try {
-        const responseBulk = await fetch(getURL(bulkUrl));
-        const jsonDataBulk = await responseBulk.json();
-        setRecipesList(jsonDataBulk);
-      } catch (error) {
-        setSearchError(error.toString());
-      }
-    } else {
       setSearchTerm('');
-      setSearchError(`no results for the search term: ${textInput}`);
     }
   };
 
