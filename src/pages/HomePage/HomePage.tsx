@@ -38,7 +38,7 @@ export default function HomePage({ userLoggedIn }: any) {
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/bulkinfo`,
   };
   const randomUrl: URL = {
-    apiURL: `${baseUrl}/complexSearch?apiKey=${getRandomApiKey()}&number=${limit}&addRecipeNutrition=true&sort=random`,
+    apiURL: `${baseUrl}/complexSearch?apiKey=${getRandomApiKey()}&number=${limit}&addRecipeNutrition=true&fillIngredients=true&sort=random`,
     // apiURL: `${baseUrl}/random?apiKey=${getRandomApiKey()}&number=${limit}`,
     mockURL: `${process.env.REACT_APP_MOCK_BASE_URL}/random`,
   };
