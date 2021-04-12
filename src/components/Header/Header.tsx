@@ -41,16 +41,20 @@ function Header({ userLoggedIn }: any) {
             <Link to="/" className="navbar__menuItem">
               <FontAwesomeIcon icon={faHome} size="2x" />
             </Link>
+
+            {userLoggedIn && (
+              <>
+                <Link to="/calendar" className="navbar__menuItem">
+                  CALENDAR
+                </Link>
+
+                <Link to="/favorites" className="navbar__menuItem">
+                  FAVORITES
+                </Link>
+              </>
+            )}
             <Link to="/about" className="navbar__menuItem">
               ABOUT
-            </Link>
-            {userLoggedIn && (
-              <Link to="/calendar" className="navbar__menuItem">
-                CALENDAR
-              </Link>
-            )}
-            <Link to="/favorites" className="navbar__menuItem">
-              FAVORITES
             </Link>
           </div>
 
