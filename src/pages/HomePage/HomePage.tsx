@@ -53,13 +53,15 @@ export default function HomePage({ userLoggedIn }: any) {
     try {
       setSearchTerm(textInput);
       setRecipesList([]);
+
       const response = await fetch(getURL(getSearchUrl()));
 
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);
     } catch (error) {
-      setSearchError(error);
+      setSearchError(error.toString());
     }
+
     if (idsBulk.length) {
       bulkUrl.apiURL += `&ids=${idsBulk}`;
 
@@ -68,7 +70,7 @@ export default function HomePage({ userLoggedIn }: any) {
         const jsonDataBulk = await responseBulk.json();
         setRecipesList(jsonDataBulk);
       } catch (error) {
-        setSearchError(error);
+        setSearchError(error.toString());
       }
     } else {
       setSearchTerm('');
@@ -87,7 +89,7 @@ export default function HomePage({ userLoggedIn }: any) {
       const jsonData = await response.json();
       setRecipesList(jsonData.results);
     } catch (error) {
-      setSearchError(error);
+      setSearchError(error.toString());
     }
   };
 
@@ -113,7 +115,7 @@ export default function HomePage({ userLoggedIn }: any) {
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);
     } catch (error) {
-      setSearchError(error);
+      setSearchError(error.toString());
     }
 
     if (idsBulk.length) {
@@ -124,7 +126,7 @@ export default function HomePage({ userLoggedIn }: any) {
         const jsonDataBulk = await responseBulk.json();
         setRecipesList(jsonDataBulk);
       } catch (error) {
-        setSearchError(error);
+        setSearchError(error.toString());
       }
     } else {
       setSearchTerm('');
@@ -169,7 +171,6 @@ export default function HomePage({ userLoggedIn }: any) {
             {searchTerm && !recipesList.length && <Loader />}
             {searchTerm && !!recipesList.length && <RecipeCardList />}
             {searchError}
-            {/* end test only code */}
           </>
         )}
       </div>
