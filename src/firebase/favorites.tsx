@@ -13,6 +13,7 @@ export const storeFavorite = async (recipe: Recipe, userId: string) => {
     readyInMinutes: recipe.readyInMinutes,
     servings: recipe.servings,
     aggregateLikes: recipe.aggregateLikes,
+    pricePerServing: recipe.pricePerServing,
   });
 };
 
