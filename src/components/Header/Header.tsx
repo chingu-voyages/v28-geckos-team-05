@@ -25,7 +25,12 @@ function Header({ userLoggedIn }: any) {
 
   return (
     <>
-      {showModal && <NavigationModal onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <NavigationModal
+          isLogged={userLoggedIn}
+          onClose={() => setShowModal(false)}
+        />
+      )}
 
       <nav className="navbar">
         <FontAwesomeIcon
@@ -41,22 +46,29 @@ function Header({ userLoggedIn }: any) {
             <Link to="/" className="navbar__menuItem">
               <FontAwesomeIcon icon={faHome} size="2x" />
             </Link>
+
+            {userLoggedIn && (
+              <>
+                <Link to="/calendar" className="navbar__menuItem">
+                  CALENDAR
+                </Link>
+
+                <Link to="/favorites" className="navbar__menuItem">
+                  FAVORITES
+                </Link>
+              </>
+            )}
             <Link to="/about" className="navbar__menuItem">
               ABOUT
-            </Link>
-            {userLoggedIn && (
-              <Link to="/calendar" className="navbar__menuItem">
-                CALENDAR
-              </Link>
-            )}
-            <Link to="/favorites" className="navbar__menuItem">
-              FAVORITES
             </Link>
           </div>
 
           <div className="navbar-container--right">
             {userLoggedIn && (
-              <Link to="/settings" className="navbar__menuItem">
+              <Link
+                to="/settings"
+                className="navbar__menuItem navbar__settings"
+              >
                 Settings
               </Link>
             )}
