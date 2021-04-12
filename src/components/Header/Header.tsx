@@ -25,7 +25,12 @@ function Header({ userLoggedIn }: any) {
 
   return (
     <>
-      {showModal && <NavigationModal onClose={() => setShowModal(false)} />}
+      {showModal && (
+        <NavigationModal
+          isLogged={userLoggedIn}
+          onClose={() => setShowModal(false)}
+        />
+      )}
 
       <nav className="navbar">
         <FontAwesomeIcon
@@ -60,7 +65,10 @@ function Header({ userLoggedIn }: any) {
 
           <div className="navbar-container--right">
             {userLoggedIn && (
-              <Link to="/settings" className="navbar__menuItem">
+              <Link
+                to="/settings"
+                className="navbar__menuItem navbar__settings"
+              >
                 Settings
               </Link>
             )}
