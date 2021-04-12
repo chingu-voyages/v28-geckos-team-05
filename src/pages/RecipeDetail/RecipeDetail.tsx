@@ -43,7 +43,7 @@ export default function RecipeDetail(props: any) {
         <div className="recipe-detail__section-title">ingredients</div>
         <div className="recipe-detail__ingredients-content-container">
           {recipe.extendedIngredients.map((ingredient: any) => (
-            <div className="recipe-detail__ingredient" key="">
+            <div className="recipe-detail__ingredient" key={ingredient.id}>
               <span>{ingredient.measures.us.amount}</span>
               <span>{ingredient.measures.us.unitShort}</span>
               <span>{ingredient.nameClean}</span>
