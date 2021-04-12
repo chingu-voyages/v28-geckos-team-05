@@ -37,7 +37,7 @@
 
   &-container {
     &--left {
-      display: flex;
+      display: none;
       align-items: center;
     }
 
@@ -51,8 +51,14 @@
     display: flex;
   }
 
-  &__links {
+  &__settings {
     display: none;
+  }
+
+  &__links {
+    display: flex;
+    width: 100%;
+    justify-content: flex-end;
   }
 
   &__menuItem {
@@ -78,6 +84,10 @@
   .navbar {
     justify-content: center;
 
+    &__settings {
+      display: flex;
+    }
+
     &__menuIcon {
       display: none;
     }
@@ -86,6 +96,10 @@
       display: flex;
       justify-content: space-between;
       width: $max-page-width;
+    }
+
+    &-container--left {
+      display: flex;
     }
   }
 }

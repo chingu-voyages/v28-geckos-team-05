@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import './NavigationModal.scss';
 
 interface Props {
+  isLogged: boolean;
   onClose: MouseEventHandler;
 }
 
-export default function NavigationModal({ onClose }: Props) {
+export default function NavigationModal({ isLogged, onClose }: Props) {
   return (
     <div className="modal">
       <div className="modal-header">
@@ -32,16 +33,26 @@ export default function NavigationModal({ onClose }: Props) {
               About
             </Link>
           </div>
-          <div className="modal-content-links__link">
-            <Link to="/calendar" onClick={onClose}>
-              Calendar
-            </Link>
-          </div>
-          <div className="modal-content-links__link">
-            <Link to="/favorites" onClick={onClose}>
-              Favorites
-            </Link>
-          </div>
+
+          {isLogged && (
+            <>
+              <div className="modal-content-links__link">
+                <Link to="/calendar" onClick={onClose}>
+                  Calendar
+                </Link>
+              </div>
+              <div className="modal-content-links__link">
+                <Link to="/favorites" onClick={onClose}>
+                  Favorites
+                </Link>
+              </div>
+              <div className="modal-content-links__link">
+                <Link to="/settings" onClick={onClose}>
+                  Settings
+                </Link>
+              </div>
+            </>
+          )}
         </div>
       </div>
     </div>

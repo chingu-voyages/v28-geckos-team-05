@@ -53,26 +53,30 @@ export default function HomePage({ userLoggedIn }: any) {
     try {
       setSearchTerm(textInput);
       setRecipesList([]);
+
       const response = await fetch(getURL(getSearchUrl()));
 
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);
-    } catch (error) {
-      setSearchError(error);
-    }
-    if (idsBulk.length) {
-      bulkUrl.apiURL += `&ids=${idsBulk}`;
 
-      try {
-        const responseBulk = await fetch(getURL(bulkUrl));
-        const jsonDataBulk = await responseBulk.json();
-        setRecipesList(jsonDataBulk);
-      } catch (error) {
-        setSearchError(error);
+      if (idsBulk.length) {
+        bulkUrl.apiURL += `&ids=${idsBulk}`;
+
+        try {
+          const responseBulk = await fetch(getURL(bulkUrl));
+          const jsonDataBulk = await responseBulk.json();
+          setRecipesList(jsonDataBulk);
+        } catch (error) {
+          setSearchError(error.toString());
+        }
+      } else {
+        setSearchTerm('');
+        !searchError &&
+          setSearchError(`no results for the search term: ${textInput}`);
       }
-    } else {
+    } catch (error) {
+      setSearchError(error.toString());
       setSearchTerm('');
-      setSearchError(`no results for the search term: ${textInput}`);
     }
   };
 
@@ -87,7 +91,7 @@ export default function HomePage({ userLoggedIn }: any) {
       const jsonData = await response.json();
       setRecipesList(jsonData.results);
     } catch (error) {
-      setSearchError(error);
+      setSearchError(error.toString());
     }
   };
 
@@ -112,23 +116,25 @@ export default function HomePage({ userLoggedIn }: any) {
       const response = await fetch(getURL(url));
       const jsonData = await response.json();
       idsBulk = getIdsBulk(jsonData.results);
-    } catch (error) {
-      setSearchError(error);
-    }
 
-    if (idsBulk.length) {
-      bulkUrl.apiURL += `&ids=${idsBulk}`;
+      if (idsBulk.length) {
+        bulkUrl.apiURL += `&ids=${idsBulk}`;
 
-      try {
-        const responseBulk = await fetch(getURL(bulkUrl));
-        const jsonDataBulk = await responseBulk.json();
-        setRecipesList(jsonDataBulk);
-      } catch (error) {
-        setSearchError(error);
+        try {
+          const responseBulk = await fetch(getURL(bulkUrl));
+          const jsonDataBulk = await responseBulk.json();
+          setRecipesList(jsonDataBulk);
+        } catch (error) {
+          setSearchError(error.toString());
+        }
+      } else {
+        setSearchTerm('');
+        !searchError &&
+          setSearchError(`no results for the search term: ${textInput}`);
       }
-    } else {
+    } catch (error) {
+      setSearchError(error.toString());
       setSearchTerm('');
-      setSearchError(`no results for the search term: ${textInput}`);
     }
   };
 
@@ -169,7 +175,6 @@ export default function HomePage({ userLoggedIn }: any) {
             {searchTerm && !recipesList.length && <Loader />}
             {searchTerm && !!recipesList.length && <RecipeCardList />}
             {searchError}
-            {/* end test only code */}
           </>
         )}
       </div>

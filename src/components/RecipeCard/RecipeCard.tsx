@@ -69,13 +69,15 @@ export default function RecipeCard(props: RecipeProps) {
         <img className="recipe__image" src={recipe.image} alt={recipe.title} />
       </div>
 
-      <button
-        type="button"
-        className="recipe__button-wishlist"
-        onClick={() => addToFavorites(recipe)}
-      >
-        <FontAwesomeIcon icon={faHeart} />
-      </button>
+      {userId && (
+        <button
+          type="button"
+          className="recipe__button-wishlist"
+          onClick={() => addToFavorites(recipe)}
+        >
+          <FontAwesomeIcon icon={faHeart} />
+        </button>
+      )}
 
       {location.pathname === '/calendar' && userId && (
         <BtnRemoveRecipe
